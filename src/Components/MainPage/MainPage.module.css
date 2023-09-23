@@ -1,0 +1,33 @@
+/* .block{
+    width: 100%;
+    background: white;
+    height: 1500px;
+}
+
+.side{
+    width: 15%;
+    background: rgb(225, 234, 238);
+    min-height: 1500px;
+    padding-top: 10px;
+    padding-left: 15px;
+    
+} */
+
+
+
+
+.mainBlock{
+    display: flex;
+    /* align-items: center; */
+    /* background-color: aquamarine; */
+}
+
+.child1{
+    width: 15%;
+    background: rgb(225, 234, 238);
+    min-height: 1500px;
+}
+.child2{
+    width: 89%;
+    background-color: white
+}

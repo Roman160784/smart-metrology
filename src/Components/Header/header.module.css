@@ -1,0 +1,18 @@
+/* .headerCsmsPic{
+    background-image: url('../../Pictures/gcscms-headimg.png');
+    background-size: contain;
+  background-repeat: no-repeat;
+  width: 100%;
+  height: 100vh; 
+} */
+
+ .headerBlock {
+    width: 100%;
+    height: 30%;
+ }
+
+/* .title{
+    
+    padding-top: 300px;
+    padding-left: 50%;
+} */
