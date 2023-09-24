@@ -1,0 +1,43 @@
+.mainHeaderBlock{
+    display: flex;
+}
+
+.title{
+    padding-left: 2%;
+    font-size: 13px;
+}
+
+.pictures{
+    padding-left: 30px;
+    font-size: 12px;
+}
+
+.adress{
+    padding-left: 10%;
+}
+.metr{
+    padding-left: 150px;
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.adr{
+    padding-top: 5px;
+    padding-left: 100px;  
+    font-size: 14px;
+}
+.tel{
+    padding-top: 1px;
+    padding-left: 30px;  
+    font-size: 14px;
+}
+
+.pic{
+    width: 100px;
+    height: 35px;
+    
+}
+.pic2{
+    width: 50px;
+    height: 40px;
+}

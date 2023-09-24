@@ -23,6 +23,7 @@
 }
 
 .child1{
+    padding-right: 5%;
     width: 15%;
     background: rgb(225, 234, 238);
     min-height: 1500px;

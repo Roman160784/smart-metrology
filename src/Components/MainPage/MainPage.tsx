@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import { AllReports } from '../Common/AllReports/AllReports';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
-import { ReportEso } from '../ReportEso/ReportEso';
+import { ReportEso } from '../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
 import { EmirNavReports, pathEmirEnum } from '../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { Fhi } from '../Sectors/FHI/Fhi';
 import { Gi } from '../Sectors/GI/Gi';

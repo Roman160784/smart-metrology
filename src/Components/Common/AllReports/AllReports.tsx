@@ -1,6 +1,6 @@
 import React , { useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ReportEso } from '../../ReportEso/ReportEso';
+import { ReportEso } from '../../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
 import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { Button } from '../Button/Button';
 import st from './AllReports.module.css'
@@ -37,7 +37,7 @@ export const AllReports = () => {
             <span className={st.title}>Номер свидетельства о калибровке</span>
             <span className={st.title}>Заказчик</span>
             <span className={st.push}> 
-            <Button disabled={false} title={'Добавить протокол калибровки +'} onClick={onClickButtonHandler}/>
+            <Button disabled={false} title={'Добавить протокол +'} onClick={onClickButtonHandler}/>
             </span>
             </div>
         </div>
