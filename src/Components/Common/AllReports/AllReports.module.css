@@ -1,0 +1,17 @@
+.mainBlock {
+    background-color: rgb(195, 215, 230);
+    border-bottom: 1px solid black;
+    border-top: 1px solid black;
+}
+
+.title{
+    font-size: 21px;
+    margin-left: 2%;
+    padding: auto;
+}
+
+.push{
+    font-size: 21px;
+    margin-left: 10%;
+    padding: auto;
+}

@@ -1,8 +1,9 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
+import { AllReports } from '../Common/AllReports/AllReports';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
-import { Emir } from '../Sectors/EMiR/Emir';
+import { EmirNavReports, pathEmirEnum } from '../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { Fhi } from '../Sectors/FHI/Fhi';
 import { Gi } from '../Sectors/GI/Gi';
 import { Ion } from '../Sectors/IonI/Ion';
@@ -21,13 +22,17 @@ export const MainPage = () => {
                 </div>
                 <div className={st.child2}>
                     <Routes>
-                    <Route path={pathSiteBarEnum.mainAria} element={<MainAria/>} />
-                        <Route path={pathSiteBarEnum.elictric} element={<Emir/>} />
-                        <Route path={pathSiteBarEnum.chemists} element={<Fhi/>} />
-                        <Route path={pathSiteBarEnum.geometry} element={<Gi/>} />
-                        <Route path={pathSiteBarEnum.heating} element={<Tti/>} />
-                        <Route path={pathSiteBarEnum.mechanics} element={<Mi/>} />
-                        <Route path={pathSiteBarEnum.radiation} element={<Ion/>} />
+                        <Route path={pathSiteBarEnum.mainAria} element={<MainAria />} />
+                        <Route path={pathSiteBarEnum.elictric} element={<EmirNavReports />} />
+                        <Route path={pathSiteBarEnum.chemists} element={<Fhi />} />
+                        <Route path={pathSiteBarEnum.geometry} element={<Gi />} />
+                        <Route path={pathSiteBarEnum.heating} element={<Tti />} />
+                        <Route path={pathSiteBarEnum.mechanics} element={<Mi />} />
+                        <Route path={pathSiteBarEnum.radiation} element={<Ion />} />
+                        <Route path={pathEmirEnum.esoAll} element={<AllReports />} />
+                        <Route path={pathEmirEnum.e6All} element={<AllReports />} />
+                        <Route path={pathEmirEnum.mrpAll} element={<AllReports />} />
+                        <Route path={pathEmirEnum.ifnAll} element={<AllReports />} />
                     </Routes>
                 </div>
 

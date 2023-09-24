@@ -1,0 +1,25 @@
+.mainBlock{
+    padding-top: 1.7%;
+    padding-left: 1%;
+}
+
+.block{
+    display: inline;
+    background-color: rgb(211, 224, 237);
+    border: 1px solid black;
+    margin-right: 15px;
+    padding: 8px;
+    border-radius: 5px;
+}
+
+.navigation{
+    text-decoration: none;
+    padding-top: 15px;
+    margin-right: 15px;
+    font-size: 18px;
+}
+
+.navigation :hover {
+color: rgb(197, 141, 43);
+}
+
