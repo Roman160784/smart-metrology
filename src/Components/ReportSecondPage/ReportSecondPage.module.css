@@ -1,0 +1,32 @@
+.header{
+    padding-top: 10px;
+    padding-left: 75%;
+    font-size: 10px;
+}
+
+.headerTitle{
+    display: block;
+}
+
+.standards{
+    padding-left: 2%;
+}
+
+.stansardsTable{
+    padding-top: 1%;
+    padding-left: 2%;
+    text-align: center;
+    font-size: 15px;
+}
+
+.traceability{
+    padding-top: 1%;
+    padding-left: 2%;
+    padding-right: 1%;
+    font-size: 12px;
+}
+
+.mathModel{
+    padding-top: 5%;
+    padding-left: 2%; 
+}
