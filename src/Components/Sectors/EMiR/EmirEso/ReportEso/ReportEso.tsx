@@ -3,17 +3,26 @@ import { ReportFirstPage } from '../../../../ReportFirstPage/ReportFrirstPage';
 import { ReportHeader } from '../../../../ReportHeader/ReportHeder';
 import { useReactToPrint } from 'react-to-print'
 import { ReportSecondPage } from '../../../../ReportSecondPage/ReportSecondPage';
+import { useSelector } from 'react-redux';
 import st from './ReportEso.module.css'
+import { useParams } from 'react-router-dom';
 
 
 
 export const ReportEso = () => {
 
-    const componentRef = useRef()
+  const params = useParams<'id'>();
+  const reportId = params.id
+  // alert(reportId)
 
+    const componentRef = useRef()
+    
+
+
+    
     const pdfHandler = useReactToPrint({
         content: () => componentRef.current!,
-        documentTitle: 'Certificate',
+        documentTitle: 'Report',
     })
 
     const data = [<div>fggfsd  </div> , <span>dvsvsd</span>]
@@ -46,7 +55,7 @@ export const ReportEso = () => {
 
             <div className={st.page}>
                 <ReportHeader />
-                <ReportFirstPage />
+                <ReportFirstPage changeReportTitle={()  => {}} />
             </div>
             <div className={st.page}>
                 <ReportSecondPage />

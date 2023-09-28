@@ -47,6 +47,7 @@
     ]
   },
   "devDependencies": {
-    "@types/uuid": "^9.0.4"
+    "@types/uuid": "^9.0.4",
+    "@babel/plugin-proposal-private-property-in-object": "^7.14.0"
   }
 }

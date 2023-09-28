@@ -51,11 +51,12 @@ type StandatdType = {
 }
 
 export type ReportEsoType = {
-    sectorId: string
-    typeId: string
+    sectorEmirId: string
+    typeEsoId: string
     reportId: string
     reportNumber: string
-    calibrationObject: string
+    calibrationObjectName: string
+    calibrationObjectType: string
     serialNumber: string
     application: string
     customer: string
@@ -71,16 +72,93 @@ export type ReportEsoType = {
     engineer: string
 }
 
+const sectorEmirId = v1()
+export const typeEsoId = v1()
+
+export const addReportEsoTC = createAsyncThunk(
+    'esoReport/',
+    async (param: {}, { dispatch, rejectWithValue }) => {
+
+        try {
+            let newReportEso = {
+                sectorEmirId: sectorEmirId,
+                typeEsoId: typeEsoId,
+                reportId: v1(),
+                reportNumber: '1111/23/2160к',
+                calibrationObjectName: 'Мегаомметр',
+                calibrationObjectType: ' ЭС0202/2-Г',
+                serialNumber: '1111',
+                application: 'Заявка на калибровку № 001341 от 13.01.2023',
+                customer: 'РУП "Гомельэнерго',
+                adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
+                calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
+                calibrationDate: '11.11.2023',
+                method: 'МК.ГМ 1580 - 2013, Метод прямых измерений',
+                calibrationConditions: {
+                    id: v1(),
+                    temperature: '21,0',
+                    relativeHumidity: '31,8',
+                    pressure: '100,1',
+                    supplyVoltage: '228',
+                    frequency: '50'
+                },
+                standard: [
+                    {
+                        id: v1(),
+                        standardName: 'Мера-имитатор',
+                        standardType: 'Р40116',
+                        standardNumber: '090',
+                        value: '---',
+                        calibrationDate: '11.2022'
+                    }
+                ],
+                calculation: [
+                    {
+                        id: v1(),
+                        calibrationDot: 1,
+                        testVoltage: '500 B',
+                        dataForCalibration: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        calibrationMiddleValue: 0,
+                        sanadardError: 0,
+                        userError: 0,
+                        uncertaintyMiddle: 0,
+                        uncertaintySanadardError: 0,
+                        uncertaintyUserError: 0,
+                        uncertaintyResult: 0,
+                        uncertaintyMiddlePercent: 0,
+                        uncertaintySanadardErrorPercent: 0,
+                        uncertaintyUserErrorPercent: 0,
+                        uncertaintyResultPercent: 0,
+                        error: 0,
+                        permissibleValue: 0,
+                        expandedUncertainty: 0,
+                    }
+                ],
+                stigma: 'BY00045',
+                boss: 'Д. В. Миранович: Начальник сектора ЭМиР ',
+                engineer: " Р. С. Матвеенко: Инженер по метрологии I к",
+            }
+
+            return newReportEso
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать})
+        } finally {
+
+        }
+    }
+)
+
 const initialState: ReportEsoType[] = [
     {
-        sectorId: v1(),
-        typeId: v1(),
+        sectorEmirId: sectorEmirId,
+        typeEsoId: typeEsoId,
         reportId: v1(),
         reportNumber: '83/23/2160к',
-        calibrationObject: 'Мегаомметр ЭС0202/2-Г',
+        calibrationObjectName: 'Мегаомметр',
+        calibrationObjectType: ' ЭС0202/2-Г',
         serialNumber: '1111',
         application: 'Заявка на калибровку № 001341 от 13.01.2023',
-        customer: 'РУП "Гомельэнерго',
+        customer: 'РУП "Гомельэнерго"',
         adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
         calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
         calibrationDate: '11.11.2023',
@@ -108,7 +186,7 @@ const initialState: ReportEsoType[] = [
                 id: v1(),
                 calibrationDot: 1,
                 testVoltage: '500 B',
-                dataForCalibration: [0,0,0,0,0,0,0,0,0,0],
+                dataForCalibration: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
                 calibrationMiddleValue: 0,
                 sanadardError: 0,
                 userError: 0,
@@ -133,14 +211,17 @@ const initialState: ReportEsoType[] = [
 
 
 const slice = createSlice({
-   name: 'esoReport',
-   initialState: initialState,
-   reducers: {
-    
-   }, 
-   extraReducers: builder => {
+    name: 'esoReport',
+    initialState: initialState,
+    reducers: {
 
-   }
+    },
+    extraReducers: builder => {
+        //Add new report 
+        builder.addCase(addReportEsoTC.fulfilled, (state, action) => {
+            state.unshift(action.payload!)
+        })
+    }
 })
 
 export const ReportEsoReducer = slice.reducer

@@ -6,7 +6,8 @@
 
 .title{
     font-size: 19px;
-    margin-left: 2%;
+    padding-left: 3%;
+    font-weight: bold;
     padding: auto;
 }
 
@@ -14,4 +15,24 @@
     font-size: 21px;
     margin-left: 10%;
     padding: auto;
+}
+
+.secondBlock {
+    height: 5%;
+    padding-top: 10px;
+    background-color: rgb(234, 239, 243);
+    border-bottom: 1px solid black;
+
+}
+
+.secondBlockTitle{
+    display: inline-block;
+    text-align: center;
+    width: 15%;
+    padding-left: 1%;
+}
+
+
+.secondBlock  :hover {
+    color: blue;
 }

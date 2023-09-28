@@ -3,7 +3,12 @@ import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
 import st from './ReportFirstPage.module.css'
 
 
-export const ReportFirstPage = () => {
+type ReportFirstPageType = {
+
+changeReportTitle: (title: string) => void
+}
+
+export const ReportFirstPage = ({changeReportTitle, ...props} : ReportFirstPageType) => {
 
     return (
         <>
