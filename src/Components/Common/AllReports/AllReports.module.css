@@ -19,20 +19,61 @@
 
 .secondBlock {
     height: 5%;
-    padding-top: 10px;
+    padding-top: 7px;
     background-color: rgb(234, 239, 243);
     border-bottom: 1px solid black;
-
+    padding-bottom: 3px;
 }
 
 .secondBlockTitle{
     display: inline-block;
     text-align: center;
-    width: 15%;
+    width: 10%;
+    padding-left: 0.5%;
+}
+
+.calibrationDate{
+    display: inline-block;
+    text-align: center;
+    width: 10%;
+    padding-left: 1%;
+}
+.calibrationObjectType{
+    display: inline-block;
+    text-align: center;
+    width: 10%;
+    padding-left: 1%;
+}
+.serialNumber{
+    display: inline-block;
+    text-align: center;
+    width: 10%;
+    padding-left: 0.005%;
+}
+.stigma{
+    display: inline-block;
+    text-align: center;
+    width: 10%;
+    padding-left: 1%;
+}
+.customer{
+    display: inline-block;
+    vertical-align: bottom;
+    text-align: center;
+    width: 30%;
+    padding-left: 0.1%;
+}
+.delete{
+    display: inline-block;
+    text-align: center;
+    width: 2%;
     padding-left: 1%;
 }
 
-
-.secondBlock  :hover {
+ .secondBlock :hover {
     color: blue;
+}
+
+.delete :hover{
+    color: red;   
 }

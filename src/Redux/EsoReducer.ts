@@ -75,8 +75,38 @@ export type ReportEsoType = {
 const sectorEmirId = v1()
 export const typeEsoId = v1()
 
+const updateReportTitleTC = createAsyncThunk(
+    'esoReport/updateReportTitle',
+    async (param: {reportId: string, key: string, parameter: string}, { dispatch, rejectWithValue }) => {
+        try{
+            return { reportId: param.reportId }
+        }
+        catch(e: any){
+
+        }
+        finally{
+
+        }
+    }
+)
+
+export const removeReportTC = createAsyncThunk(
+    'esoReport/removeReport',
+    async (param: {reportId: string}, { dispatch, rejectWithValue }) => {
+        try{
+            return { reportId: param.reportId }
+        }
+        catch(e: any){
+
+        }
+        finally{
+
+        }
+    }
+)
+
 export const addReportEsoTC = createAsyncThunk(
-    'esoReport/',
+    'esoReport/addReport',
     async (param: {}, { dispatch, rejectWithValue }) => {
 
         try {
@@ -220,6 +250,17 @@ const slice = createSlice({
         //Add new report 
         builder.addCase(addReportEsoTC.fulfilled, (state, action) => {
             state.unshift(action.payload!)
+        })
+        builder.addCase(addReportEsoTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove report
+        builder.addCase(removeReportTC.fulfilled, (state, action) => {  
+           state.forEach((el, i) => el.reportId === action.payload?.reportId ? state.splice(i, 1) : el)
+           return state
+        })
+        builder.addCase(removeReportTC.rejected, (state, { payload }) => {
+            //to do something inside
         })
     }
 })

@@ -1,13 +1,13 @@
 import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { addReportEsoTC, ReportEsoType } from '../../../Redux/EsoReducer';
+import { addReportEsoTC, removeReportTC, ReportEsoType } from '../../../Redux/EsoReducer';
 import { selectReportEso } from '../../../Redux/selectors/eso-report-selectors';
 import { useAppDispatch } from '../../../Redux/store';
-import { ReportEso } from '../../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
-import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
+import {FiTrash} from "react-icons/fi"
 import { Button } from '../Button/Button';
 import st from './AllReports.module.css'
+import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
 
 
 export const AllReports = () => {
@@ -16,7 +16,7 @@ export const AllReports = () => {
     let allReports: ReportEsoType[] = []
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
-    const reportEso = useSelector(selectReportEso)
+    const reportsEso = useSelector(selectReportEso)
     //Ловим тип из URL
     const urlRef = useRef('');
 
@@ -25,12 +25,22 @@ export const AllReports = () => {
     typeSi = urlRef.current
 
     if (typeSi.split('/').includes('eso')) {
-        allReports = reportEso
+        allReports = reportsEso
     }
 
-
-    const onClickButtonHandler = () => {
+    const addReportHandler = () => {
         dispatch(addReportEsoTC({}))
+    }
+
+    const removeReportHandler = (reportId: string) => {
+        dispatch(removeReportTC({reportId: reportId}))
+    }
+
+    const updateReport = (reportId: string) => {
+        if (typeSi.split('/').includes('eso')) {
+            navigate(`/reportEso/${reportId}`)
+            // navigate('/reportEso/:id')
+        }
     }
 
 
@@ -45,7 +55,7 @@ export const AllReports = () => {
                 <span className={st.title}>Номер свидетельства о калибровке</span>
                 <span className={st.title}>Заказчик</span>
                 <span className={st.push}>
-                    <Button disabled={false} title={'Добавить протокол +'} onClick={onClickButtonHandler} />
+                    <Button disabled={false} title={'Добавить протокол +'} onClick={addReportHandler} />
                 </span>
             </div>
             <div>
@@ -53,12 +63,13 @@ export const AllReports = () => {
                    allReports.map((el) => {
                     return(
                         <div className={st.secondBlock} key={el.reportId}>
-                            <span className={st.secondBlockTitle}>{el.reportNumber}</span>
-                            <span className={st.secondBlockTitle}> {el.calibrationDate}</span>
-                            <span className={st.secondBlockTitle}>{el.calibrationObjectType}</span>
-                            <span className={st.secondBlockTitle}>{el.serialNumber}</span>
-                            <span className={st.secondBlockTitle}>{el.stigma}</span>
-                            <span className={st.secondBlockTitle}>{el.customer}</span>
+                            <span onClick={() => {updateReport(el.reportId)}} className={st.secondBlockTitle}>{el.reportNumber}</span>
+                            <span className={st.calibrationDate}> {el.calibrationDate}</span>
+                            <span className={st.calibrationObjectType}>{el.calibrationObjectType}</span>
+                            <span className={st.serialNumber}>{el.serialNumber}</span>
+                            <span className={st.stigma}>{el.stigma}</span>
+                            <span className={st.customer}>{el.customer}</span>
+                            <span onClick={()=> {removeReportHandler(el.reportId)}} className={st.delete}>{<FiTrash/>}</span>
                         </div>
                     )
                    }) 
