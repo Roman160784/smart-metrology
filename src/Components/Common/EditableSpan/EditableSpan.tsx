@@ -13,7 +13,7 @@ export const EditableSpan = ({title, changeTitle ,...props}: EditableSpanPropsTy
  const [mode, setEditMode] = useState <boolean>(false)
 
  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    console.log(e.currentTarget.value);
+    // console.log(e.currentTarget.value);
     setValue(e.currentTarget.value)   
 }
 

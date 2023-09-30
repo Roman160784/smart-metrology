@@ -9,7 +9,7 @@ type ReportSecondPagePropsType = {
 }
 
 
-export const ReportSecondPage = ({report,...props}: ReportSecondPagePropsType) => {
+export const ReportSecondPage = ({report, ...props}: ReportSecondPagePropsType) => {
 
     return (
         <div>
@@ -27,7 +27,7 @@ export const ReportSecondPage = ({report,...props}: ReportSecondPagePropsType) =
                         <StandardsTableHeader />
                         
                             {
-                                report.standard.map(el => {
+                                report.standard.map((el, i) => {
                                     return (
                                         <tr key={report.reportId}>
                                         <td >
