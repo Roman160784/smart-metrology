@@ -2,6 +2,12 @@ import React from 'react';
 import { StandardsTableHeader } from '../Common/StandardsTableHeader/StandardsTableHeader';
 import st from './ReportSecondPage.module.css'
 
+
+type ReportSecondPagePropsType = {
+
+}
+
+
 export const ReportSecondPage = () => {
 
     return (

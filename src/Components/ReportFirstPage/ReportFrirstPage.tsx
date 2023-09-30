@@ -21,23 +21,28 @@ export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFir
         <tbody>
             <tr>
                 <td>Объект калибровки</td>
-                <td><EditableSpan title={`${report.calibrationObjectName} ${report.calibrationObjectType}`} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={`Мегаомметр ${report.calibrationObjectType}`}
+                 changeTitle={(title) => {changeReportTitle( report.reportId, 'calibrationObjectType', title)}}/></td>
             </tr>
             <tr>
                 <td>Заводской номер</td>
-                <td><EditableSpan title={report.serialNumber} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.serialNumber} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'serialNumber', title)}}/></td>
             </tr>
             <tr>
                 <td>Основания для проведения калибровки</td>
-                <td><EditableSpan title={report.application} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.application} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'application', title)}}/></td>
             </tr>
             <tr>
                 <td>Наименование заказчика</td>
-                <td><EditableSpan title={report.customer} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.customer} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'customer', title)}}/></td>
             </tr>
             <tr>
                 <td>Адрес Заказчика</td>
-                <td><EditableSpan title={report.adresCustumer} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.adresCustumer} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'adresCustumer', title)}}/></td>
             </tr>
             <tr>
                 <td>Место проведения калибровки</td>
@@ -45,38 +50,40 @@ export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFir
             </tr>
             <tr>
                 <td>Дата проведения калибровки</td>
-                <td><EditableSpan title={report.calibrationDate} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.calibrationDate} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'calibrationDate', title)}}/></td>
             </tr>
             <tr>
                 <td>Метод, методика калибровки </td>
-                <td><EditableSpan title={report.method} changeTitle={() => {}}/></td>
+                <td><EditableSpan title={report.method} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'method', title)}}/></td>
             </tr>
             <tr>
                 <td>Условия проведения калибровки</td>
                 <tr>
                     <td className={st.tempreture}> 
-                    Температура воздуха: <EditableSpan title={report.calibrationConditions.temperature} 
-                    changeTitle={() => {}}/> ºС</td>
+                    Температура воздуха: <EditableSpan title={report.temperature} 
+                    changeTitle={(title) => {changeReportTitle( report.reportId, 'temperature', title)}}/> ºС</td>
                 </tr>
                 <tr>
                     <td className={st.tempreture}>
-                        Относительная влажность воздуха: <EditableSpan title={report.calibrationConditions.relativeHumidity} 
-                        changeTitle={() => {}}/> %</td>
+                        Относительная влажность воздуха: <EditableSpan title={report.relativeHumidity} 
+                        changeTitle={(title) => {changeReportTitle( report.reportId, 'relativeHumidity', title)}}/> %</td>
                 </tr>
                 <tr>
                     <td className={st.tempreture}>
-                        Атмосферное давление: <EditableSpan title={report.calibrationConditions.pressure} 
-                        changeTitle={() => {}}/> кПа</td>
+                        Атмосферное давление: <EditableSpan title={report.pressure} 
+                        changeTitle={(title) => {changeReportTitle( report.reportId, 'pressure', title)}}/> кПа</td>
                 </tr>
                 <tr>
                     <td className={st.tempreture}>
-                        Напряжение питающей сети: <EditableSpan title={report.calibrationConditions.supplyVoltage} 
-                        changeTitle={() => {}}/> В</td>
+                        Напряжение питающей сети: <EditableSpan title={report.supplyVoltage} 
+                        changeTitle={(title) => {changeReportTitle( report.reportId, 'supplyVoltage', title)}}/> В</td>
                 </tr>
                 <tr>
                     <td className={st.tempreture}>
-                        Частота питающей сети: <EditableSpan title={report.calibrationConditions.frequency} 
-                        changeTitle={() => {}}/> Гц</td>
+                        Частота питающей сети: <EditableSpan title={report.frequency} 
+                        changeTitle={(title) => {changeReportTitle( report.reportId, 'frequency', title)}}/> Гц</td>
                 </tr>
             </tr>
             </tbody>

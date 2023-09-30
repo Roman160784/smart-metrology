@@ -7,27 +7,31 @@ import { useSelector } from 'react-redux';
 import st from './ReportEso.module.css'
 import { useParams } from 'react-router-dom';
 import { selectReportEso } from '../../../../../Redux/selectors/eso-report-selectors';
-import { ReportEsoType } from '../../../../../Redux/EsoReducer';
+import { ReportEsoType, updateReportTitleTC } from '../../../../../Redux/EsoReducer';
+import { useAppDispatch } from '../../../../../Redux/store';
 
 
 
 export const ReportEso = () => {
 
   const componentRef = useRef()
+  const dispatch = useAppDispatch()
 
   const params = useParams<'id'>();
-  const reportId = params.id
+  let reportId = params.id
   
-  const reportsEso = useSelector(selectReportEso)
+  let reportsEso = useSelector(selectReportEso)
  
   let report :ReportEsoType 
 
-  let el = reportsEso.find(el => el.reportId === reportId)
+  let element = reportsEso.find(el => el.reportId === reportId)
 
-  if(el) {
-    report = el
+
+  if(element) {
+    report = element
   } else {
-    alert("Протокол не найден")
+    console.log('err');
+    
   }
     
     const pdfHandler = useReactToPrint({
@@ -36,7 +40,7 @@ export const ReportEso = () => {
     })
 
     const changeReportTitleHandler = (id: string, key: string, parameter: string) => {
-
+      dispatch(updateReportTitleTC({reportId: id, key: key, parameter: parameter}))
     }
 
 
@@ -77,7 +81,7 @@ export const ReportEso = () => {
 
             <div className={st.page}>
                 <ReportHeader />
-                <ReportFirstPage report={report!} changeReportTitle={()  => {}} />
+                <ReportFirstPage report={report!} changeReportTitle={changeReportTitleHandler} />
             </div>
             <div className={st.page}>
                 <ReportSecondPage />
@@ -89,3 +93,5 @@ export const ReportEso = () => {
         </div>
     )
 }
+
+
