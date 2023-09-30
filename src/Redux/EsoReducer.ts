@@ -70,7 +70,7 @@ export type ReportEsoType = {
     mathModelData: string[]
 }
 
-let traceability = '>Обеспечивается прослеживаемость результатов измерений до Национального эталона электрического сопротивления - Ома НЭ РБ 29-16'
+let traceability = 'Обеспечивается прослеживаемость результатов измерений до Национального эталона электрического сопротивления - Ома НЭ РБ 29-16'
 let mathModel = 'Математическая модель: Rx = Ri0 +ΔR0 +δind'
 let mathModelData = [
     'Rx – показания калибруемого устройства, Ом',
@@ -116,10 +116,11 @@ export const addReportEsoTC = createAsyncThunk(
     'esoReport/addReport',
     async (param: {}, { dispatch, rejectWithValue }) => {
         try {
+            let id = v1()
             let newReportEso = {
                 sectorEmirId: sectorEmirId,
                 typeEsoId: typeEsoId,
-                reportId: v1(),
+                reportId: id,
                 reportNumber: '1111/23/2160к',
                 calibrationObjectName: 'Мегаомметр',
                 calibrationObjectType: ' ЭС0202/2-Г',
@@ -140,17 +141,18 @@ export const addReportEsoTC = createAsyncThunk(
                 mathModelData: mathModelData,
                 standard: [
                     {
-                        reportId: v1(),
+                        reportId: id,
                         standardName: 'Мера-имитатор',
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
                         calibrationDate: '11.2022'
-                    }
+                    },
+                    
                 ],
                 calculation: [
                     {
-                        reportId: v1(),
+                        reportId: id,
                         calibrationDot: 1,
                         testVoltage: '500 B',
                         dataForCalibration: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
@@ -217,7 +219,7 @@ const initialState: ReportEsoType[] = [
                 standardNumber: '090',
                 value: '---',
                 calibrationDate: '11.2022'
-            }
+            },
         ],
         calculation: [
             {

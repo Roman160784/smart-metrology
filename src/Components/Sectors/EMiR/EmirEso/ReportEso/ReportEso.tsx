@@ -84,7 +84,7 @@ export const ReportEso = () => {
                 <ReportFirstPage report={report!} changeReportTitle={changeReportTitleHandler} />
             </div>
             <div className={st.page}>
-                <ReportSecondPage />
+                <ReportSecondPage report={report!} />
             </div>
             {/* <div className={st.page2}>
       {Array.from({ length: pageCount }, (_, index) => renderPage(index))}
