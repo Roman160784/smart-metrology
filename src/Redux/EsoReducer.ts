@@ -1,25 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
+import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDot } from "./utils/utils";
 
 export type CalculationEsoType = {
     reportId: string
+    calculationId: string
     calibrationDot: number
     testVoltage: string
     dataForCalibration: number[]
     calibrationMiddleValue: number
-    sanadardError: number
+    satadardError: number
     userError: number
     uncertaintyMiddle: number
-    uncertaintySanadardError: number
+    uncertaintyStnadardError: number
     uncertaintyUserError: number
     uncertaintyResult: number
     uncertaintyMiddlePercent: number
-    uncertaintySanadardErrorPercent: number
+    uncertaintyStanadardErrorPercent: number
     uncertaintyUserErrorPercent: number
     uncertaintyResultPercent: number
     error: number
     permissibleValue: number
     expandedUncertainty: number
+    calibrationValue: string
 }
 
 export type ResultEsoType = {
@@ -32,7 +35,7 @@ export type ResultEsoType = {
     expandedUncertainty: number
 }
 
-type StandatdType = {
+type StandardType = {
     reportId: string
     standardName: string
     standardType: string
@@ -60,7 +63,7 @@ export type ReportEsoType = {
     pressure: string
     supplyVoltage: string
     frequency: string
-    standard: StandatdType[]
+    standard: StandardType[]
     calculation: CalculationEsoType[]
     stigma: string
     boss: string
@@ -82,8 +85,94 @@ let mathModelData = [
 const sectorEmirId = v1()
 export const typeEsoId = v1()
 
+
+
+export const addNewCalibrationFieldTC = createAsyncThunk(
+    'esoReport/addNewCalibrationField',
+    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, rejectWithValue }) => {
+        try {
+
+            //Заполняем массив значениями для вычисления
+            let dataForCalibration: number[] = []
+            for (let index = 0; index < 10; index++) {
+                dataForCalibration.push(param.dot)
+            }
+            // Ищем среднее значение из массива
+            let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
+            // Ищем погрешность эталона в точке
+            let satadardError = findStandardErrorForEso(param.dot)
+            // Ищем погрешность оператора
+            let userError = findUserErrorInDot(param.dot)
+            //срасчёт СКО
+            let uncertaintyMiddle = findSKO(dataForCalibration)
+            //Ищем неопpеделённость Эталона
+            let uncertaintyStnadardError = findUncertainty(satadardError)
+            //Ищем неопpеделённость ошибки оператора
+            let uncertaintyUserError = findUncertainty(userError)
+            // расчёт сумарной неопределённости
+            let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)
+            //Расчёт процентного вклада
+            let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
+            let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
+            let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult) 
+            let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+            //Расчёт погрешности в точке
+            let error = calibrationMiddleValue - param.dot
+            // Расчёт допускаемого значения 
+            let permissibleValue = findPermissibleValue(param.dot, 15)
+            //Расчёт расширенной неопределённости
+            let coefficient = 2
+            let expandedUncertainty = coefficient * uncertaintyResult
+            
+            let newCalibrationField : CalculationEsoType = {
+                    reportId: param.reportId,
+                    calculationId: param.calculationId,
+                    calibrationDot: param.dot,
+                    testVoltage: '500',
+                    dataForCalibration: dataForCalibration,
+                    calibrationMiddleValue: calibrationMiddleValue,
+                    satadardError: satadardError,
+                    userError: userError,
+                    uncertaintyMiddle: uncertaintyMiddle,
+                    uncertaintyStnadardError: uncertaintyStnadardError,
+                    uncertaintyUserError: uncertaintyUserError,
+                    uncertaintyResult: uncertaintyResult,
+                    uncertaintyMiddlePercent: uncertaintyMiddlePercent,
+                    uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
+                    uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
+                    uncertaintyResultPercent: uncertaintyResultPercent,
+                    error: error,
+                    permissibleValue: permissibleValue,
+                    expandedUncertainty: expandedUncertainty,
+                    calibrationValue: 'MOм',
+            }
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
 export const updateReportTitleTC = createAsyncThunk(
     'esoReport/updateReportTitle',
+    async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+export const updateStandardsDateTC = createAsyncThunk(
+    'esoReport/updateStandardsDate',
     async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
         try {
             return { reportId: param.reportId, key: param.key, parameter: param.parameter }
@@ -152,24 +241,26 @@ export const addReportEsoTC = createAsyncThunk(
                 ],
                 calculation: [
                     {
+                        calculationId: '2',
                         reportId: id,
                         calibrationDot: 1,
                         testVoltage: '500 B',
-                        dataForCalibration: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                        dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
                         calibrationMiddleValue: 0,
-                        sanadardError: 0,
+                        satadardError: 0,
                         userError: 0,
                         uncertaintyMiddle: 0,
-                        uncertaintySanadardError: 0,
+                        uncertaintyStnadardError: 0,
                         uncertaintyUserError: 0,
                         uncertaintyResult: 0,
                         uncertaintyMiddlePercent: 0,
-                        uncertaintySanadardErrorPercent: 0,
+                        uncertaintyStanadardErrorPercent: 0,
                         uncertaintyUserErrorPercent: 0,
                         uncertaintyResultPercent: 0,
                         error: 0,
                         permissibleValue: 0,
                         expandedUncertainty: 0,
+                        calibrationValue: 'MOм'
                     }
                 ],
                 stigma: 'BY00045',
@@ -223,24 +314,26 @@ const initialState: ReportEsoType[] = [
         ],
         calculation: [
             {
+                calculationId: '1',
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
                 calibrationDot: 1,
                 testVoltage: '500 B',
-                dataForCalibration: [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+                dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
                 calibrationMiddleValue: 0,
-                sanadardError: 0,
+                satadardError: 0,
                 userError: 0,
                 uncertaintyMiddle: 0,
-                uncertaintySanadardError: 0,
+                uncertaintyStnadardError: 0,
                 uncertaintyUserError: 0,
                 uncertaintyResult: 0,
                 uncertaintyMiddlePercent: 0,
-                uncertaintySanadardErrorPercent: 0,
+                uncertaintyStanadardErrorPercent: 0,
                 uncertaintyUserErrorPercent: 0,
                 uncertaintyResultPercent: 0,
                 error: 0,
                 permissibleValue: 0,
                 expandedUncertainty: 0,
+                calibrationValue: 'MOм',
             }
         ],
         stigma: 'BY00045',
@@ -280,6 +373,33 @@ const slice = createSlice({
             return state
         })
         builder.addCase(updateReportTitleTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update standards date
+        builder.addCase(updateStandardsDateTC.fulfilled, (state, action) => {      
+            state.map((el) =>el.reportId === action.payload?.reportId? {...el,standard: el.standard.map((a) => {
+                if (action.payload?.key !== undefined) {
+                    let key = action.payload?.key as keyof StandardType;
+                    a[key] = action.payload?.parameter;
+                }
+                return a}),
+            } : el); 
+                 
+            return state
+        })
+        builder.addCase(updateStandardsDateTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Add new calibration field
+        builder.addCase(addNewCalibrationFieldTC.fulfilled, (state, action) => {      
+           let obj = state.find(el => el.reportId === action.payload?.reportId)
+
+           if (obj?.calculation && action.payload?.newCalibrationField) {
+            obj.calculation.push(action.payload.newCalibrationField);
+            }   
+            return state
+        })
+        builder.addCase(addNewCalibrationFieldTC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

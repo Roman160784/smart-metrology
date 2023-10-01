@@ -1,0 +1,36 @@
+.arrayTable {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+
+}
+
+.calculationTable {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    font-size: 10.3px;
+    padding-bottom: 10px;
+    line-height: 16px;
+    height: 150px;
+}
+
+
+.calculationResultTable {
+    margin-top: 10px;
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+.res {
+    padding-top: 20px;
+    padding-left: 30px;
+}

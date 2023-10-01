@@ -1,15 +1,17 @@
 import React from 'react';
 import { ReportEsoType } from '../../Redux/EsoReducer';
+import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
 import { StandardsTableHeader } from '../Common/StandardsTableHeader/StandardsTableHeader';
 import st from './ReportSecondPage.module.css'
 
 
 type ReportSecondPagePropsType = {
     report : ReportEsoType
+    changeStandardDate: (reportId: string, key: string, title: string) => void
 }
 
 
-export const ReportSecondPage = ({report, ...props}: ReportSecondPagePropsType) => {
+export const ReportSecondPage = ({report, changeStandardDate, ...props}: ReportSecondPagePropsType) => {
 
     return (
         <div>
@@ -42,8 +44,8 @@ export const ReportSecondPage = ({report, ...props}: ReportSecondPagePropsType) 
                                         <td >
                                             {el.value}
                                         </td>
-                                        <td >
-                                            {el.calibrationDate}
+                                        <td ><EditableSpan title={el.calibrationDate} 
+                                        changeTitle={(title) => {changeStandardDate(report.reportId, 'calibrationDate', title)}}/>
                                         </td>
                                         </tr>
                                     )
