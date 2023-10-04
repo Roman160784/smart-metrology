@@ -1,6 +1,7 @@
 import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { AllReports } from '../Common/AllReports/AllReports';
+import { Certificate } from '../Common/Cectificate/Certificate';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
 import { ReportEso } from '../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
@@ -35,6 +36,7 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.mrpAll} element={<AllReports />} />
                         <Route path={pathEmirEnum.ifnAll} element={<AllReports />} />
                         <Route path={pathEmirEnum.reportEso} element={<ReportEso />} />
+                        <Route path={pathEmirEnum.certificate} element={<Certificate />} />
                     </Routes>
                 </div>
 

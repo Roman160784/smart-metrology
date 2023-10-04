@@ -7,7 +7,6 @@
 }
 
 .page {
-
     width: 535px;
     height: 840px;
     border: 1px solid black;
@@ -61,11 +60,18 @@
     font-size: 14px;
 }
 
-.delete{
+.printer{
     padding-top: 10px;
     padding-left: 46%;
 }
 
-.delete :hover {
-    color: red
+.printer :hover {
+    color: green
+}
+
+.certificate{
+    margin-left: 30px;
+    border: 2px solid black;
+    padding: 3px;
+    border-radius: 3px;
 }

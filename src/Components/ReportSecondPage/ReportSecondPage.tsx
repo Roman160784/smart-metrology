@@ -8,17 +8,18 @@ import st from './ReportSecondPage.module.css'
 type ReportSecondPagePropsType = {
     report : ReportEsoType
     changeStandardDate: (reportId: string, key: string, title: string) => void
+    lastPage: number
 }
 
 
-export const ReportSecondPage = ({report, changeStandardDate, ...props}: ReportSecondPagePropsType) => {
+export const ReportSecondPage = ({report, changeStandardDate, lastPage, ...props}: ReportSecondPagePropsType) => {
 
     return (
         <div>
             <div className={st.header}>
                 <span className={st.headerTitle}>Протокол  {report.reportNumber}</span>
                 <span className={st.headerTitle}>от {report.calibrationDate}</span>
-                <span className={st.headerTitle}>страница 2 страниц 5</span>
+                <span className={st.headerTitle}>страница 2 страниц {lastPage}</span>
             </div>
             <div className={st.standards}>
                 Эталоны, применяемые при калибровке:

@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
+import { RootState } from "./store";
 import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDot } from "./utils/utils";
 
 export type CalculationEsoType = {
@@ -85,11 +86,68 @@ let mathModelData = [
 const sectorEmirId = v1()
 export const typeEsoId = v1()
 
+export const updateCalculationDataTC = createAsyncThunk(
+    'esoReport/updateCalculationData',
+    async (param: { reportId: string, calculationId: string, index: number, testVoltage: string, dot: number },
+        { dispatch, getState, rejectWithValue }) => {
+        try {
+            let state = getState() as RootState
+            let report = state.reportEso.find(r => r.reportId === param.reportId)
+            let newCalculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let newDataForCalculation = newCalculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el)
+            let calibrationMiddleValue = findMiddleValueFromArray(newDataForCalculation!)
+            let satadardError = findStandardErrorForEso(param.dot)
+            let userError = findUserErrorInDot(param.dot)
+            let uncertaintyMiddle = findSKO(newDataForCalculation!)
+            let uncertaintyStnadardError = findUncertainty(satadardError)
+            let uncertaintyUserError = findUncertainty(userError)
+            let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)
+            let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
+            let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
+            let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
+            let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+            let error = calibrationMiddleValue - param.dot
+            let permissibleValue = findPermissibleValue(param.dot, 15)
+            let coefficient = 2
+            let expandedUncertainty = coefficient * uncertaintyResult
 
+            let newCalibrationField: CalculationEsoType = {
+                reportId: param.reportId,
+                calculationId: param.calculationId,
+                calibrationDot: param.dot,
+                testVoltage: param.testVoltage,
+                dataForCalibration: newDataForCalculation!,
+                calibrationMiddleValue: calibrationMiddleValue,
+                satadardError: satadardError,
+                userError: userError,
+                uncertaintyMiddle: uncertaintyMiddle,
+                uncertaintyStnadardError: uncertaintyStnadardError,
+                uncertaintyUserError: uncertaintyUserError,
+                uncertaintyResult: uncertaintyResult,
+                uncertaintyMiddlePercent: uncertaintyMiddlePercent,
+                uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
+                uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
+                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+                error: error,
+                permissibleValue: permissibleValue,
+                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                calibrationValue: 'MOм',
+            }
+
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
 
 export const addNewCalibrationFieldTC = createAsyncThunk(
     'esoReport/addNewCalibrationField',
-    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, rejectWithValue, }) => {
         try {
 
             //Заполняем массив значениями для вычисления
@@ -114,7 +172,7 @@ export const addNewCalibrationFieldTC = createAsyncThunk(
             //Расчёт процентного вклада
             let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
             let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
-            let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult) 
+            let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
             let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
             //Расчёт погрешности в точке
             let error = calibrationMiddleValue - param.dot
@@ -123,28 +181,28 @@ export const addNewCalibrationFieldTC = createAsyncThunk(
             //Расчёт расширенной неопределённости
             let coefficient = 2
             let expandedUncertainty = coefficient * uncertaintyResult
-            
-            let newCalibrationField : CalculationEsoType = {
-                    reportId: param.reportId,
-                    calculationId: param.calculationId,
-                    calibrationDot: param.dot,
-                    testVoltage: '500',
-                    dataForCalibration: dataForCalibration,
-                    calibrationMiddleValue: calibrationMiddleValue,
-                    satadardError: satadardError,
-                    userError: userError,
-                    uncertaintyMiddle: uncertaintyMiddle,
-                    uncertaintyStnadardError: uncertaintyStnadardError,
-                    uncertaintyUserError: uncertaintyUserError,
-                    uncertaintyResult: uncertaintyResult,
-                    uncertaintyMiddlePercent: uncertaintyMiddlePercent,
-                    uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
-                    uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
-                    uncertaintyResultPercent: uncertaintyResultPercent,
-                    error: error,
-                    permissibleValue: permissibleValue,
-                    expandedUncertainty: expandedUncertainty,
-                    calibrationValue: 'MOм',
+
+            let newCalibrationField: CalculationEsoType = {
+                reportId: param.reportId,
+                calculationId: param.calculationId,
+                calibrationDot: param.dot,
+                testVoltage: '500 В',
+                dataForCalibration: dataForCalibration,
+                calibrationMiddleValue: calibrationMiddleValue,
+                satadardError: satadardError,
+                userError: userError,
+                uncertaintyMiddle: uncertaintyMiddle,
+                uncertaintyStnadardError: uncertaintyStnadardError,
+                uncertaintyUserError: uncertaintyUserError,
+                uncertaintyResult: uncertaintyResult,
+                uncertaintyMiddlePercent: uncertaintyMiddlePercent,
+                uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
+                uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
+                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+                error: error,
+                permissibleValue: permissibleValue,
+                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                calibrationValue: 'MOм',
             }
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
         }
@@ -156,6 +214,38 @@ export const addNewCalibrationFieldTC = createAsyncThunk(
         }
     }
 )
+
+export const updateTestVolageCalculationFieldTC = createAsyncThunk(
+    'esoReport/updateTestVolageCalculationField',
+    async (param: { reportId: string, calculationId: string, testVoltage: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calculationId: param.calculationId, testVoltage: param.testVoltage }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+
+export const removeCalculationFieldTC = createAsyncThunk(
+    'esoReport/removeCalculationField',
+    async (param: { reportId: string, calculationId: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calculationId: param.calculationId }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
 export const updateReportTitleTC = createAsyncThunk(
     'esoReport/updateReportTitle',
     async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
@@ -210,7 +300,7 @@ export const addReportEsoTC = createAsyncThunk(
                 sectorEmirId: sectorEmirId,
                 typeEsoId: typeEsoId,
                 reportId: id,
-                reportNumber: '1111/23/2160к',
+                reportNumber: '0000/23/2160к',
                 calibrationObjectName: 'Мегаомметр',
                 calibrationObjectType: ' ЭС0202/2-Г',
                 serialNumber: '1111',
@@ -237,31 +327,10 @@ export const addReportEsoTC = createAsyncThunk(
                         value: '---',
                         calibrationDate: '11.2022'
                     },
-                    
+
                 ],
                 calculation: [
-                    {
-                        calculationId: '2',
-                        reportId: id,
-                        calibrationDot: 1,
-                        testVoltage: '500 B',
-                        dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
-                        calibrationMiddleValue: 0,
-                        satadardError: 0,
-                        userError: 0,
-                        uncertaintyMiddle: 0,
-                        uncertaintyStnadardError: 0,
-                        uncertaintyUserError: 0,
-                        uncertaintyResult: 0,
-                        uncertaintyMiddlePercent: 0,
-                        uncertaintyStanadardErrorPercent: 0,
-                        uncertaintyUserErrorPercent: 0,
-                        uncertaintyResultPercent: 0,
-                        error: 0,
-                        permissibleValue: 0,
-                        expandedUncertainty: 0,
-                        calibrationValue: 'MOм'
-                    }
+                   
                 ],
                 stigma: 'BY00045',
                 boss: 'Д. В. Миранович: Начальник сектора ЭМиР ',
@@ -376,30 +445,83 @@ const slice = createSlice({
             //to do something inside
         })
         //Update standards date
-        builder.addCase(updateStandardsDateTC.fulfilled, (state, action) => {      
-            state.map((el) =>el.reportId === action.payload?.reportId? {...el,standard: el.standard.map((a) => {
-                if (action.payload?.key !== undefined) {
-                    let key = action.payload?.key as keyof StandardType;
-                    a[key] = action.payload?.parameter;
-                }
-                return a}),
-            } : el); 
-                 
+        builder.addCase(updateStandardsDateTC.fulfilled, (state, action) => {
+            state.map((el) => el.reportId === action.payload?.reportId ? {
+                ...el, standard: el.standard.map((a) => {
+                    if (action.payload?.key !== undefined) {
+                        let key = action.payload?.key as keyof StandardType;
+                        a[key] = action.payload?.parameter;
+                    }
+                    return a
+                }),
+            } : el);
+
             return state
         })
         builder.addCase(updateStandardsDateTC.rejected, (state, { payload }) => {
             //to do something inside
         })
         //Add new calibration field
-        builder.addCase(addNewCalibrationFieldTC.fulfilled, (state, action) => {      
-           let obj = state.find(el => el.reportId === action.payload?.reportId)
+        builder.addCase(addNewCalibrationFieldTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
 
-           if (obj?.calculation && action.payload?.newCalibrationField) {
-            obj.calculation.push(action.payload.newCalibrationField);
-            }   
+            if (obj?.calculation && action.payload?.newCalibrationField) {
+                obj.calculation.push(action.payload.newCalibrationField);
+            }
             return state
         })
         builder.addCase(addNewCalibrationFieldTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove calibration field
+        builder.addCase(removeCalculationFieldTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+
+            if (obj?.calculation && action.payload?.calculationId) {
+                obj.calculation.forEach((el, i) => el.calculationId === action.payload?.calculationId
+                    ? obj?.calculation.splice(i, 1) : el)
+            }
+            return state
+        })
+        builder.addCase(removeCalculationFieldTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update calibration field
+        builder.addCase(updateCalculationDataTC.fulfilled, (state, action) => {
+             
+               let obj = state.find(el => el.reportId === action.payload?.reportId)
+               let  newCalculation : CalculationEsoType[]
+
+               if (obj?.calculation && action.payload?.calculationId) {
+                newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+                  ? el = action.payload.newCalibrationField
+                  : el);
+              }  
+
+              state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+              return state
+                
+        })
+        builder.addCase(updateCalculationDataTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update test voltage in field
+        builder.addCase(updateTestVolageCalculationFieldTC.fulfilled, (state, action) => {
+             
+               let obj = state.find(el => el.reportId === action.payload?.reportId)
+               let  newCalculation : CalculationEsoType[]
+
+               if (obj?.calculation && action.payload?.calculationId) {
+                newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+                  ? {...el, testVoltage : action.payload.testVoltage}
+                  : el);
+              }  
+
+              state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+              return state
+                
+        })
+        builder.addCase(updateTestVolageCalculationFieldTC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

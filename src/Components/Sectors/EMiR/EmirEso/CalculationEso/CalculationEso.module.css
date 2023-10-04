@@ -34,3 +34,12 @@
     padding-top: 20px;
     padding-left: 30px;
 }
+
+.delete{
+    padding-top: 10px;
+    padding-left: 46%;
+}
+
+.delete :hover {
+    color: red
+}

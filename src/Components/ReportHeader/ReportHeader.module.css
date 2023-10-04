@@ -3,11 +3,13 @@
 }
 
 .title{
+    padding-top: 15px;
     padding-left: 2%;
     font-size: 13px;
 }
 
 .pictures{
+    padding-top: 15px;
     padding-left: 30px;
     font-size: 12px;
 }

@@ -5,24 +5,27 @@ import { useReactToPrint } from 'react-to-print'
 import { ReportSecondPage } from '../../../../ReportSecondPage/ReportSecondPage';
 import { useSelector } from 'react-redux';
 import st from './ReportEso.module.css'
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import { selectReportEso } from '../../../../../Redux/selectors/eso-report-selectors';
-import { addNewCalibrationFieldTC, ReportEsoType, updateReportTitleTC, updateStandardsDateTC } from '../../../../../Redux/EsoReducer';
+import { addNewCalibrationFieldTC, removeCalculationFieldTC, ReportEsoType, updateCalculationDataTC, updateReportTitleTC, updateStandardsDateTC, updateTestVolageCalculationFieldTC } from '../../../../../Redux/EsoReducer';
 import { useAppDispatch } from '../../../../../Redux/store';
 import { Input } from '../../../../Common/Input/Input';
 import { v1 } from 'uuid';
 import { CalculationEso } from '../CalculationEso/CalculatioEso';
 import { Gym } from '../../../../Common/Gym/Gym';
 import { EditableSpan } from '../../../../Common/EditableSpan/EditableSpan';
-import {FiTrash} from "react-icons/fi"
+import {FiPrinter} from "react-icons/fi"
 
 
 
 export const ReportEso = () => {
 
   const componentRef = useRef()
+  const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [value, setValue] = useState<string>('')
+
+  let lastPage:number = 3
 
   const params = useParams<'id'>();
   let reportId = params.id
@@ -33,6 +36,7 @@ export const ReportEso = () => {
 
   let element = reportsEso.find(el => el.reportId === reportId)
 
+  
 
   if (element) {
     report = element
@@ -54,6 +58,18 @@ export const ReportEso = () => {
     dispatch(updateStandardsDateTC({ reportId: reportId, key: key, parameter: title }))
   }
 
+  const removeCalculationField = (reportId: string, id: string) => {
+    dispatch(removeCalculationFieldTC({reportId: reportId, calculationId: id}))
+  }
+
+  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number) => {
+    dispatch(updateCalculationDataTC({reportId: reportId, calculationId: calculationId, index: index, testVoltage: testVoltage, dot: dot}))
+  }
+
+  const updateTestVoltageHandler = (reportId: string, calculationId: string, testVoltage: string) => {
+    dispatch(updateTestVolageCalculationFieldTC({reportId: reportId, calculationId: calculationId, testVoltage: testVoltage}))
+  }
+
   const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     setValue(e.currentTarget.value)
   }
@@ -65,34 +81,34 @@ export const ReportEso = () => {
     setValue('')
   }
 
+  const navigateToCertificate = (reportId: string) => {
+    navigate(`/certificate/${reportId}`)
+  }
 
   return (
     //  @ts-ignore 
-    <div className={st.container} onDoubleClick={pdfHandler} ref={componentRef} >
-
+    <div className={st.container}  ref={componentRef} >
       <div className={st.page}>
         <ReportHeader />
         <ReportFirstPage report={report!} changeReportTitle={changeReportTitleHandler} />
       </div>
       <div className={st.page}>
-        <ReportSecondPage report={report!} changeStandardDate={changeStandardDateHandler} />
-        
+        <ReportSecondPage lastPage={lastPage} report={report!} changeStandardDate={changeStandardDateHandler} />
       </div>
       {
         report!.calculation.map((el, i) => {
+          lastPage++
           return (
             <div key={i} className={st.page}>
                <div className={st.header}>
                 <span className={st.headerTitle}>Протокол  {report.reportNumber}</span>
                 <span className={st.headerTitle}>от {report.calibrationDate}</span>
-                <span className={st.headerTitle}>страница {i+3} страниц 5</span>
+                <span className={st.headerTitle}>страница {i+3} страниц {lastPage} </span>
             </div>
-              <CalculationEso calculation={el}  />
-              <div className={st.delete}>
-              <FiTrash/>
-              </div>
-              
-              
+              <CalculationEso calculation={el}
+              updateDataForCalculation={updateDataForCalculation}
+              removeCalculationField={removeCalculationField}
+               updateTestVoltage={updateTestVoltageHandler}  />
             </div>
           )
         })
@@ -101,7 +117,7 @@ export const ReportEso = () => {
       <div className={st.header}>
                 <span className={st.headerTitle}>Протокол  {report!.reportNumber}</span>
                 <span className={st.headerTitle}>от {report!.calibrationDate}</span>
-                <span className={st.headerTitle}>страница {5} страниц 5</span>
+                <span className={st.headerTitle}>страница {lastPage} страниц {lastPage}</span>
             </div>
             <div className={st.inputBlock}><Input value={value} onChange={inputHandler} onBlur={()=>{onblurHandler(report.reportId)}} />
           <span className={st.spanInput}>Добавьте точку калибровки</span></div>
@@ -130,10 +146,11 @@ export const ReportEso = () => {
         <EditableSpan title={report!.boss} changeTitle={(title) => {changeReportTitleHandler( report.reportId, 'boss', title)}}/>
         </div>
       </div>
+      <div className={st.printer}>
+      <FiPrinter onClick={pdfHandler}/>
+      <span onClick={() => {navigateToCertificate(report.reportId)}} className={st.certificate}>{'Cоздать свидетельство'}</span>
       </div>
-
-      
-
+      </div>
     </div>
   )
 }

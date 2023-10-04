@@ -1,18 +1,28 @@
 import React, { ChangeEvent, useRef, useState } from 'react';
 import { CalculationEsoType } from '../../../../../Redux/EsoReducer';
 import st from './CalculationEso.module.css'
+import {FiTrash} from "react-icons/fi"
+import { EditableSpanForCalculation } from '../../../../Common/EditableSpanForCalculation/EditableSpanForCalculation';
+import { EditableSpan } from '../../../../Common/EditableSpan/EditableSpan';
 
 type CalculationEsoTropsType = {
     calculation: CalculationEsoType
+    removeCalculationField: (reportId: string, id: string) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number) => void
+    updateTestVoltage: (reportId: string, calculationId: string,  testVoltage: string) => void
 }
 
-export const CalculationEso = ({ calculation, ...props }: CalculationEsoTropsType) => {
+export const CalculationEso = ({ calculation, removeCalculationField, updateDataForCalculation,
+    updateTestVoltage, ...props }: CalculationEsoTropsType) => {
     return (
         <>
             <table className={st.arrayTable} border={1}>
                 <tbody>
                     <tr>
-                        <td>{`Калибруемая отметка (${calculation.calibrationValue}) при напряжении ${calculation.testVoltage}`}</td>
+                        <td>{`Калибруемая отметка (${calculation.calibrationValue}) при напряжении `} 
+                        
+                         <EditableSpan title={calculation.testVoltage} changeTitle={(title) => 
+                            {updateTestVoltage(calculation.reportId, calculation.calculationId, title)}}/> </td>
                         <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
                         <td>{`Измеренное значени (${calculation.calibrationValue})`}</td>
 
@@ -26,7 +36,8 @@ export const CalculationEso = ({ calculation, ...props }: CalculationEsoTropsTyp
                         calculation.dataForCalibration.map((el, i) => {
                             return (
                                 <tr key={i}>
-                                    <td>{el}</td>
+                                    <td><EditableSpanForCalculation title={el.toString()} 
+         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title)}}/></td>
                                 </tr>
                             )
                         })
@@ -132,6 +143,9 @@ export const CalculationEso = ({ calculation, ...props }: CalculationEsoTropsTyp
                         </tr>
                     </tbody>
                 </table>
+                <div className={st.delete}>
+              <FiTrash onClick={() => {removeCalculationField(calculation.reportId, calculation.calculationId)}}/>
+              </div>
             </div>
         </>
     )
