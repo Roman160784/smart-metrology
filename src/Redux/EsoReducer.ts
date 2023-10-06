@@ -37,6 +37,7 @@ export type ResultEsoType = {
 }
 
 type StandardType = {
+    id: string
     reportId: string
     standardName: string
     standardType: string
@@ -44,6 +45,8 @@ type StandardType = {
     value: string
     calibrationDate: string
 }
+
+
 
 export type ReportEsoType = {
     sectorEmirId: string
@@ -263,9 +266,9 @@ export const updateReportTitleTC = createAsyncThunk(
 
 export const updateStandardsDateTC = createAsyncThunk(
     'esoReport/updateStandardsDate',
-    async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
+    async (param: { reportId: string, key: string, parameter: string, id: string }, { dispatch, rejectWithValue }) => {
         try {
-            return { reportId: param.reportId, key: param.key, parameter: param.parameter }
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter, id: param.id }
         }
         catch (e: any) {
 
@@ -321,14 +324,29 @@ export const addReportEsoTC = createAsyncThunk(
                 standard: [
                     {
                         reportId: id,
+                        id: v1(),
                         standardName: 'Мера-имитатор',
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
                         calibrationDate: '11.2022'
                     },
-
+                    {reportId: id,
+                        id: v1(),
+                        standardName: 'Прибор комбинированный цифровой',
+                        standardType: 'Testo 511',
+                        standardNumber: '39113412/607',
+                        value: '---',
+                        calibrationDate: '11.2022'},
+                    {reportId: id,
+                        id: v1(),
+                        standardName: 'Прибор комбинированный цифровой',
+                        standardType: 'Testo 605-H1',
+                        standardNumber: '41110955/406',
+                        value: '---',
+                        calibrationDate: '01.2023'},
                 ],
+                
                 calculation: [
                    
                 ],
@@ -374,13 +392,33 @@ const initialState: ReportEsoType[] = [
         standard: [
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
+                id: '3',
                 standardName: 'Мера-имитатор',
                 standardType: 'Р40116',
                 standardNumber: '090',
                 value: '---',
                 calibrationDate: '11.2022'
+            }, 
+            {
+                reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
+                id: '4',
+                standardName: 'Прибор комбинированный цифровой',
+                standardType: 'Testo 511',
+                standardNumber: '39113412/607',
+                value: '---',
+                calibrationDate: '11.2022'
+            },
+            {
+                reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
+                id: '5',
+                standardName: 'Прибор комбинированный цифровой',
+                standardType: 'Testo 605-H1',
+                standardNumber: '41110955/406',
+                value: '---',
+                calibrationDate: '01.2023'
             },
         ],
+        
         calculation: [
             {
                 calculationId: '1',
@@ -446,15 +484,18 @@ const slice = createSlice({
         })
         //Update standards date
         builder.addCase(updateStandardsDateTC.fulfilled, (state, action) => {
-            state.map((el) => el.reportId === action.payload?.reportId ? {
-                ...el, standard: el.standard.map((a) => {
-                    if (action.payload?.key !== undefined) {
-                        let key = action.payload?.key as keyof StandardType;
-                        a[key] = action.payload?.parameter;
-                    }
-                    return a
-                }),
-            } : el);
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let newObj = obj?.standard.map(el => el.id === action.payload?.id ? {...el, [action.payload.key] : action.payload.parameter} : el)
+            state = state.map((el) => {
+                if (el.reportId === action.payload?.reportId) {
+                  return {
+                    ...el,
+                    standard: newObj || el.standard
+                  };
+                }
+                return el;
+              });
+           
 
             return state
         })

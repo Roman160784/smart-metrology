@@ -7,7 +7,7 @@ import st from './ReportSecondPage.module.css'
 
 type ReportSecondPagePropsType = {
     report : ReportEsoType
-    changeStandardDate: (reportId: string, key: string, title: string) => void
+    changeStandardDate: (reportId: string, key: string, title: string, id: string) => void
     lastPage: number
 }
 
@@ -32,7 +32,7 @@ export const ReportSecondPage = ({report, changeStandardDate, lastPage, ...props
                             {
                                 report.standard.map((el, i) => {
                                     return (
-                                        <tr key={report.reportId}>
+                                        <tr key={i}>
                                         <td >
                                             {el.standardName}
                                         </td>
@@ -46,10 +46,11 @@ export const ReportSecondPage = ({report, changeStandardDate, lastPage, ...props
                                             {el.value}
                                         </td>
                                         <td ><EditableSpan title={el.calibrationDate} 
-                                        changeTitle={(title) => {changeStandardDate(report.reportId, 'calibrationDate', title)}}/>
+                                        changeTitle={(title) => {changeStandardDate(report.reportId, 'calibrationDate', title, el.id)}}/>
                                         </td>
                                         </tr>
                                     )
+                                    
                                 })
                             }
                           

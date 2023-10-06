@@ -54,8 +54,8 @@ export const ReportEso = () => {
     dispatch(updateReportTitleTC({ reportId: id, key: key, parameter: parameter }))
   }
 
-  const changeStandardDateHandler = (reportId: string, key: string, title: string) => {
-    dispatch(updateStandardsDateTC({ reportId: reportId, key: key, parameter: title }))
+  const changeStandardDateHandler = (reportId: string, key: string, title: string, id: string) => {
+    dispatch(updateStandardsDateTC({ reportId: reportId, key: key, parameter: title, id: id}))
   }
 
   const removeCalculationField = (reportId: string, id: string) => {
