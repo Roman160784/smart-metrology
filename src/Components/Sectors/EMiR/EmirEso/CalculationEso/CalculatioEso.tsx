@@ -4,6 +4,7 @@ import st from './CalculationEso.module.css'
 import {FiTrash} from "react-icons/fi"
 import { EditableSpanForCalculation } from '../../../../Common/EditableSpanForCalculation/EditableSpanForCalculation';
 import { EditableSpan } from '../../../../Common/EditableSpan/EditableSpan';
+import { ResultTableEsoHeader } from '../../../../Common/ResultTableEsoHeader/ResultTableEsoHeader';
 
 type CalculationEsoTropsType = {
     calculation: CalculationEsoType
@@ -126,12 +127,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
                 <table className={st.calculationResultTable} border={1}>
                     <tbody>
                         <tr>
-                            <td className={''}>Калибруемая точка</td>
-                            <td className={''}>Испытательное напряжение</td>
-                            <td className={''}>Полученное значение</td>
-                            <td className={''}>Абсолютная погрешность</td>
-                            <td className={''}> Предел основной абсолютной погрешности</td>
-                            <td className={''}>Расширенная неопределенность</td>
+                           <ResultTableEsoHeader/>
                         </tr>
                         <tr>
                             <td className={''}>{`${calculation.calibrationDot} ${calculation.calibrationValue}`}</td>
