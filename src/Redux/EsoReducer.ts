@@ -86,7 +86,7 @@ let mathModelData = [
     'δind – поправка, обусловленная разрешающей способность, Ом',
 ]
 
-const sectorEmirId = v1()
+export const sectorEmirId = '11111'
 export const typeEsoId = v1()
 
 export const updateCalculationDataTC = createAsyncThunk(
