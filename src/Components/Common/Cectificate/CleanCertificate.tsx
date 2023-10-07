@@ -6,8 +6,13 @@ import iso from '../../../Pictures/iso.png'
 import { StandardsTableHeader } from '../StandardsTableHeader/StandardsTableHeader';
 import { ResultTableEsoHeader } from '../ResultTableEsoHeader/ResultTableEsoHeader';
 import { Gym } from '../Gym/Gym';
+import { ReportEsoType } from '../../../Redux/EsoReducer';
 
-export const CleanCertificate = () => {
+type CleanCetrificatePropsType = {
+    report: ReportEsoType
+}
+
+export const CleanCertificate = ({report, ...props} : CleanCetrificatePropsType) => {
 
     return(
         <>
@@ -47,34 +52,34 @@ export const CleanCertificate = () => {
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Номер свидетельства</span>
-                    <span className={st.certificateNumber}>BY0004972</span>
+                    <span className={st.certificateNumber}>{report.stigma}</span>
                     <span className={st.certificateTitleB}>Дата калибровки</span>
-                    <span className={st.certificateNumber}>11.11.2023</span>
+                    <span className={st.certificateNumber}>{report.calibrationDate}</span>
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Объект калибровки</span>
-                    <span className={st.certificateNumber}>Измеритель сопротивленияfd d df dfgfdbhdh заземдения Ис20/1 </span>
+                    <span className={st.certificateNumber}>{report.calibrationObjectName} {report.calibrationObjectType}</span>
                     <div>
                         <span className={st.serialNumber}>зав. №</span>
-                        <span className={st.certificateNumber}>11111111</span>
+                        <span className={st.certificateNumber}>{report.serialNumber}</span>
                     </div>
                 </div>
                 <div className={st.si}>{`(наименование  средства измерения/идентификация) `}</div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Владелец средства измерения</span>
-                    <span className={st.certificateNumber}>РПППРРРРРРРРр РОПШдсиывды рдиывдмивырдимывдр мирвыимрдвыимрдыв имывдми</span>
+                    <span className={st.certificateNumber}>{report.customer}</span>
                     <div className={st.adres}>
-                        <span className={st.adres}>адрес адрес адрес адрес</span>
+                        <span className={st.adres}>{report.adresCustumer}</span>
                     </div>
                 </div>
                 <div className={st.si}>{`(информация о владельце средства измерения, адрес) `}</div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Калибровочное клеймо-наклейка</span>
-                    <span className={st.certificateNumber}>BY1111111</span>
+                    <span className={st.certificateNumber}>{report.stigma}</span>
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Метод калибровки</span>
-                    <span className={st.certificateNumber}>МК.ГМ 1580 - 2013 Метод прямых измерений</span>
+                    <span className={st.certificateNumber}>{report.method}</span>
                 </div>
                 <div className={st.si}>{`(наименование метода/идентификация) `}</div>
                 
@@ -91,18 +96,18 @@ export const CleanCertificate = () => {
                 </div>
                 <div className={st.bossBlock}>
                 <span className={st.certificateTitleB}>Подпись</span>
-                    <span className={st.boss}>Д. В. Миранович - начальник сектора ЭМиР</span>
+                    <span className={st.boss}>{report.boss}</span>
                 </div>
                 <div className={st.si}>{`(инициалы, фамилия, должность служащего)  `}</div>
                 <div className={st.dateBlock}>
                     <span className={st.dateTitle}>Дата выдачи</span>
-                    <span className={st.certificateNumber}>11.11.2023</span>
+                    <span className={st.certificateNumber}>{report.calibrationDate}</span>
                 </div>
             </div>
             <div className={st.page}>
                 <div className={st.seconPageHeaderCetrificate}>
                 <span className={st.certificateTitleB}>Свидетельство о калибровке</span>
-                    <span className={st.certificateNumber}>BY0004972</span>
+                    <span className={st.certificateNumber}>{report.stigma}</span>
                     <span className={st.pageNumber}>Страница 2 из 2</span>
                 </div>
                 <div className={st.calibration}>
@@ -113,19 +118,26 @@ export const CleanCertificate = () => {
                 <table border={1} >
                     <tbody>
                     <StandardsTableHeader />
-                    <tr>
-                    <td> Наименование </td>
-                    <td> Тип</td>
-                    <td> Зав. №</td>
-                    <td> Значение</td>
-                    <td>Дата метрологической оценки</td>
-                </tr>
+                    {
+                        report.standard.map((el, i)=> {
+                            return(
+                                <tr key={i}>
+                                <td> {el.standardName} </td>
+                                <td> {el.standardType}</td>
+                                <td> {el.standardNumber}</td>
+                                <td> {el.value}</td>
+                                <td>{el.calibrationDate}</td>
+                            </tr>
+                            )
+                        })
+                    }
+                   
                     </tbody>
                 </table>
                 </div>
                     <div className={st.aboutSrandards}>
                         <span>
-                        Обеспечивается прослеживамость до Национальных эталонов - Ома НЭ РБ 29-16
+                        {report.traceability}
                         </span>
                     </div>
                 <div className={st.evidance}>
@@ -133,10 +145,11 @@ export const CleanCertificate = () => {
                 </div>
                 <div className={st.weatherBlock}>
                     <span className={st.weather}>Условия калибровки: </span>
-                    <span className={st.weather}>Температура воздуха: {'21.1'} ºС;</span>
-                    <span className={st.weather}>Атмосферное давление: {'100.1'} кПа;</span>
-                    <span className={st.weather}>Напряжение питающей сети: {'230,1'} В;</span>
-                    <span className={st.weather}>Частота питающей сети: {'50,0'} Гц;</span>
+                    <span className={st.weather}>Температура воздуха: {report.temperature} ºС;</span>
+                    <span className={st.weather}>Относительная влажность воздуха: {report.relativeHumidity}%;</span>
+                    <span className={st.weather}>Атмосферное давление: {report.pressure} кПа;</span>
+                    <span className={st.weather}>Напряжение питающей сети: {report.supplyVoltage} В;</span>
+                    <span className={st.weather}>Частота питающей сети: {report.frequency} Гц;</span>
                     
                 </div>
                 <div className={st.weatherDown}>
@@ -152,60 +165,20 @@ export const CleanCertificate = () => {
                             <tr>
                                 <ResultTableEsoHeader/>
                             </tr>
-                            <tr>
-                                <td>afd</td>
+                        {
+                            report.calculation.map((el, i) => {
+                                return(
+                            <tr key={i}>
+                                <td className={''}>{`${el.calibrationDot} ${el.calibrationValue}`}</td>
+                            <td className={''}>{el.testVoltage}</td>
+                            <td className={''}>{`${el.calibrationMiddleValue}  ${el.calibrationValue}`}</td>
+                            <td className={''}>{`${el.error}  ${el.calibrationValue}`}</td>
+                            <td className={''}> {` ± ${el.permissibleValue}  ${el.calibrationValue}`}</td>
+                            <td className={''}>{`${el.expandedUncertainty}  ${el.calibrationValue}`}</td>
                             </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
-                            <tr>
-                                <td>afd</td>
-                            </tr>
+                                )
+                            })
+                        }     
                         </tbody>
                     </table>
                 </div>
@@ -214,9 +187,9 @@ export const CleanCertificate = () => {
                 </div>
                 <div className={st.correspondence}>
                     <span> Заключение о соответствии : </span>
-                    <span> Мегаомметр </span>
-                    <span> ЭС0202/2-Г </span>
-                    <span>№ 11111</span>
+                    <span> {report.calibrationObjectName} </span>
+                    <span> {report.calibrationObjectType}</span>
+                    <span>{` № ${report.serialNumber}`}</span>
                 </div>
                 <div className={st.gym}>
                     <span>
@@ -225,15 +198,27 @@ export const CleanCertificate = () => {
                 </div>
                 <div className={st.correspondence}>
                     <span>Дополнительная информация:</span>
-                    <span> протокол калибровки № 1111/23/2160к</span>
+                    <span> протокол калибровки № {report.reportNumber}</span>
                 </div>
                 
                 <div className={st.correspondence}>
                     <span>Межкалибровочный интервал не должен превышать 12 месяцев </span>
                 </div>
-                <div className={st.correspondence}>
+                <div className={st.sign}>
                     <span>Подпись лица, выполнившего калибровку </span>
-                    <span className={st.face}>Р. С. Матвеенко, инженер  Iк </span>   
+                    <span className={st.face}>{report.engineer}</span>   
+                </div>
+                <div>
+                    <span className={st.faceDiscription}>{`(инициалы, фамилия, должность служащего)`}</span>
+                </div>
+                <div className={''}>
+                    <div className={st.adressLastPage}> {`ул.Лепешинского,1, 246015, г.Гомель,  +375 232 26-33-03, +375 232 26-33-25 факс,`}</div>
+                    <div className={st.adressLastPage}>mail@gomelcsms.by, www.gomelcsms.by</div>
+                    <div className={st.adressLastPage}>{`(адрес лаборатории, телефон, факс, эл. почта, web-сайт)`}</div>
+                </div>
+                <div className={st.sign}>
+                <span>Место проведения калибровки </span>
+                    <span className={st.face}>{`государственное предприятие "Гомельский ЦСМС", 246015, г. Гомель, ул. Лепешинского, 1`} </span>  
                 </div>
             </div>
         </>
