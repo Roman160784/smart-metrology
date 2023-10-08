@@ -42,7 +42,6 @@ export const ReportEso = () => {
     report = element
   } else {
     console.log('err');
-
   }
 
   const pdfHandler = useReactToPrint({

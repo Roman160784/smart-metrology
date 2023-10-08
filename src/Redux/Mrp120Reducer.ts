@@ -19,6 +19,113 @@ const mathModelDataMrp =[
 ]
 
 
+
+export const addNewReportMrp120TC = createAsyncThunk(
+    'mrp120Report/addReport',
+    async (param: {reportId: string}, { dispatch, rejectWithValue }) => {
+        try {
+            let newReportMrp120 = {
+                sectorEmirId: sectorEmirId,
+                typeMrp120Id: mrp120Id,
+                reportId: param.reportId,
+                reportNumber: '0000/23/2160к',
+                calibrationObjectName: 'Измеритель напряжения прикосновения и параметров защитного отключения',
+                calibrationObjectType: '  MRP-120',
+                serialNumber: '1111',
+                application: 'Заявка на калибровку ',
+                customer: 'РУП "Гомельэнерго',
+                adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
+                calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
+                calibrationDate: '11.11.2023',
+                method: 'МК.ГМ 2114-2018 , Метод прямых измерений',
+                temperature: '21,0',
+                relativeHumidity: '31,8',
+                pressure: '100,1',
+                supplyVoltage: '228',
+                frequency: '50',
+                traceability: traceabilityMrp,
+                mathModel: mathModelMrp,
+                mathModelData: mathModelDataMrp,
+                standard: [
+                    {
+                        reportId: param.reportId,
+                        id: '3',
+                        standardName: 'Вольтметр',
+                        standardType: 'ЦВ8500/3',
+                        standardNumber: '037',
+                        value: '---',
+                        calibrationDate: '10.2023'
+                    }, 
+                    {
+                        reportId: param.reportId,
+                        id: '6',
+                        standardName: 'Амперметр',
+                        standardType: 'ЦА8500/1',
+                        standardNumber: '043',
+                        value: '---',
+                        calibrationDate: '10.2023'
+                    }, 
+                    {
+                        reportId: param.reportId,
+                        id: '7',
+                        standardName: 'Калибратор времени отключения УЗО',
+                        standardType: 'ERS-2',
+                        standardNumber: '69',
+                        value: '---',
+                        calibrationDate: '07.2023'
+                    }, 
+                    {
+                        reportId: param.reportId,
+                        id: '4',
+                        standardName: 'Прибор комбинированный цифровой',
+                        standardType: 'Testo 511',
+                        standardNumber: '39113412/607',
+                        value: '---',
+                        calibrationDate: '11.2022'
+                    },
+                    {
+                        reportId: param.reportId,
+                        id: '5',
+                        standardName: 'Прибор комбинированный цифровой',
+                        standardType: 'Testo 605-H1',
+                        standardNumber: '41110955/406',
+                        value: '---',
+                        calibrationDate: '01.2023'
+                    },
+                ],
+                
+                calculation: [
+                   
+                ],
+                stigma: 'BY00045',
+                boss: 'Д. В. Миранович: Начальник сектора ЭМиР ',
+                engineer: " Р. С. Матвеенко: Инженер по метрологии I к",
+            }
+
+            return newReportMrp120
+        } catch (e: any) {
+            //return rejectedWithValue({Error: что то описать})
+        } finally {
+
+        }
+    }
+)
+
+export const removeReportMrp120TC = createAsyncThunk(
+    'mrp120Report/removeReport',
+    async (param: { reportId: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
 const initialState: ReportMrp120Type [] = [{
     sectorEmirId: sectorEmirId,
     typeMrp120Id: mrp120Id,
@@ -94,7 +201,7 @@ const initialState: ReportMrp120Type [] = [{
                 calculationId: '1',
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
                 calibrationDot: 1,
-                testVoltage: '500 B',
+                testVoltage: 'с',
                 dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
                 calibrationMiddleValue: 0,
                 satadardError: 0,
@@ -126,7 +233,20 @@ const slice = createSlice({
 
     },
     extraReducers: builder => {
-        
+        //Add new report 
+        builder.addCase(addNewReportMrp120TC.fulfilled, (state, action) => {
+                state.unshift(action.payload!)  
+        })
+        builder.addCase(addNewReportMrp120TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove report
+        builder.addCase(removeReportMrp120TC.fulfilled, (state, action) => {
+            state.forEach((el, i) => el.reportId === action.payload?.reportId ? state.splice(i, 1) : el)
+        })
+        builder.addCase(removeReportMrp120TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
     }
 })
 

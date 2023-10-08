@@ -5,6 +5,7 @@ import { Certificate } from '../Common/Cectificate/Certificate';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
 import { ReportEso } from '../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
+import { ReportMrp120 } from '../Sectors/EMiR/EmirMrp120/ReportMrp120';
 import { EmirNavReports, pathEmirEnum } from '../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { Fhi } from '../Sectors/FHI/Fhi';
 import { Gi } from '../Sectors/GI/Gi';
@@ -37,6 +38,7 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.ifnAll} element={<AllReports />} />
                         <Route path={pathEmirEnum.reportEso} element={<ReportEso />} />
                         <Route path={pathEmirEnum.certificate} element={<Certificate />} />
+                        <Route path={pathEmirEnum.reportMrp120} element={<ReportMrp120 />} />
                     </Routes>
                 </div>
 

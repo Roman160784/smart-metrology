@@ -8,7 +8,8 @@ import {FiTrash} from "react-icons/fi"
 import { Button } from '../Button/Button';
 import st from './AllReports.module.css'
 import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
-import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
+import { addNewReportMrp120TC, removeReportMrp120TC, ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
+import { v1 } from 'uuid';
 
 
 export const AllReports = () => {
@@ -36,18 +37,24 @@ export const AllReports = () => {
         if (typeSi.split('/').includes('eso')){
             dispatch(addReportEsoTC({}))
         } else if(typeSi.split('/').includes('mrp')){
-            alert('mrp')
+            dispatch(addNewReportMrp120TC({reportId: v1()}))
         }
     }
 
     const removeReportHandler = (reportId: string) => {
+        if (typeSi.split('/').includes('eso')){
         dispatch(removeReportTC({reportId: reportId}))
+        }else if(typeSi.split('/').includes('mrp')){
+            dispatch(removeReportMrp120TC({reportId: reportId}))
+        }
     }
 
     const updateReport = (reportId: string) => {
         if (typeSi.split('/').includes('eso')) {
             navigate(`/reportEso/${reportId}`)
             // navigate('/reportEso/:id')
+        }else if (typeSi.split('/').includes('mrp')) {
+            navigate(`/reportMrp120/${reportId}`)
         }
     }
 
@@ -68,9 +75,9 @@ export const AllReports = () => {
             </div>
             <div>
                 {
-                   allReports.map((el) => {
+                   allReports.map((el, i) => {
                     return(
-                        <div className={st.secondBlock} key={el.reportId}>
+                        <div className={st.secondBlock} key={i}>
                             <span onClick={() => {updateReport(el.reportId)}} className={st.secondBlockTitle}>{el.reportNumber}</span>
                             <span className={st.calibrationDate}> {el.calibrationDate}</span>
                             <span className={st.calibrationObjectType}>{el.calibrationObjectType}</span>

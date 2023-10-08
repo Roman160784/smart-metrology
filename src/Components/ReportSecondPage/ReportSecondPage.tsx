@@ -1,12 +1,13 @@
 import React from 'react';
 import { ReportEsoType } from '../../Redux/EsoReducer';
+import { ReportMrp120Type } from '../../Redux/Mrp120Reducer';
 import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
 import { StandardsTableHeader } from '../Common/StandardsTableHeader/StandardsTableHeader';
 import st from './ReportSecondPage.module.css'
 
 
 type ReportSecondPagePropsType = {
-    report : ReportEsoType
+    report : ReportEsoType | ReportMrp120Type
     changeStandardDate: (reportId: string, key: string, title: string, id: string) => void
     lastPage: number
 }

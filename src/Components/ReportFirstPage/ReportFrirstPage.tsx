@@ -1,11 +1,12 @@
 import React from 'react';
 import { ReportEsoType } from '../../Redux/EsoReducer';
+import { ReportMrp120Type } from '../../Redux/Mrp120Reducer';
 import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
 import st from './ReportFirstPage.module.css'
 
 
 type ReportFirstPageType = {
-report : ReportEsoType
+report : ReportEsoType | ReportMrp120Type
 changeReportTitle: (reportId: string, key: string, parameter: string) => void
 }
 
@@ -21,7 +22,7 @@ export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFir
         <tbody>
             <tr>
                 <td>Объект калибровки</td>
-                <td><EditableSpan title={`Мегаомметр ${report.calibrationObjectType}`}
+                <td><EditableSpan title={`${report.calibrationObjectName} ${report.calibrationObjectType}`}
                  changeTitle={(title) => {changeReportTitle( report.reportId, 'calibrationObjectType', title)}}/></td>
             </tr>
             <tr>
