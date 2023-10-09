@@ -70,7 +70,8 @@ export const ReportEso = () => {
   }
 
   const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    setValue(e.currentTarget.value)
+    let newValue = e.currentTarget.value
+    setValue(newValue)
   }
 
   const onblurHandler = (reportId: string) => {

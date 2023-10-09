@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
 import { RootState } from "./store";
-import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDot } from "./utils/utils";
+import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDotForEso } from "./utils/utils";
 
 export type CalculationEsoType = {
     reportId: string
@@ -97,10 +97,11 @@ export const updateCalculationDataTC = createAsyncThunk(
             let state = getState() as RootState
             let report = state.reportEso.find(r => r.reportId === param.reportId)
             let newCalculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let calibrationDot = newCalculation?.calibrationDot
             let newDataForCalculation = newCalculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el)
             let calibrationMiddleValue = findMiddleValueFromArray(newDataForCalculation!)
-            let satadardError = findStandardErrorForEso(param.dot)
-            let userError = findUserErrorInDot(param.dot)
+            let satadardError = findStandardErrorForEso(calibrationDot!)
+            let userError = findUserErrorInDotForEso(calibrationDot!)
             let uncertaintyMiddle = findSKO(newDataForCalculation!)
             let uncertaintyStnadardError = findUncertainty(satadardError)
             let uncertaintyUserError = findUncertainty(userError)
@@ -109,15 +110,15 @@ export const updateCalculationDataTC = createAsyncThunk(
             let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
             let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
             let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
-            let error = calibrationMiddleValue - param.dot
-            let permissibleValue = findPermissibleValue(param.dot, 15)
+            let error = calibrationMiddleValue - calibrationDot!
+            let permissibleValue = findPermissibleValue(calibrationDot!, 15)
             let coefficient = 2
             let expandedUncertainty = coefficient * uncertaintyResult
 
             let newCalibrationField: CalculationEsoType = {
                 reportId: param.reportId,
                 calculationId: param.calculationId,
-                calibrationDot: param.dot,
+                calibrationDot: calibrationDot!,
                 testVoltage: param.testVoltage,
                 dataForCalibration: newDataForCalculation!,
                 calibrationMiddleValue: calibrationMiddleValue,
@@ -163,7 +164,7 @@ export const addNewCalibrationFieldTC = createAsyncThunk(
             // Ищем погрешность эталона в точке
             let satadardError = findStandardErrorForEso(param.dot)
             // Ищем погрешность оператора
-            let userError = findUserErrorInDot(param.dot)
+            let userError = findUserErrorInDotForEso(param.dot)
             //срасчёт СКО
             let uncertaintyMiddle = findSKO(dataForCalibration)
             //Ищем неопpеделённость Эталона

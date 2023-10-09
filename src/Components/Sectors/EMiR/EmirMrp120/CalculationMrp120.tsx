@@ -1,7 +1,6 @@
 import React, { useState, ChangeEvent } from 'react';
 import { FiTrash } from 'react-icons/fi';
 import { CalculationEsoType } from '../../../../Redux/EsoReducer';
-import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
 import { EditableSpanForCalculation } from '../../../Common/EditableSpanForCalculation/EditableSpanForCalculation';
 import { ResultTableCommonHeader } from '../../../Common/ResultTableCommonHeader/ResultTableCommonHeader';
 import st from '../EmirEso/CalculationEso/CalculationEso.module.css'
@@ -9,7 +8,7 @@ import st from '../EmirEso/CalculationEso/CalculationEso.module.css'
 type CalculationMrp120PropsType = {
     calculation: CalculationEsoType
     removeCalculationField: (reportId: string, id: string) => void
-    updateDataForCalculation: (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, calibrationValue: string, dot: number) => void
     updateCalibrationValue: (reportId: string, calculationId: string, calibrationValue: string) => void
 }
 
@@ -51,7 +50,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                             return (
                                 <tr key={i}>
                                     <td><EditableSpanForCalculation title={el.toString()} 
-         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title)}}/></td>
+         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, selectedValue, +title)}}/></td>
                                 </tr>
                             )
                         })

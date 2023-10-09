@@ -1,7 +1,8 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
-import {  ReportEsoType, sectorEmirId } from "./EsoReducer";
+import {  CalculationEsoType, ReportEsoType, sectorEmirId } from "./EsoReducer";
 import { RootState } from "./store";
+import { createNewCalibrationFieldMRP120, findInterestDeposit, findMiddleValueFromArray, findPermissibleValueForMrp120, findSKO, findStandardErrorForMrp120, findTotalUncertainty, findUncertainty, findUserErrorInDotForMrp120 } from "./utils/utils";
 
 
 export const mrp120Id = '1234'
@@ -125,6 +126,105 @@ export const removeReportMrp120TC = createAsyncThunk(
         }
     }
 )
+export const removeCalculationMrp120FieldTC = createAsyncThunk(
+    'mrp120Report/removeCalculationFieldMrp120Report',
+    async (param: { reportId: string,  calculationId: string,}, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calculationId: param.calculationId}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+export const updateCalibrationValueMrp120TC = createAsyncThunk(
+    'mrp120Report/updateCalibrationValueMrp120Report',
+    async (param: { reportId: string,  calculationId: string, calibrationValue: string}, { dispatch, getState, rejectWithValue }) => {
+        try {
+            let state = getState() as RootState
+            let report = state.reportMrp120.find(r => r.reportId === param.reportId)
+            let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let dataForCalibration = calculation?.dataForCalibration 
+            let calibrationDot = calculation?.calibrationDot
+            let newCalibrationField: CalculationEsoType = 
+            createNewCalibrationFieldMRP120(dataForCalibration!, param.calibrationValue, calibrationDot!, param.reportId, param.calculationId)
+
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+export const addNewCalibrationFielMrp120dTC = createAsyncThunk(
+    'mrp120Report/addNewCalibrationFieldMrp120',
+    async (param: { reportId: string, calculationId: string, dot: number}, { dispatch, rejectWithValue }) => {
+        try {
+            let dataForCalibration: number[] = []
+            for (let index = 0; index < 10; index++) {
+                dataForCalibration.push(param.dot)
+            }
+
+            let calibrationValue = 'В'
+            let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
+            let satadardError = findStandardErrorForMrp120(param.dot, calibrationValue)
+            let userError = findUserErrorInDotForMrp120(param.dot, calibrationValue)
+            let uncertaintyMiddle = findSKO(dataForCalibration)
+            let uncertaintyStnadardError = findUncertainty(satadardError)
+            let uncertaintyUserError = findUncertainty(userError)
+            let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)
+            let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
+            let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
+            let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
+            let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+            let error = calibrationMiddleValue - param.dot
+            let permissibleValue = findPermissibleValueForMrp120(param.dot, calibrationValue)
+            let coefficient = 2
+            let expandedUncertainty = coefficient * uncertaintyResult
+
+            let newCalibrationField: CalculationEsoType = {
+                reportId: param.reportId,
+                calculationId: param.calculationId,
+                calibrationDot: param.dot,
+                testVoltage: '500 В',
+                dataForCalibration: dataForCalibration,
+                calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
+                satadardError: +satadardError.toFixed(3),
+                userError: +userError.toFixed(3),
+                uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
+                uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
+                uncertaintyUserError: +uncertaintyUserError.toFixed(3),
+                uncertaintyResult: +uncertaintyResult.toFixed(3),
+                uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
+                uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
+                uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
+                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+                error: +error.toFixed(3),
+                permissibleValue: +permissibleValue.toFixed(3),
+                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                calibrationValue: calibrationValue,
+            }
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
+        }
+
+        
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
 
 const initialState: ReportMrp120Type [] = [{
     sectorEmirId: sectorEmirId,
@@ -245,6 +345,44 @@ const slice = createSlice({
             state.forEach((el, i) => el.reportId === action.payload?.reportId ? state.splice(i, 1) : el)
         })
         builder.addCase(removeReportMrp120TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Add new calibration field
+        builder.addCase(addNewCalibrationFielMrp120dTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            if (obj?.calculation && action.payload?.newCalibrationField) {
+                obj.calculation.push(action.payload.newCalibrationField);
+            }
+        })
+        builder.addCase(addNewCalibrationFielMrp120dTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Remove calibration field
+        builder.addCase(removeCalculationMrp120FieldTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            if (obj?.calculation && action.payload?.calculationId) {
+                obj.calculation.forEach((el, i) => el.calculationId === action.payload?.calculationId
+                    ? obj?.calculation.splice(i, 1) : el)
+            } 
+        })
+        builder.addCase(removeCalculationMrp120FieldTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update  calibration value 
+        builder.addCase(updateCalibrationValueMrp120TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let  newCalculation : CalculationEsoType[]
+
+            if (obj?.calculation && action.payload?.calculationId) {
+             newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+               ? el = action.payload.newCalibrationField
+               : el);
+           }  
+
+           state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+           return state
+        })
+        builder.addCase(updateCalibrationValueMrp120TC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }
