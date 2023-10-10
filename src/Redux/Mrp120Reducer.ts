@@ -20,6 +20,34 @@ const mathModelDataMrp =[
 ]
 
 
+export const changeReportMrp120TitleTC = createAsyncThunk(
+    'mrp120Report/changeReportMrp120Title',
+    async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const changeStandardCalibrationDateTC = createAsyncThunk(
+    'mrp120Report/changeStandardCalibrationDate',
+    async (param: {reportId: string, key: string, parameter: string, id: string}, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter, id: param.id }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
 
 export const addNewReportMrp120TC = createAsyncThunk(
     'mrp120Report/addReport',
@@ -164,6 +192,30 @@ export const updateCalibrationValueMrp120TC = createAsyncThunk(
     }
 )
 
+export const updateDaraForCalculationCalibrationMrp120TC = createAsyncThunk(
+    'mrp120Report/updateDaraForCalculationCalibrationMrp120',
+    async (param: { reportId: string, calculationId: string, index: number, dot: number}, { dispatch, getState, rejectWithValue }) => {
+        try {
+            let state = getState() as RootState
+            let report = state.reportMrp120.find(r => r.reportId === param.reportId)
+            let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let dataForCalibration = calculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el) 
+            let calibrationDot = calculation?.calibrationDot
+            let calibrationValue = calculation?.calibrationValue
+            let newCalibrationField: CalculationEsoType = 
+            createNewCalibrationFieldMRP120(dataForCalibration!, calibrationValue!, calibrationDot!, param.reportId, param.calculationId)
+
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
 export const addNewCalibrationFielMrp120dTC = createAsyncThunk(
     'mrp120Report/addNewCalibrationFieldMrp120',
     async (param: { reportId: string, calculationId: string, dot: number}, { dispatch, rejectWithValue }) => {
@@ -194,7 +246,7 @@ export const addNewCalibrationFielMrp120dTC = createAsyncThunk(
                 reportId: param.reportId,
                 calculationId: param.calculationId,
                 calibrationDot: param.dot,
-                testVoltage: '500 В',
+                testVoltage: '-',
                 dataForCalibration: dataForCalibration,
                 calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
                 satadardError: +satadardError.toFixed(3),
@@ -297,28 +349,7 @@ const initialState: ReportMrp120Type [] = [{
         ],
         
         calculation: [
-            {
-                calculationId: '1',
-                reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
-                calibrationDot: 1,
-                testVoltage: 'с',
-                dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
-                calibrationMiddleValue: 0,
-                satadardError: 0,
-                userError: 0,
-                uncertaintyMiddle: 0,
-                uncertaintyStnadardError: 0,
-                uncertaintyUserError: 0,
-                uncertaintyResult: 0,
-                uncertaintyMiddlePercent: 0,
-                uncertaintyStanadardErrorPercent: 0,
-                uncertaintyUserErrorPercent: 0,
-                uncertaintyResultPercent: 0,
-                error: 0,
-                permissibleValue: 0,
-                expandedUncertainty: 0,
-                calibrationValue: 'В',
-            }
+            
         ],
         stigma: 'BY00045',
         boss: 'Д. В. Миранович: Начальник сектора ЭМиР ',
@@ -338,6 +369,34 @@ const slice = createSlice({
                 state.unshift(action.payload!)  
         })
         builder.addCase(addNewReportMrp120TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Change report title
+        builder.addCase(changeReportMrp120TitleTC.fulfilled, (state, action) => {
+            let copy = state.map(el => el.reportId === action.payload?.reportId
+                ? { ...el, [action.payload.key]: action.payload.parameter } : el)
+            state = copy
+            return state  
+        })
+        builder.addCase(changeReportMrp120TitleTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Change report data of calibration for standard title
+        builder.addCase(changeStandardCalibrationDateTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let newObj = obj?.standard.map(el => el.id === action.payload?.id ? {...el, [action.payload.key] : action.payload.parameter} : el)
+            state = state.map((el) => {
+                if (el.reportId === action.payload?.reportId) {
+                  return {
+                    ...el,
+                    standard: newObj || el.standard
+                  };
+                }
+                return el;
+              });
+            return state
+        })
+        builder.addCase(changeStandardCalibrationDateTC.rejected, (state, { payload }) => {
             //to do something inside
         })
         //Remove report
@@ -383,6 +442,23 @@ const slice = createSlice({
            return state
         })
         builder.addCase(updateCalibrationValueMrp120TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+        //Update data for calculation 
+        builder.addCase(updateDaraForCalculationCalibrationMrp120TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let  newCalculation : CalculationEsoType[]
+
+            if (obj?.calculation && action.payload?.calculationId) {
+             newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+               ? el = action.payload.newCalibrationField
+               : el);
+           }  
+
+           state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+           return state
+        })
+        builder.addCase(updateDaraForCalculationCalibrationMrp120TC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

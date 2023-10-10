@@ -7,9 +7,10 @@ import { StandardsTableHeader } from '../StandardsTableHeader/StandardsTableHead
 import { ResultTableEsoHeader } from '../ResultTableEsoHeader/ResultTableEsoHeader';
 import { Gym } from '../Gym/Gym';
 import { ReportEsoType } from '../../../Redux/EsoReducer';
+import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 
 type CleanCetrificatePropsType = {
-    report: ReportEsoType
+    report: ReportEsoType | ReportMrp120Type
 }
 
 export const CleanCertificate = ({report, ...props} : CleanCetrificatePropsType) => {

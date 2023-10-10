@@ -47,7 +47,7 @@ export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFir
             </tr>
             <tr>
                 <td>Место проведения калибровки</td>
-                <td>госурарственное предприятие "Гомельский ЦСМС"</td>
+                <td>государственное предприятие "Гомельский ЦСМС"</td>
             </tr>
             <tr>
                 <td>Дата проведения калибровки</td>

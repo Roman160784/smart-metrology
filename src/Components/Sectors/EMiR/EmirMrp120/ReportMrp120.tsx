@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
 import { useReactToPrint } from 'react-to-print';
 import { v1 } from 'uuid';
-import { addNewCalibrationFielMrp120dTC, removeCalculationMrp120FieldTC, ReportMrp120Type, updateCalibrationValueMrp120TC } from '../../../../Redux/Mrp120Reducer';
+import { addNewCalibrationFielMrp120dTC, changeReportMrp120TitleTC, changeStandardCalibrationDateTC, removeCalculationMrp120FieldTC, ReportMrp120Type, updateCalibrationValueMrp120TC, updateDaraForCalculationCalibrationMrp120TC } from '../../../../Redux/Mrp120Reducer';
 import { selectReportMrp120 } from '../../../../Redux/selectors/eso-report-selectors';
 import { useAppDispatch } from '../../../../Redux/store';
 import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
@@ -51,14 +51,14 @@ export const ReportMrp120 = () => {
     setValue('')
   }
   const changeReportTitleHandler = (id: string, key: string, parameter: string) => {
-
+    dispatch(changeReportMrp120TitleTC({reportId: id, key: key, parameter: parameter }))
   }
   const changeStandardDateHandler = (reportId: string, key: string, title: string, id: string) => {
-
+    dispatch(changeStandardCalibrationDateTC({reportId: reportId, key: key, parameter: title, id: id}))
   }
 
-  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, calibrationValue: string, dot: number) => {
-      console.log('reportId', reportId, 'calculationId', calculationId, index, 'calibrationValue', calibrationValue, dot);
+  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, dot: number) => {
+      dispatch(updateDaraForCalculationCalibrationMrp120TC({reportId: reportId, calculationId: calculationId, index: index, dot: dot}))
       
   }
   const removeCalculationField = (reportId: string, id: string) => {
@@ -114,7 +114,7 @@ export const ReportMrp120 = () => {
         <div className={st.final}>
           <span>Заключение о соответствии:</span>
           <div className={st.final}>
-            <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} ${report!.serialNumber}`}</span>
+            <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} № ${report!.serialNumber}`}</span>
           </div>
           <div className={st.final}>
             <span> в калибруемых точках соответствует обязательным метрологическим требованиям в соответствии с описанием типа при установлении соответствия применно правило принятия решения, основанное на простой приёмке в соответствии с СТБ ISO/IEC Guide 98-4-2019</span>

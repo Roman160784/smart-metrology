@@ -8,7 +8,7 @@ import st from '../EmirEso/CalculationEso/CalculationEso.module.css'
 type CalculationMrp120PropsType = {
     calculation: CalculationEsoType
     removeCalculationField: (reportId: string, id: string) => void
-    updateDataForCalculation: (reportId: string, calculationId: string, index: number, calibrationValue: string, dot: number) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, dot: number) => void
     updateCalibrationValue: (reportId: string, calculationId: string, calibrationValue: string) => void
 }
 
@@ -33,7 +33,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                                 {selectHandler( calculation.reportId, calculation.calculationId, selectedValue)}}>
                             <option value='B' selected={true}>В</option>
                             <option value='мА'>мА</option>
-                            <option value='с'>с</option>
+                            <option value='мс'>мс</option>
                             </select>
                           </td>
                         <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
@@ -50,7 +50,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                             return (
                                 <tr key={i}>
                                     <td><EditableSpanForCalculation title={el.toString()} 
-         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, selectedValue, +title)}}/></td>
+         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, +title)}}/></td>
                                 </tr>
                             )
                         })

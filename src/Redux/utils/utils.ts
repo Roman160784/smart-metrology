@@ -89,7 +89,7 @@ export const findStandardErrorForMrp120 = (dot: number, calibrationValue: string
         } else if (dot > 250 && dot <= 500) {
             standardErronInDot = 500 * standardCVCA8500Class / 100
         }
-    } else if(calibrationValue === 'с') {
+    } else if(calibrationValue === 'мс') {
         if (dot <= 190) {
             standardErronInDot = 0.002 * dot + 0.2
         }else if (dot > 190 && dot <=  900) {
@@ -102,7 +102,7 @@ export const findStandardErrorForMrp120 = (dot: number, calibrationValue: string
 //Ищем единицу младшего разряда для MRP120 
 export const findUserErrorInDotForMrp120 = (dot: number, calibrationValue: string) => {
     let userError = 0
-    if (calibrationValue === 'с' || calibrationValue === 'В' ){
+    if (calibrationValue === 'мс' || calibrationValue === 'В' ){
         userError = 0.5
     }else if (calibrationValue === 'мА') {
         if (dot <= 30) {
@@ -119,7 +119,7 @@ export const findPermissibleValueForMrp120 = (dot: number, calibrationValue: str
     let permissibleValue = 0
     if(calibrationValue === 'В') {
         permissibleValue = 0.02 * dot + 2
-    } else if (calibrationValue === 'с') {
+    } else if (calibrationValue === 'мс') {
         permissibleValue = 0.02 * dot + 1
     } else if (calibrationValue === 'мА') {
         permissibleValue = 0.05 * dot
@@ -149,7 +149,7 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
                 reportId: reportId,
                 calculationId: calculationId,
                 calibrationDot: calibrationDot,
-                testVoltage: '500 В',
+                testVoltage: '-',
                 dataForCalibration: dataForCalibration,
                 calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
                 satadardError: +satadardError.toFixed(3),
