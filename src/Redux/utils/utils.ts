@@ -1,3 +1,4 @@
+import { E6CalibrationValue, E6CalibratonTypesType } from "../E6Reducer"
 import { CalculationEsoType } from "../EsoReducer"
 
 // Ищем среднее значение из массива
@@ -169,5 +170,82 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
             }
 
             return newCalibrationField
+
+}
+
+//Расчёт погрешности эталона для вольтметра ЦВ8500/3
+
+export const findStandardErrorForVoltmetrCV8500 = (calibrationDot: number) => {
+    let standardErronInDot = 0
+    let standardCVCA8500Class = 0.1
+    if (calibrationDot <= 45) {
+        standardErronInDot = 45 * standardCVCA8500Class / 100
+    }else if (calibrationDot > 45 && calibrationDot <= 60) {
+        standardErronInDot = 60 * standardCVCA8500Class / 100
+    } else if (calibrationDot > 60 && calibrationDot <= 75) {
+        standardErronInDot = 75 * standardCVCA8500Class / 100
+    }else if (calibrationDot > 75 && calibrationDot <= 150) {
+        standardErronInDot = 150 * standardCVCA8500Class / 100
+    }else if (calibrationDot > 150 && calibrationDot <= 300) {
+        standardErronInDot = 300 * standardCVCA8500Class / 100
+    }else if (calibrationDot > 300 && calibrationDot <= 450) {
+        standardErronInDot = 450 * standardCVCA8500Class / 100
+    }else if (calibrationDot > 450 && calibrationDot <= 600) {
+        standardErronInDot = 600 * standardCVCA8500Class / 100
+    }
+    return +standardErronInDot.toFixed(3)
+}
+
+//Расчёт погрешности эталона для мера-иммитатора Р40116
+
+export const findStandardErrorForP40116 = (calibrationDot: number, calibrationValue: string) => {
+    let standardErronInDot = 0
+    if(calibrationValue === E6CalibrationValue.kom){
+        if(calibrationDot <= 100 ) {
+            standardErronInDot = calibrationDot * 0.05 / 100
+        }else if(calibrationDot > 100 && calibrationDot <= 1000) {
+            standardErronInDot = calibrationDot * 0.02 / 100
+        }
+    }else if (calibrationValue === E6CalibrationValue.mom) {
+        if(calibrationDot <= 1) {
+            standardErronInDot = calibrationDot * 0.05 / 100
+        }else if (calibrationDot > 1 && calibrationDot <= 10) {
+            standardErronInDot = calibrationDot * 0.02 / 100
+        }else if (calibrationDot > 10 && calibrationDot <= 100) {
+            standardErronInDot = calibrationDot * 0.05 / 100
+        }else if (calibrationDot > 100 && calibrationDot <= 10000) {
+            standardErronInDot = calibrationDot * 0.1 / 100
+        }
+    }else if (calibrationValue === E6CalibrationValue.gom) {
+        if(calibrationDot <= 1) {
+            standardErronInDot = calibrationDot * 0.05 / 100
+        } else if (calibrationDot > 1 && calibrationDot <= 10){
+            standardErronInDot = calibrationDot * 0.1 / 100
+        } else if (calibrationDot > 10){
+            standardErronInDot = calibrationDot * 0.2 / 100
+        }
+    }
+
+    return +standardErronInDot.toFixed(3)
+}
+
+
+//Cоздание нового объекта с расчитанными значениями для мегомметров E6
+
+export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: E6CalibratonTypesType, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string) => {
+
+    let calibrationMiddleValue = 0
+    let satadardError = 0
+    let userError = 0
+
+    if ( calibrationObjectType === "Е6-24") {
+        calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
+        if(calibrationValue === E6CalibrationValue.volts) {
+            satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
+        }else if (calibrationValue !== E6CalibrationValue.volts){
+            satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
+        }
+
+    }
 
 }
