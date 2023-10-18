@@ -5,7 +5,7 @@ import { RootState } from "./store";
 import { createNewCalibrationFieldMRP120, findInterestDeposit, findMiddleValueFromArray, findPermissibleValueForMrp120, findSKO, findStandardErrorForMrp120, findTotalUncertainty, findUncertainty, findUserErrorInDotForMrp120 } from "./utils/utils";
 
 
-export const mrp120Id = '1234'
+ const mrp120Id = '1234'
 export type ReportMrp120Type = Omit<ReportEsoType, 'typeEsoId'> & {
     typeMrp120Id: string
 }
