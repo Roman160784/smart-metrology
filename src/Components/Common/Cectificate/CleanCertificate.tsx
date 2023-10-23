@@ -8,9 +8,11 @@ import { ResultTableEsoHeader } from '../ResultTableEsoHeader/ResultTableEsoHead
 import { Gym } from '../Gym/Gym';
 import { ReportEsoType } from '../../../Redux/EsoReducer';
 import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
+import { ResultInDot } from '../ResultInDot/ResultInDot';
+import { ReportE6Type } from '../../../Redux/E6Reducer';
 
 type CleanCetrificatePropsType = {
-    report: ReportEsoType | ReportMrp120Type
+    report: ReportEsoType | ReportMrp120Type | ReportE6Type
 }
 
 export const CleanCertificate = ({report, ...props} : CleanCetrificatePropsType) => {
@@ -193,9 +195,7 @@ export const CleanCertificate = ({report, ...props} : CleanCetrificatePropsType)
                     <span>{` № ${report.serialNumber}`}</span>
                 </div>
                 <div className={st.gym}>
-                    <span>
-                   {` в калибруемых точках соответствует обязательным метрологическим требованиям в соответствии с описанием типа (при установлении соответствия применно правило принятия решения, основанное на простой приёмке в соответствии с СТБ ISO/IEC Guide 98-4-2019)`}
-                    </span>
+                <span> <ResultInDot/> </span>
                 </div>
                 <div className={st.correspondence}>
                     <span>Дополнительная информация:</span>

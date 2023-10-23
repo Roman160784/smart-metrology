@@ -15,6 +15,7 @@ import { CalculationEso } from '../CalculationEso/CalculatioEso';
 import { Gym } from '../../../../Common/Gym/Gym';
 import { EditableSpan } from '../../../../Common/EditableSpan/EditableSpan';
 import {FiPrinter} from "react-icons/fi"
+import { ResultInDot } from '../../../../Common/ResultInDot/ResultInDot';
 
 
 
@@ -130,7 +131,7 @@ export const ReportEso = () => {
           <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} ${report!.serialNumber}` }</span>
         </div>
         <div className={st.final}>
-          <span> {`в калибруемых точках соответствует обязательным метрологическим требованиям в соответствии с описанием типа (при установлении соответствия применно правило принятия решения, основанное на простой приёмке в соответствии с СТБ ISO/IEC Guide 98-4-2019)`}</span>
+        <span> <ResultInDot/> </span>
         </div>
         <div className={st.final}>
         

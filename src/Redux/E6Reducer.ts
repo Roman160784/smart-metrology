@@ -1,12 +1,15 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
+import { report } from "process"
 import { v1 } from "uuid"
-import { ReportEsoType,} from "./EsoReducer"
+import { CalculationEsoType, ReportEsoType,} from "./EsoReducer"
+import { RootState } from "./store"
+import { createNewCalibrationFieldE6 } from "./utils/utils"
 
 
 export const E6TypeId = '12345'
 
 export enum E6CalibrationValue {
-    volts = 'В',
+    volts = '~В',
     om = 'Ом',
     mom = 'МОм',
     kom = 'кОм',
@@ -25,11 +28,11 @@ const mathModelDataE6 = [
 
 const typeE6Id = v1()
 const reportId = '1188131ea2-5f79-11ee-8918-e3627ebad505'
-export type E6CalibratonTypesType = 'Е6-24' | 'Е6-24/1' | 'Е6-24/2' | 'Е6-31' | 'Е6-31/1' | 'Е6-32' 
+
 
 export type ReportE6Type = Omit<ReportEsoType, 'typeEsoId' | 'calibrationObjectType'> & {
     typeE6Id: string
-    calibrationObjectType: E6CalibratonTypesType
+    calibrationObjectType: string
 }
 
 
@@ -43,7 +46,7 @@ export const addNewReportE6TC = createAsyncThunk(
                 reportId: param.reportId,
                 reportNumber: '0000/23/2160к',
                 calibrationObjectName: 'Мегаомметр',
-                calibrationObjectType : 'Е6-31' as E6CalibratonTypesType,
+                calibrationObjectType : 'Е6-31',
                 serialNumber: '1111',
                 application: 'Заявка на калибровку № 001341 от 13.01.2023',
                 customer: 'РУП "Гомельэнерго"',
@@ -158,6 +161,158 @@ export const removeReportE6TC = createAsyncThunk(
         }
     }
 )
+export const removeCalibrationFieldE6TC = createAsyncThunk(
+    'e6Report/removeCalibrationFieldE6',
+    async (param: { reportId: string, calculationId: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calculationId: param.calculationId}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const updateDaraForCalculationCalibrationE6TC = createAsyncThunk(
+    'e6Report/updateDaraForCalculationCalibrationMrpE6',
+    async (param: { reportId: string, calculationId: string, index: number, dot: number }, { dispatch, getState, rejectWithValue }) => {
+        try {
+            let state = getState() as RootState
+            let report = state.reportE6.find(r => r.reportId === param.reportId)
+            let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let calibrationObjectType = report?.calibrationObjectType
+            let dataForCalibration = calculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el) 
+            let calibrationDot = calculation?.calibrationDot
+            let calibrationValue = calculation?.calibrationValue
+            let testVoltage = calculation?.testVoltage
+            let newCalibrationField: CalculationEsoType = 
+            createNewCalibrationFieldE6(dataForCalibration!, calibrationObjectType!,
+                 testVoltage, calibrationValue, calibrationDot!, param.reportId, param.calculationId)
+
+            return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const changeStandardCalibrationDateE6TC = createAsyncThunk(
+    'e6Report/hangeStandardCalibrationDateE6',
+    async (param: { reportId: string, key: string, parameter: string, id: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter, id: param.id }
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const changeReportE6TitleTC = createAsyncThunk(
+    'e6Report/changeReportE6Title',
+    async (param: { reportId: string, key: string, parameter: string }, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, key: param.key, parameter: param.parameter}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const updateCalibrationObjectTypeE6TC = createAsyncThunk(
+    'e6Report/updateCalibrationObjectTypeE6',
+    async (param: { reportId: string, calibrationObjectType: string}, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calibrationObjectType: param.calibrationObjectType}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const updateTestVoltageReportE6TC = createAsyncThunk(
+    'e6Report/updateTestVoltageReportE6',
+    async (param: { reportId: string, calculationId: string, testVoltage: string}, { dispatch, rejectWithValue }) => {
+        try {
+            return { reportId: param.reportId, calculationId: param.calculationId, testVoltage: param.testVoltage}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+export const updateCalibrationValueE6TC = createAsyncThunk(
+    'e6Report/updateCalibrationValueE6',
+    async (param: { reportId: string, calculationId: string,  calibrationValue: string}, { dispatch, getState, rejectWithValue }) => {
+        try {
+            let state = getState() as RootState
+            let report = state.reportE6.find(r => r.reportId === param.reportId)
+            let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
+            let calibrationObjectType = report?.calibrationObjectType
+            let dataForCalibration = calculation?.dataForCalibration 
+            let testVoltage = calculation?.testVoltage
+            let calibrationDot = calculation?.calibrationDot
+            let newCalibrationField: CalculationEsoType = 
+            createNewCalibrationFieldE6(dataForCalibration!, calibrationObjectType!, testVoltage, param.calibrationValue, calibrationDot!, 
+                param.reportId, param.calculationId)  
+                   
+            return {reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+
+export const addNewCalibrationFieldForE6andPsiTC = createAsyncThunk(
+    'e6Report/addNewCalibrationFieldForE6andPsi',
+    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, getState, rejectWithValue }) => {
+        try {
+            
+            let state = getState() as RootState
+            let report = state.reportE6.find(r => r.reportId === param.reportId)
+            let dataForCalibration: number[] = []
+            for (let index = 0; index < 10; index++) {
+                dataForCalibration.push(param.dot)
+            }
+
+            let calibrationObjectType = report?.calibrationObjectType 
+            let calibrationValue = E6CalibrationValue.mom
+            let testVoltage = '500 В'
+            
+            let newCalibrationField = createNewCalibrationFieldE6(dataForCalibration, calibrationObjectType!, testVoltage, calibrationValue, param.dot, param.reportId, param.calculationId)
+            return { reportId: param.reportId, calibrationObjectType: calibrationObjectType, newCalibrationField: newCalibrationField}
+        }
+        catch (e: any) {
+
+        }
+        finally {
+
+        }
+    }
+)
+
+
 const initialState: ReportE6Type[] = [
     {
     sectorEmirId: '11111',
@@ -249,7 +404,7 @@ const initialState: ReportE6Type[] = [
         error: 0,
         permissibleValue: 0,
         expandedUncertainty: 0,
-        calibrationValue: E6CalibrationValue.volts
+        calibrationValue: E6CalibrationValue.mom
     },
     ],
     stigma: 'BY00045',
@@ -278,6 +433,98 @@ const slice = createSlice({
             state.forEach((el, i) => el.reportId === action.payload?.reportId ? state.splice(i, 1) : el)
         })
         builder.addCase(removeReportE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Add new calibraton field
+         builder.addCase(addNewCalibrationFieldForE6andPsiTC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            if (obj && obj.calculation && action.payload?.newCalibrationField) {
+                obj.calibrationObjectType  = action.payload.calibrationObjectType as string;
+                obj.calculation.push(action.payload.newCalibrationField);
+              }
+        })
+        builder.addCase(addNewCalibrationFieldForE6andPsiTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Remove calibraton field
+         builder.addCase(removeCalibrationFieldE6TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            obj?.calculation.forEach((el, i) => el.calculationId === action.payload?.calculationId ? obj?.calculation.splice(i, 1) : el)
+        })
+        builder.addCase(removeCalibrationFieldE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update calibration object type
+         builder.addCase(updateCalibrationObjectTypeE6TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            if (obj && action.payload?.calibrationObjectType !== undefined) {
+                obj.calibrationObjectType = action.payload.calibrationObjectType;
+                obj.calculation = [];  
+              }
+        })
+        builder.addCase(updateCalibrationObjectTypeE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update report title
+         builder.addCase(changeReportE6TitleTC.fulfilled, (state, action) => {
+          let copy = state.map(el => el.reportId === action.payload?.reportId ? {...el, [action.payload.key] : action.payload.parameter} : el)
+          state = copy
+          return state
+        })
+        builder.addCase(changeReportE6TitleTC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update report standard date
+         builder.addCase(changeStandardCalibrationDateE6TC.fulfilled, (state, action) => {
+            state = state.map(el => el.reportId === action.payload?.reportId ? {
+                ...el, standard: el.standard.map(el => el.id === action.payload?.id
+                  ? { ...el, [action.payload.key]: action.payload.parameter } : el) } : el);
+                
+                return state;
+        })
+        builder.addCase(changeStandardCalibrationDateE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update test voltage
+         builder.addCase(updateTestVoltageReportE6TC.fulfilled, (state, action) => {
+            state = state.map(el => el.reportId === action.payload?.reportId ? {
+                ...el, calculation : el.calculation.map(el => el.calculationId === action.payload?.calculationId 
+                    ? {...el, testVoltage : action.payload.testVoltage} : el)} : el);
+                return state;
+        })
+        builder.addCase(updateTestVoltageReportE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update data for calculation 
+         builder.addCase(updateDaraForCalculationCalibrationE6TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let  newCalculation : CalculationEsoType[]
+
+            if (obj?.calculation && action.payload?.calculationId) {
+             newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+               ? el = action.payload.newCalibrationField
+               : el);
+           }  
+           state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+           return state
+        })
+        builder.addCase(updateDaraForCalculationCalibrationE6TC.rejected, (state, { payload }) => {
+            //to do something inside
+        })
+         //Update calculation value
+         builder.addCase(updateCalibrationValueE6TC.fulfilled, (state, action) => {
+            let obj = state.find(el => el.reportId === action.payload?.reportId)
+            let  newCalculation : CalculationEsoType[]
+
+            if (obj?.calculation && action.payload?.calculationId) {
+             newCalculation  =  obj.calculation.map(el => el.calculationId === action.payload?.calculationId
+               ? el = action.payload.newCalibrationField
+               : el);
+           }  
+           state = state.map(el => el.reportId === action.payload?.reportId ? {...el, calculation : newCalculation} : el)
+           return state
+        })
+        builder.addCase(updateCalibrationValueE6TC.rejected, (state, { payload }) => {
             //to do something inside
         })
     }

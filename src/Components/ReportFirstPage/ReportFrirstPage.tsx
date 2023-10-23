@@ -6,7 +6,7 @@ import st from './ReportFirstPage.module.css'
 
 
 type ReportFirstPageType = {
-report : ReportEsoType | ReportMrp120Type
+report : ReportEsoType | ReportMrp120Type 
 changeReportTitle: (reportId: string, key: string, parameter: string) => void
 }
 

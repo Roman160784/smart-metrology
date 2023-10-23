@@ -1,4 +1,5 @@
 import React from 'react';
+import { ReportE6Type } from '../../Redux/E6Reducer';
 import { ReportEsoType } from '../../Redux/EsoReducer';
 import { ReportMrp120Type } from '../../Redux/Mrp120Reducer';
 import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
@@ -7,7 +8,7 @@ import st from './ReportSecondPage.module.css'
 
 
 type ReportSecondPagePropsType = {
-    report : ReportEsoType | ReportMrp120Type
+    report : ReportEsoType | ReportMrp120Type | ReportE6Type
     changeStandardDate: (reportId: string, key: string, title: string, id: string) => void
     lastPage: number
 }

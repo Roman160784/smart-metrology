@@ -10,6 +10,7 @@ import { useAppDispatch } from '../../../../Redux/store';
 import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
 import { Gym } from '../../../Common/Gym/Gym';
 import { Input } from '../../../Common/Input/Input';
+import { ResultInDot } from '../../../Common/ResultInDot/ResultInDot';
 import { ReportFirstPage } from '../../../ReportFirstPage/ReportFrirstPage';
 import { ReportHeader } from '../../../ReportHeader/ReportHeder';
 import { ReportSecondPage } from '../../../ReportSecondPage/ReportSecondPage';
@@ -85,6 +86,7 @@ export const ReportMrp120 = () => {
       </div>
       {
         report!.calculation.map((el, i) => {
+          lastPage++
           return (
             <div key={i} className={st.page}>
               <div className={st.header}>
@@ -117,7 +119,7 @@ export const ReportMrp120 = () => {
             <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} № ${report!.serialNumber}`}</span>
           </div>
           <div className={st.final}>
-            <span> {`в калибруемых точках соответствует обязательным метрологическим требованиям в соответствии с описанием типа (при установлении соответствия применно правило принятия решения, основанное на простой приёмке в соответствии с СТБ ISO/IEC Guide 98-4-2019)`}</span>
+            <span> <ResultInDot/> </span>
           </div>
           <div className={st.final}>
 

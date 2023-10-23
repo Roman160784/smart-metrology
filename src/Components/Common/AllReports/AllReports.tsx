@@ -60,9 +60,10 @@ export const AllReports = () => {
     const updateReport = (reportId: string) => {
         if (typeSi.split('/').includes('eso')) {
             navigate(`/reportEso/${reportId}`)
-            // navigate('/reportEso/:id')
         }else if (typeSi.split('/').includes('mrp')) {
             navigate(`/reportMrp120/${reportId}`)
+        }else if(typeSi.split('/').includes('e6')){
+            navigate(`/reportE6andPsi/${reportId}`)
         }
     }
 

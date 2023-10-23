@@ -4,6 +4,7 @@ import { AllReports } from '../Common/AllReports/AllReports';
 import { Certificate } from '../Common/Cectificate/Certificate';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
+import { ReportE6andPsi } from '../Sectors/EMiR/EmirE6andPsi/ReportE6andPsi';
 import { ReportEso } from '../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
 import { ReportMrp120 } from '../Sectors/EMiR/EmirMrp120/ReportMrp120';
 import { EmirNavReports, pathEmirEnum } from '../Sectors/EMiR/EmirNavReports/EmirNavReports';
@@ -39,6 +40,7 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.reportEso} element={<ReportEso />} />
                         <Route path={pathEmirEnum.certificate} element={<Certificate />} />
                         <Route path={pathEmirEnum.reportMrp120} element={<ReportMrp120 />} />
+                        <Route path={pathEmirEnum.reportE6andPsi} element={<ReportE6andPsi/>} />
                     </Routes>
                 </div>
 

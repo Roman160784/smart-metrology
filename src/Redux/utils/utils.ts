@@ -1,4 +1,4 @@
-import { E6CalibrationValue, E6CalibratonTypesType } from "../E6Reducer"
+import { E6CalibrationValue, } from "../E6Reducer"
 import { CalculationEsoType } from "../EsoReducer"
 
 // Ищем среднее значение из массива
@@ -269,7 +269,7 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
     if (calibrationValue === E6CalibrationValue.kom) {
         userError = 0.5
     } else if (calibrationValue === E6CalibrationValue.mom) {
-        if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             userError = 0.005
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             userError = 0.05
@@ -277,7 +277,7 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
             userError = 0.5
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
-        if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             userError = 0.005
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             userError = 0.05
@@ -285,7 +285,7 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
             userError = 0.5
         }
     } else if (calibrationValue === E6CalibrationValue.om) {
-        if(calibrationDot > 0 && calibrationDot <= 9.99){
+        if(calibrationDot > 0.01 && calibrationDot <= 9.99){
             userError = 0.005
         }else if (calibrationDot >= 10 && calibrationDot <= 99.9){
             userError = 0.05
@@ -308,7 +308,7 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
     } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.mom) {
-        if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3
@@ -336,7 +336,7 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
     }else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0.03 * calibrationDot + 3
     }else if (calibrationValue === E6CalibrationValue.mom) {
-        if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3
@@ -346,7 +346,7 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
     }else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot <= 1) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
-        } else if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        } else if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 5 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <=99.9 ) {
             permissibleValue = calibrationDot * 5 / 100 + 0.5
@@ -359,9 +359,68 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
     return +permissibleValue.toFixed(4)
 }
 
+//Ищем допускаемое значене для ПСИ-2500
+
+const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue: string) => {
+    let permissibleValue = 0
+    if (calibrationValue === E6CalibrationValue.volts) {
+        permissibleValue = 0.05 * calibrationDot + 3
+    }else if (calibrationValue === E6CalibrationValue.om) {
+        permissibleValue = 0
+    }else if (calibrationValue === E6CalibrationValue.kom) {
+        permissibleValue = 0
+    }else if (calibrationValue === E6CalibrationValue.mom) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
+            permissibleValue = 0.03 * calibrationDot + 0.03
+        }else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+            permissibleValue = calibrationDot * 0.03 + 0.3
+        }else if (calibrationDot >= 100 && calibrationDot <= 999) {
+            permissibleValue = calibrationDot * 0.03 + 3
+        }
+    }else if (calibrationValue === E6CalibrationValue.gom) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
+            permissibleValue = 0.05 * calibrationDot + 0.05
+        }else if (calibrationDot > 10) {
+            permissibleValue = 0
+        }
+    }
+
+    return +permissibleValue.toFixed(3)
+}
+//Ищем допускаемое значене для ПСИ-2510 ПСИ-2530
+
+const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue: string) => {
+    let permissibleValue = 0
+    if (calibrationValue === E6CalibrationValue.volts) {
+        permissibleValue = 0.05 * calibrationDot + 3
+    }else if (calibrationValue === E6CalibrationValue.om) {
+        permissibleValue = 0
+    }else if (calibrationValue === E6CalibrationValue.kom) {
+        permissibleValue = 0.025 * calibrationDot + 3
+    }else if (calibrationValue === E6CalibrationValue.mom) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
+            permissibleValue = 0.025 * calibrationDot + 0.03
+        }else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+            permissibleValue = calibrationDot * 0.025 + 0.3
+        }else if (calibrationDot >= 100 && calibrationDot <= 999) {
+            permissibleValue = calibrationDot * 0.025 + 3
+        }
+    }else if (calibrationValue === E6CalibrationValue.gom) {
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
+            permissibleValue = 0.05 * calibrationDot + 0.05
+        }else if (calibrationDot > 10 && calibrationDot <= 99.9) {
+            permissibleValue = 0.05 * calibrationDot + 0.5
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+            permissibleValue = calibrationDot * 0.05 + 5
+        }
+    }
+
+    return +permissibleValue.toFixed(3)
+}
+
 //Cоздание нового объекта с расчитанными значениями для мегомметров E6
 
-export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: E6CalibratonTypesType, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string) => {
+export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string) => {
 
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let uncertaintyMiddle = findSKO(dataForCalibration)
@@ -399,7 +458,24 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = findEmrForE6_24(calibrationDot, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_30(calibrationDot, calibrationValue)
+
+    } else if (calibrationObjectType === "ПСИ-2500" || calibrationObjectType === "ПСИ-2510" ||  calibrationObjectType === "ПСИ-2530") {
+        if (calibrationValue === E6CalibrationValue.volts) {
+            satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
+            userError = 0.5
+        }  else if (calibrationValue !== E6CalibrationValue.volts){
+            satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
+            userError = findEmrForE6_24(calibrationDot, calibrationValue)
+        }
+
+        if(calibrationObjectType === "ПСИ-2500") {
+            permissibleValue =  findPermissibleValueForPSI2500(calibrationDot, calibrationValue) 
+        } else if (calibrationObjectType === "ПСИ-2510" ||  calibrationObjectType === "ПСИ-2530") {
+            permissibleValue = findPermissibleValueForPSI2510(calibrationDot, calibrationValue)
+        }
+        
     }
+     
     let uncertaintyStnadardError = findUncertainty(satadardError)
     let uncertaintyUserError = findUncertainty(userError)
     let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)

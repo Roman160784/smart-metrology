@@ -10,6 +10,7 @@ export enum pathEmirEnum {
     reportEso = '/reportEso/:id',
     certificate = '/certificate/:id',
     reportMrp120 = '/reportMrp120/:id',
+    reportE6andPsi = '/reportE6andPsi/:id',
 }
 
 
@@ -23,7 +24,7 @@ export const EmirNavReports = () => {
             </div>
             <div className={st.block}>
                 <NavLink className={st.navigation} to={pathEmirEnum.e6All}>
-                    <span className={st.navigation}> Мегаомметры E6 </span>
+                    <span className={st.navigation}> {`Мегаомметры E6 / ПСИ`} </span>
                 </NavLink>
             </div>
             <div className={st.block}>
