@@ -4,6 +4,7 @@ import thunkMiddleware from "redux-thunk";
 import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { ReportMrp120Reducer } from "./Mrp120Reducer";
 import { ReportE6Reducer } from "./E6Reducer";
+import { ReportIfnReducer } from "./IfnReducer";
 
 
 
@@ -11,6 +12,7 @@ const rootReducer = combineReducers({
     reportEso: ReportEsoReducer,
     reportMrp120: ReportMrp120Reducer,
     reportE6: ReportE6Reducer,
+    reportIfn: ReportIfnReducer,
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>

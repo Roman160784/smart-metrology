@@ -2,7 +2,7 @@ import React, { useRef, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addReportEsoTC, removeReportTC, ReportEsoType } from '../../../Redux/EsoReducer';
-import { selectReportE6, selectReportEso, selectReportMrp120 } from '../../../Redux/selectors/eso-report-selectors';
+import { selectReportE6, selectReportEso, selectReportIfn, selectReportMrp120 } from '../../../Redux/selectors/eso-report-selectors';
 import { useAppDispatch } from '../../../Redux/store';
 import {FiTrash} from "react-icons/fi"
 import { Button } from '../Button/Button';
@@ -11,17 +11,19 @@ import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { addNewReportMrp120TC, removeReportMrp120TC, ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { v1 } from 'uuid';
 import { addNewReportE6TC, removeReportE6TC, ReportE6Type } from '../../../Redux/E6Reducer';
+import { ReportIfnType } from '../../../Redux/IfnReducer';
 
 
 export const AllReports = () => {
 
 
-    let allReports: ReportEsoType[] | ReportMrp120Type[] | ReportE6Type[] = []
+    let allReports: ReportEsoType[] | ReportMrp120Type[] | ReportE6Type[] | ReportIfnType[] = []
     const navigate = useNavigate()
     const dispatch = useAppDispatch()
     const reportsEso = useSelector(selectReportEso)
     const reportsMrp120 = useSelector(selectReportMrp120)
     const reportE6 = useSelector(selectReportE6)
+    const reportIfn = useSelector(selectReportIfn)
     //Ловим тип из URL
     const urlRef = useRef('');
 
@@ -35,7 +37,10 @@ export const AllReports = () => {
         allReports = reportsMrp120
     }else if (typeSi.split('/').includes('e6')) {
         allReports = reportE6
+    }else if (typeSi.split('/').includes('ifn')) {
+        allReports = reportIfn
     }
+    
 
     const addReportHandler = () => {
         if (typeSi.split('/').includes('eso')){
