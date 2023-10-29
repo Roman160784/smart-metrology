@@ -35,6 +35,7 @@ export const ReportMrp120 = () => {
   } else {
     console.log('err');
   }
+
   const pdfHandler = useReactToPrint({
     content: () => componentRef.current!,
     documentTitle: 'Report',
@@ -51,6 +52,7 @@ export const ReportMrp120 = () => {
     }
     setValue('')
   }
+  
   const changeReportTitleHandler = (id: string, key: string, parameter: string) => {
     dispatch(changeReportMrp120TitleTC({reportId: id, key: key, parameter: parameter }))
   }

@@ -1,5 +1,6 @@
 import { E6CalibrationValue, } from "../E6Reducer"
 import { CalculationEsoType } from "../EsoReducer"
+import { calibrationObjectTypesEnum, modeEnum, NewCalculationIfnType, StandardValueEnum, StandardValueType, ValueIfnEnum } from "../IfnReducer"
 
 // Ищем среднее значение из массива
 export const findMiddleValueFromArray = (arr: number[]) => {
@@ -236,7 +237,7 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
         permissibleValue = calibrationDot * 5 / 100 + 3
-    }else if (calibrationValue === E6CalibrationValue.om) {
+    } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
@@ -248,14 +249,14 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
         } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
-    }else if (calibrationValue === E6CalibrationValue.gom) {
+    } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot <= 1) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot > 1 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
-        } else if (calibrationDot >= 10 && calibrationDot <=99.9 ) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 5 / 100 + 0.5
-        }else if (calibrationDot >= 100 ) {
+        } else if (calibrationDot >= 100) {
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     }
@@ -285,14 +286,14 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
             userError = 0.5
         }
     } else if (calibrationValue === E6CalibrationValue.om) {
-        if(calibrationDot > 0.01 && calibrationDot <= 9.99){
+        if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             userError = 0.005
-        }else if (calibrationDot >= 10 && calibrationDot <= 99.9){
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             userError = 0.05
-        }else if (calibrationDot >= 100 && calibrationDot <= 999){
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             userError = 0.5
         }
-        
+
     }
     return +userError.toFixed(4)
 }
@@ -303,7 +304,7 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
         permissibleValue = calibrationDot * 5 / 100 + 3
-    }else if (calibrationValue === E6CalibrationValue.om) {
+    } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
@@ -315,14 +316,14 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
         } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
-    }else if (calibrationValue === E6CalibrationValue.gom) {
+    } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot <= 1) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot > 1 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 5 / 100 + 0.03
-        } else if (calibrationDot >= 10 && calibrationDot <=99.9 ) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 5 / 100 + 0.5
-        }else if (calibrationDot >= 100 ) {
+        } else if (calibrationDot >= 100) {
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     }
@@ -333,9 +334,9 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
         permissibleValue = 0.05 * calibrationDot + 3
-    }else if (calibrationValue === E6CalibrationValue.kom) {
+    } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0.03 * calibrationDot + 3
-    }else if (calibrationValue === E6CalibrationValue.mom) {
+    } else if (calibrationValue === E6CalibrationValue.mom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
@@ -343,14 +344,14 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
         } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
-    }else if (calibrationValue === E6CalibrationValue.gom) {
+    } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot <= 1) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 5 / 100 + 0.03
-        } else if (calibrationDot >= 10 && calibrationDot <=99.9 ) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 5 / 100 + 0.5
-        }else if (calibrationDot >= 100 ) {
+        } else if (calibrationDot >= 100) {
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     } else if (calibrationValue === E6CalibrationValue.om) {
@@ -365,22 +366,22 @@ const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
         permissibleValue = 0.05 * calibrationDot + 3
-    }else if (calibrationValue === E6CalibrationValue.om) {
+    } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
-    }else if (calibrationValue === E6CalibrationValue.kom) {
+    } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
-    }else if (calibrationValue === E6CalibrationValue.mom) {
+    } else if (calibrationValue === E6CalibrationValue.mom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.03 * calibrationDot + 0.03
-        }else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 0.03 + 0.3
-        }else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 0.03 + 3
         }
-    }else if (calibrationValue === E6CalibrationValue.gom) {
+    } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.05 * calibrationDot + 0.05
-        }else if (calibrationDot > 10) {
+        } else if (calibrationDot > 10) {
             permissibleValue = 0
         }
     }
@@ -393,22 +394,22 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
         permissibleValue = 0.05 * calibrationDot + 3
-    }else if (calibrationValue === E6CalibrationValue.om) {
+    } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
-    }else if (calibrationValue === E6CalibrationValue.kom) {
+    } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0.025 * calibrationDot + 3
-    }else if (calibrationValue === E6CalibrationValue.mom) {
+    } else if (calibrationValue === E6CalibrationValue.mom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.025 * calibrationDot + 0.03
-        }else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 0.025 + 0.3
-        }else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 0.025 + 3
         }
-    }else if (calibrationValue === E6CalibrationValue.gom) {
+    } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.05 * calibrationDot + 0.05
-        }else if (calibrationDot > 10 && calibrationDot <= 99.9) {
+        } else if (calibrationDot > 10 && calibrationDot <= 99.9) {
             permissibleValue = 0.05 * calibrationDot + 0.5
         } else if (calibrationDot >= 100 && calibrationDot <= 999) {
             permissibleValue = calibrationDot * 0.05 + 5
@@ -422,13 +423,15 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
 
 export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string) => {
 
+
+
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let uncertaintyMiddle = findSKO(dataForCalibration)
     let satadardError = 0
     let userError = 0
     let permissibleValue = 0
     let coefficient = 2
-    
+
     if (calibrationObjectType === "Е6-24") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
@@ -439,7 +442,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         }
         permissibleValue = findPermissibleValueForE6_24(calibrationDot, calibrationValue)
 
-    } else if ( calibrationObjectType === "Е6-24/1" || calibrationObjectType === "Е6-24/2") {
+    } else if (calibrationObjectType === "Е6-24/1" || calibrationObjectType === "Е6-24/2") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
@@ -448,34 +451,34 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = findEmrForE6_24(calibrationDot, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_24_1(calibrationDot, calibrationValue)
-        
-    } else if (calibrationObjectType === "Е6-31" || calibrationObjectType === "Е6-31/1" ||  calibrationObjectType === "Е6-32") {
+
+    } else if (calibrationObjectType === "Е6-31" || calibrationObjectType === "Е6-31/1" || calibrationObjectType === "Е6-32") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
-        }  else if (calibrationValue !== E6CalibrationValue.volts){
+        } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
             userError = findEmrForE6_24(calibrationDot, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_30(calibrationDot, calibrationValue)
 
-    } else if (calibrationObjectType === "ПСИ-2500" || calibrationObjectType === "ПСИ-2510" ||  calibrationObjectType === "ПСИ-2530") {
+    } else if (calibrationObjectType === "ПСИ-2500" || calibrationObjectType === "ПСИ-2510" || calibrationObjectType === "ПСИ-2530") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
-        }  else if (calibrationValue !== E6CalibrationValue.volts){
+        } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
             userError = findEmrForE6_24(calibrationDot, calibrationValue)
         }
 
-        if(calibrationObjectType === "ПСИ-2500") {
-            permissibleValue =  findPermissibleValueForPSI2500(calibrationDot, calibrationValue) 
-        } else if (calibrationObjectType === "ПСИ-2510" ||  calibrationObjectType === "ПСИ-2530") {
+        if (calibrationObjectType === "ПСИ-2500") {
+            permissibleValue = findPermissibleValueForPSI2500(calibrationDot, calibrationValue)
+        } else if (calibrationObjectType === "ПСИ-2510" || calibrationObjectType === "ПСИ-2530") {
             permissibleValue = findPermissibleValueForPSI2510(calibrationDot, calibrationValue)
         }
-        
+
     }
-     
+
     let uncertaintyStnadardError = findUncertainty(satadardError)
     let uncertaintyUserError = findUncertainty(userError)
     let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)
@@ -509,3 +512,197 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
     }
     return newCalibrationField
 }
+
+//Ищем емр для ифн-200, 300 300/1 при измернии сопротивления
+
+const findUserErrorIfnOm = (calibrationDot: number) => {
+    let userError = 0
+    if (calibrationDot > 0 && calibrationDot <= 9.99) {
+        userError = 0.005
+    } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+        userError = 0.05
+    } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
+        userError = 0.5
+    }
+
+    return +userError.toFixed(4)
+}
+
+//неопределённость катушек индуктиыности ИИ1 ИИ2 для активного сопротивления
+const uncertaintyStnadardErrorRactiv_Reactiv = (calibrationDot: number) => {
+    let uncertaintyStnadardError = 0
+    if (calibrationDot > 100) {
+        uncertaintyStnadardError = 1
+    } else {
+        uncertaintyStnadardError = 0.01
+    }
+
+    return +uncertaintyStnadardError.toFixed(3)
+}
+
+// Ищем допускаемые значения для ифн200
+
+const findPermissibleValueForIfn_200 = (calibrationDot: number, calibrationValue: string) => {
+    let permissibleValue = 0
+    let a = 0
+    if (calibrationValue === ValueIfnEnum.voltsAC) {
+        a = 2 + 0.01 * (280 / calibrationDot - 1)
+        permissibleValue = calibrationDot * a / 100 + 2
+    } else if (calibrationValue === ValueIfnEnum.om) {
+        if (calibrationDot >= 0.01 && calibrationDot <= 9.99) {
+            a = 2 + 0.001 * (10 / calibrationDot - 1)
+            permissibleValue = calibrationDot * a / 100 + 0.02
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+            a = 2 + 0.001 * (100 / calibrationDot - 1)
+            permissibleValue = calibrationDot * a / 100 + 0.2
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+            a = 2 + 4 * calibrationDot / 1000
+            permissibleValue = calibrationDot * a / 100 + 2
+        }
+    } else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
+        if (calibrationDot === StandardValueEnum.omReact_0_27) {
+            permissibleValue = 0.04
+        } else if (calibrationDot === StandardValueEnum.omActiv_0_33) {
+            permissibleValue = 0.05
+        } else if (calibrationDot === StandardValueEnum.omActiv_1_07) {
+            permissibleValue = 0.07
+        } else if (calibrationDot === StandardValueEnum.omReact_2_89) {
+            permissibleValue = 0.13
+        } else if (calibrationDot === StandardValueEnum.omActiv_140) {
+            permissibleValue = 6.22
+        } else if (calibrationDot === StandardValueEnum.omReact_162) {
+            permissibleValue = 6.86
+        }
+    } 
+
+
+    return +permissibleValue.toFixed(3)
+}
+
+// ищем допускаемые значения для ифн-300 и ифн300/1
+const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue: string) => {
+    let permissibleValue = 0
+    
+    if (calibrationValue === ValueIfnEnum.voltsAC) {
+        permissibleValue = 0.025 * calibrationDot + 3
+    } else if (calibrationValue === ValueIfnEnum.om) {
+        if (calibrationDot >= 0.01 && calibrationDot <= 9.99) {
+            permissibleValue = 0.03 * calibrationDot + 0.03
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
+            permissibleValue = 0.03 * calibrationDot + 0.2
+        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+            permissibleValue = 0.03 * calibrationDot + 3
+        }
+    } else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
+        if (calibrationDot === StandardValueEnum.omReact_0_27) {
+            permissibleValue = 0.04
+        } else if (calibrationDot === StandardValueEnum.omActiv_0_33) {
+            permissibleValue = 0.05
+        } else if (calibrationDot === StandardValueEnum.omActiv_1_07) {
+            permissibleValue = 0.07
+        } else if (calibrationDot === StandardValueEnum.omReact_2_89) {
+            permissibleValue = 0.13
+        } else if (calibrationDot === StandardValueEnum.omActiv_140) {
+            permissibleValue = 6.22
+        } else if (calibrationDot === StandardValueEnum.omReact_162) {
+            permissibleValue = 6.86
+        }
+    } 
+
+
+    return +permissibleValue.toFixed(3)
+}
+
+//Cоздание нового объекта с расчитанными значениями для ИФН
+
+export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[]) => {
+
+    let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
+    let uncertaintyMiddle = findSKO(dataForCalibration)
+    let satadardError = 0
+    let userError = 0
+    let permissibleValue = 0
+    let coefficient = 2
+    let uncertaintyStnadardError = 0
+    
+
+
+    if (calibrationObjectType === calibrationObjectTypesEnum.ifn200) {
+        if (calibrationValue === ValueIfnEnum.voltsAC) {
+            satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
+            userError = 0.5
+            uncertaintyStnadardError = findUncertainty(satadardError)
+        } else if (calibrationValue === ValueIfnEnum.om) {
+            satadardError = calibrationDot * 0.02 / 100
+            userError = findUserErrorIfnOm(calibrationDot)
+            uncertaintyStnadardError = findUncertainty(satadardError)
+        } else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
+            if(calibrationDot > 10) {
+                userError = 0.5
+            }else {
+                userError = 0.005 
+            }
+            satadardError = 0
+            uncertaintyStnadardError = uncertaintyStnadardErrorRactiv_Reactiv(calibrationDot) 
+        }
+        permissibleValue = findPermissibleValueForIfn_200(calibrationDot, calibrationValue)
+
+    } else if (calibrationObjectType === calibrationObjectTypesEnum.ifn300 || calibrationObjectType ===  calibrationObjectTypesEnum.ifn300_1){
+        if (calibrationValue === ValueIfnEnum.voltsAC) {
+            satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
+            userError = 0.5
+            uncertaintyStnadardError = findUncertainty(satadardError)
+        }else if (calibrationValue === ValueIfnEnum.om) {
+            satadardError = calibrationDot * 0.02 / 100
+            userError = findUserErrorIfnOm(calibrationDot)
+            uncertaintyStnadardError = findUncertainty(satadardError)
+        }else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
+            if(calibrationDot > 10) {
+                userError = 0.5
+            }else {
+                userError = 0.005 
+            }
+            uncertaintyStnadardError = uncertaintyStnadardErrorRactiv_Reactiv(calibrationDot)
+        }
+        permissibleValue = findPermissibleValueForIfn_300(calibrationDot, calibrationValue)
+    }
+     
+    let uncertaintyUserError = findUncertainty(userError)
+    let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)
+    let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
+    let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
+    let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
+    let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+    let error = calibrationMiddleValue - calibrationDot
+    let expandedUncertainty = coefficient * uncertaintyResult
+
+    let newCalvulation: NewCalculationIfnType = {
+        calculationId: calculationId,
+        calibrationDot: +calibrationDot.toFixed(3),
+        calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
+        calibrationValue: calibrationValue,
+        calibrationValueSelect: calibrationValueSelect,
+        dataForCalibration: dataForCalibration,
+        error: +error.toFixed(3),
+        expandedUncertainty: +expandedUncertainty.toFixed(3),
+        mode: mode,
+        modeSelect: modeSelect,
+        permissibleValue: +permissibleValue.toFixed(3),
+        reportId: reportId,
+        satadardError: +satadardError.toFixed(3),
+        standardValueInDot: +calibrationDot.toFixed(3), 
+        standardValue: standardValue,
+        uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
+        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
+        uncertaintyResult: +uncertaintyResult.toFixed(3),
+        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
+        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
+        uncertaintyUserError: +uncertaintyUserError.toFixed(3),
+        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
+        userError: +userError.toFixed(3),
+    }
+
+    return newCalvulation
+}
+

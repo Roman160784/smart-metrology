@@ -2,10 +2,12 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import { AllReports } from '../Common/AllReports/AllReports';
 import { Certificate } from '../Common/Cectificate/Certificate';
+import { CertificateIfn } from '../Common/Cectificate/CertificateIfn';
 import { Header } from '../Header/Header';
 import { MainAria } from '../MainAria/MainAria';
 import { ReportE6andPsi } from '../Sectors/EMiR/EmirE6andPsi/ReportE6andPsi';
 import { ReportEso } from '../Sectors/EMiR/EmirEso/ReportEso/ReportEso';
+import { ReportIfn } from '../Sectors/EMiR/EmirIfn/ReportIfn';
 import { ReportMrp120 } from '../Sectors/EMiR/EmirMrp120/ReportMrp120';
 import { EmirNavReports, pathEmirEnum } from '../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { Fhi } from '../Sectors/FHI/Fhi';
@@ -41,6 +43,8 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.certificate} element={<Certificate />} />
                         <Route path={pathEmirEnum.reportMrp120} element={<ReportMrp120 />} />
                         <Route path={pathEmirEnum.reportE6andPsi} element={<ReportE6andPsi/>} />
+                        <Route path={pathEmirEnum.reportIfn} element={<ReportIfn/>} />
+                        <Route path={pathEmirEnum.certificateIfn} element={<CertificateIfn/>} />
                     </Routes>
                 </div>
 

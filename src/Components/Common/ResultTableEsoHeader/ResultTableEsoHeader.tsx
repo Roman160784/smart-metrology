@@ -6,7 +6,7 @@ export const ResultTableEsoHeader = () => {
         <>
             
                 <td className={''}>Калибруемая точка</td>
-                <td className={''}>Испытательное напряжение</td>
+                <td className={''}>Испытательное напряжение или режим измерений</td>
                 <td className={''}>Полученное значение</td>
                 <td className={''}>Абсолютная погрешность</td>
                 <td className={''}> {`Предел основной абсолютной погрешности `} </td>

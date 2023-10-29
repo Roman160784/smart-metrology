@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import st from './Certificate.module.css'
 import bgca from '../../../Pictures/bgca.jpg'
 import certif from '../../../Pictures/certif.png'
@@ -6,20 +6,39 @@ import iso from '../../../Pictures/iso.png'
 import { StandardsTableHeader } from '../StandardsTableHeader/StandardsTableHeader';
 import { ResultTableEsoHeader } from '../ResultTableEsoHeader/ResultTableEsoHeader';
 import { Gym } from '../Gym/Gym';
-import { ReportEsoType } from '../../../Redux/EsoReducer';
-import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { ResultInDot } from '../ResultInDot/ResultInDot';
-import { ReportE6Type } from '../../../Redux/E6Reducer';
+import { useSelector } from 'react-redux';
+import { selectReportIfn } from '../../../Redux/selectors/eso-report-selectors';
+import { useParams } from 'react-router-dom';
 import { ReportIfnType } from '../../../Redux/IfnReducer';
+import { useReactToPrint } from 'react-to-print';
 
-type CleanCetrificatePropsType = {
-    report: ReportEsoType | ReportMrp120Type | ReportE6Type 
-}
 
-export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType) => {
+
+
+export const CertificateIfn = () => {
+
+    const componentRef = useRef()
+    const pdfHandler = useReactToPrint({
+        content: () => componentRef.current!,
+        documentTitle: 'Certificate',
+    })
+
+    let reportsIfn = useSelector(selectReportIfn)
+    const params = useParams<'id'>();
+    let reportId = params.id
+    let report: ReportIfnType | undefined
+
+    report = reportsIfn!.find(el => el.reportId === reportId)
+
+    let newStandards = report?.standard.slice(0, -2)
+    if (report && report.standard && newStandards) {
+        report = { ...report, standard: newStandards }
+    }
 
     return (
-        <>
+        //  @ts-ignore >
+        <div className={st.container} ref={componentRef} onDoubleClick={pdfHandler}>
             <div className={st.page}>
                 <div className={st.certificateHeader}>
                     <div>
@@ -56,36 +75,36 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Номер свидетельства</span>
-                    <span className={st.certificateNumber}>{report.stigma}</span>
+                    <span className={st.certificateNumber}>{report!.stigma}</span>
                     <span className={st.certificateTitleB}>Дата калибровки</span>
-                    <span className={st.certificateNumber}>{report.calibrationDate}</span>
+                    <span className={st.certificateNumber}>{report!.calibrationDate}</span>
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Объект калибровки</span>
                     <span className={st.certificateNumber}>
-                        {report.calibrationObjectName} {report.calibrationObjectType}
+                        {report!.calibrationObjectType}
                     </span>
                     <div>
                         <span className={st.serialNumber}>зав. №</span>
-                        <span className={st.certificateNumber}>{report.serialNumber}</span>
+                        <span className={st.certificateNumber}>{report!.serialNumber}</span>
                     </div>
                 </div>
                 <div className={st.si}>{`(наименование  средства измерения/идентификация) `}</div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Владелец средства измерения</span>
-                    <span className={st.certificateNumber}>{report.customer}</span>
+                    <span className={st.certificateNumber}>{report!.customer}</span>
                     <div className={st.adres}>
-                        <span className={st.adres}>{report.adresCustumer}</span>
+                        <span className={st.adres}>{report!.adresCustumer}</span>
                     </div>
                 </div>
                 <div className={st.si}>{`(информация о владельце средства измерения, адрес) `}</div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Калибровочное клеймо-наклейка</span>
-                    <span className={st.certificateNumber}>{report.stigma}</span>
+                    <span className={st.certificateNumber}>{report!.stigma}</span>
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Метод калибровки</span>
-                    <span className={st.certificateNumber}>{report.method}</span>
+                    <span className={st.certificateNumber}>{report!.method}</span>
                 </div>
                 <div className={st.si}>{`(наименование метода/идентификация) `}</div>
 
@@ -102,18 +121,18 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.bossBlock}>
                     <span className={st.certificateTitleB}>Подпись</span>
-                    <span className={st.boss}>{report.boss}</span>
+                    <span className={st.boss}>{report!.boss}</span>
                 </div>
                 <div className={st.si}>{`(инициалы, фамилия, должность служащего)  `}</div>
                 <div className={st.dateBlock}>
                     <span className={st.dateTitle}>Дата выдачи</span>
-                    <span className={st.certificateNumber}>{report.calibrationDate}</span>
+                    <span className={st.certificateNumber}>{report!.calibrationDate}</span>
                 </div>
             </div>
             <div className={st.page}>
                 <div className={st.seconPageHeaderCetrificate}>
                     <span className={st.certificateTitleB}>Свидетельство о калибровке</span>
-                    <span className={st.certificateNumber}>{report.stigma}</span>
+                    <span className={st.certificateNumber}>{report!.stigma}</span>
                     <span className={st.pageNumber}>Страница 2 из 2</span>
                 </div>
                 <div className={st.calibration}>
@@ -125,7 +144,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                         <tbody>
                             <StandardsTableHeader />
                             {
-                                report.standard.map((el, i) => {
+                                report!.standard.map((el, i) => {
                                     return (
                                         <tr key={i}>
                                             <td> {el.standardName} </td>
@@ -143,7 +162,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.aboutSrandards}>
                     <span>
-                        {report.traceability}
+                        {report!.traceability}
                     </span>
                 </div>
                 <div className={st.evidance}>
@@ -151,11 +170,11 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.weatherBlock}>
                     <span className={st.weather}>Условия калибровки: </span>
-                    <span className={st.weather}>Температура воздуха: {report.temperature} ºС;</span>
-                    <span className={st.weather}>Относительная влажность воздуха: {report.relativeHumidity}%;</span>
-                    <span className={st.weather}>Атмосферное давление: {report.pressure} кПа;</span>
-                    <span className={st.weather}>Напряжение питающей сети: {report.supplyVoltage} В;</span>
-                    <span className={st.weather}>Частота питающей сети: {report.frequency} Гц;</span>
+                    <span className={st.weather}>Температура воздуха: {report!.temperature} ºС;</span>
+                    <span className={st.weather}>Относительная влажность воздуха: {report!.relativeHumidity}%;</span>
+                    <span className={st.weather}>Атмосферное давление: {report!.pressure} кПа;</span>
+                    <span className={st.weather}>Напряжение питающей сети: {report!.supplyVoltage} В;</span>
+                    <span className={st.weather}>Частота питающей сети: {report!.frequency} Гц;</span>
 
                 </div>
                 <div className={st.weatherDown}>
@@ -172,11 +191,11 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                                 <ResultTableEsoHeader />
                             </tr>
                             {
-                                report.calculation.map((el, i) => {
+                                report!.calculation.map((el, i) => {
                                     return (
                                         <tr key={i}>
                                             <td className={''}>{`${el.calibrationDot} ${el.calibrationValue}`}</td>
-                                            <td className={''}>{el.testVoltage}</td>
+                                            <td className={''}>{el.mode}</td>
                                             <td className={''}>{`${el.calibrationMiddleValue}  ${el.calibrationValue}`}</td>
                                             <td className={''}>{`${el.error}  ${el.calibrationValue}`}</td>
                                             <td className={''}> {` ± ${el.permissibleValue}  ${el.calibrationValue}`}</td>
@@ -193,16 +212,15 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.correspondence}>
                     <span> Заключение о соответствии : </span>
-                    <span> {report.calibrationObjectName} </span>
-                    <span> {report.calibrationObjectType}</span>
-                    <span>{` № ${report.serialNumber}`}</span>
+                    <span> {report!.calibrationObjectType}</span>
+                    <span>{` № ${report!.serialNumber}`}</span>
                 </div>
                 <div className={st.gym}>
                     <span> <ResultInDot /> </span>
                 </div>
                 <div className={st.correspondence}>
                     <span>Дополнительная информация:</span>
-                    <span> протокол калибровки № {report.reportNumber}</span>
+                    <span> протокол калибровки № {report!.reportNumber}</span>
                 </div>
 
                 <div className={st.correspondence}>
@@ -210,7 +228,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.sign}>
                     <span>Подпись лица, выполнившего калибровку </span>
-                    <span className={st.face}>{report.engineer}</span>
+                    <span className={st.face}>{report!.engineer}</span>
                 </div>
                 <div>
                     <span className={st.faceDiscription}>{`(инициалы, фамилия, должность служащего)`}</span>
@@ -225,6 +243,6 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                     <span className={st.face}>{`государственное предприятие "Гомельский ЦСМС", 246015, г. Гомель, ул. Лепешинского, 1`} </span>
                 </div>
             </div>
-        </>
+        </div>
     )
 }

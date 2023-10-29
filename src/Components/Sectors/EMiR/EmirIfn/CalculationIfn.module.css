@@ -1,0 +1,66 @@
+
+.arrayTable {
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-size: 14px;
+}
+
+.arrayTableHeader{
+    height: 30px;
+}
+
+.li{
+    list-style-type: none;
+    text-align: left;
+    font-size: 15px;
+    padding-left: 10px;
+    opacity: 0.5; 
+}
+
+.checked {
+    list-style-type: none;
+    text-align: left;
+    font-size: 15px;
+    padding-left: 10px;
+    font-weight: bold;
+}
+
+.calculationTable {
+    margin-top: 5px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    font-size: 10.3px;
+    padding-bottom: 10px;
+    line-height: 16px;
+    height: 150px;
+}
+
+.calculationResultTable {
+    margin-top: 3px;
+    padding-top: 5px;
+    padding-left: 5px;
+    padding-right: 5px;
+    text-align: center;
+    padding-bottom: 10px;
+    font-size: 12px;
+}
+
+.delete{
+    padding-top: 10px;
+    padding-left: 46%;
+}
+
+.delete :hover {
+    color: red
+}
+
+.res {
+    padding-top: 10px;
+    padding-left: 30px;
+    font-size: 15px;
+}

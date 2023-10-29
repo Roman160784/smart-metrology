@@ -11,7 +11,7 @@ import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
 import { addNewReportMrp120TC, removeReportMrp120TC, ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { v1 } from 'uuid';
 import { addNewReportE6TC, removeReportE6TC, ReportE6Type } from '../../../Redux/E6Reducer';
-import { ReportIfnType } from '../../../Redux/IfnReducer';
+import { addNewReportIfnTC, removeReportIfnTC, ReportIfnType } from '../../../Redux/IfnReducer';
 
 
 export const AllReports = () => {
@@ -49,6 +49,8 @@ export const AllReports = () => {
             dispatch(addNewReportMrp120TC({reportId: v1()}))
         }else if(typeSi.split('/').includes('e6')){
             dispatch(addNewReportE6TC({reportId: v1()}))
+        }else if(typeSi.split('/').includes('ifn')){
+            dispatch(addNewReportIfnTC({reportId: v1()}))
         }
     }
 
@@ -59,6 +61,8 @@ export const AllReports = () => {
             dispatch(removeReportMrp120TC({reportId: reportId}))
         }else if(typeSi.split('/').includes('e6')){
             dispatch(removeReportE6TC({reportId: reportId}))
+        }else if(typeSi.split('/').includes('ifn')){
+            dispatch(removeReportIfnTC({reportId: reportId}))
         }
     }
 
@@ -69,6 +73,8 @@ export const AllReports = () => {
             navigate(`/reportMrp120/${reportId}`)
         }else if(typeSi.split('/').includes('e6')){
             navigate(`/reportE6andPsi/${reportId}`)
+        }else if(typeSi.split('/').includes('ifn')){
+            navigate(`/reportIfn/${reportId}`)
         }
     }
 
