@@ -532,9 +532,9 @@ const findUserErrorIfnOm = (calibrationDot: number) => {
 const uncertaintyStnadardErrorRactiv_Reactiv = (calibrationDot: number) => {
     let uncertaintyStnadardError = 0
     if (calibrationDot > 100) {
-        uncertaintyStnadardError = 1
+        uncertaintyStnadardError = 1 / 2
     } else {
-        uncertaintyStnadardError = 0.01
+        uncertaintyStnadardError = 0.01 / 2
     }
 
     return +uncertaintyStnadardError.toFixed(3)
@@ -662,6 +662,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
             }else {
                 userError = 0.005 
             }
+            satadardError = 0
             uncertaintyStnadardError = uncertaintyStnadardErrorRactiv_Reactiv(calibrationDot)
         }
         permissibleValue = findPermissibleValueForIfn_300(calibrationDot, calibrationValue)
@@ -678,29 +679,29 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
 
     let newCalvulation: NewCalculationIfnType = {
         calculationId: calculationId,
-        calibrationDot: +calibrationDot.toFixed(3),
-        calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
+        calibrationDot: +calibrationDot.toFixed(4),
+        calibrationMiddleValue: +calibrationMiddleValue.toFixed(4),
         calibrationValue: calibrationValue,
         calibrationValueSelect: calibrationValueSelect,
         dataForCalibration: dataForCalibration,
-        error: +error.toFixed(3),
-        expandedUncertainty: +expandedUncertainty.toFixed(3),
+        error: +error.toFixed(4),
+        expandedUncertainty: +expandedUncertainty.toFixed(4),
         mode: mode,
         modeSelect: modeSelect,
-        permissibleValue: +permissibleValue.toFixed(3),
+        permissibleValue: +permissibleValue.toFixed(4),
         reportId: reportId,
-        satadardError: +satadardError.toFixed(3),
-        standardValueInDot: +calibrationDot.toFixed(3), 
+        satadardError: +satadardError.toFixed(6),
+        standardValueInDot: +calibrationDot.toFixed(4), 
         standardValue: standardValue,
-        uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
-        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
-        uncertaintyResult: +uncertaintyResult.toFixed(3),
-        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
-        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
-        uncertaintyUserError: +uncertaintyUserError.toFixed(3),
-        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-        userError: +userError.toFixed(3),
+        uncertaintyMiddle: +uncertaintyMiddle.toFixed(4),
+        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(4),
+        uncertaintyResult: +uncertaintyResult.toFixed(4),
+        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(4),
+        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(4),
+        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(4),
+        uncertaintyUserError: +uncertaintyUserError.toFixed(4),
+        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(4),
+        userError: +userError.toFixed(4),
     }
 
     return newCalvulation
