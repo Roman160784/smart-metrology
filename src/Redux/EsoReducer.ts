@@ -1,5 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
+import { customerAPI } from "../api/smartMerrologyAPI";
 import { RootState } from "./store";
 import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDotForEso } from "./utils/utils";
 
@@ -332,7 +333,7 @@ export const addReportEsoTC = createAsyncThunk(
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
-                        calibrationDate: '11.2022'
+                        calibrationDate: '11.2023'
                     },
                     {reportId: id,
                         id: v1(),
@@ -367,6 +368,24 @@ export const addReportEsoTC = createAsyncThunk(
     }
 )
 
+
+// export const findCustomerTC = createAsyncThunk(
+//     'esoReport/findCustomer',
+//     async (param: { search: string }, { dispatch, rejectWithValue }) => {
+//         try {
+//             const res = await customerAPI.findCustomer(param.search)
+//             console.log(res);
+            
+//             return {  }
+//         }
+//         catch (e: any) {
+
+//         }
+//         finally {
+
+//         }
+//     }
+// )
 
 
 const initialState: ReportEsoType[] = [

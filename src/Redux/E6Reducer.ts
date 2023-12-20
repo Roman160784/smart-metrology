@@ -79,7 +79,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
-                        calibrationDate: '11.2022'
+                        calibrationDate: '11.2023'
                     },
                     {
                         reportId: param.reportId,

@@ -7,7 +7,7 @@ title: string
 changeTitle: (title: string) => void
 }
 
-export const EditableSpan = ({title, changeTitle ,...props}: EditableSpanPropsType) => {
+export const EditableSpan = ({title, changeTitle, ...props}: EditableSpanPropsType) => {
 
  const [value, setValue] = useState(title)
  const [mode, setEditMode] = useState <boolean>(false)

@@ -21,7 +21,6 @@ export const ReportHeader = () => {
                 <br />
                 уполномочивании №16
                 <br />
-                от 25.11.2022
                 <br />
                 <img className={st.pic} src={bgca} alt="bgca" />
                 <img className={st.pic2} src={iso} alt="iso" />

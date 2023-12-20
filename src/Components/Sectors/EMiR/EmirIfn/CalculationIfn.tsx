@@ -179,7 +179,10 @@ export const CalculatonIfn = ({ calculation, removeCalculationField, updateDataF
                 </table>
             </div>
             <div>
-            <span className={st.res}>   {`Результат калибровки в точке ${calculation.calibrationDot} ${calculation.calibrationValue}`}
+            <span className={st.res}>   {`Результат калибровки в точке
+            
+            
+            ${calculation.calibrationDot} ${calculation.calibrationValue}`}
                     </span>
             </div>
             <div>
@@ -195,7 +198,7 @@ export const CalculatonIfn = ({ calculation, removeCalculationField, updateDataF
                         </tr>
                         <tr>
                             <td className={''}>{`${calculation.calibrationDot} ${calculation.calibrationValue}`}</td>
-                            <td className={''}>{calculation.mode}</td>
+                            <td className={''}>{`${calculation.mode} `}</td>
                             <td className={''}>{`${calculation.calibrationMiddleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.error}  ${calculation.calibrationValue}`}</td>
                             <td className={''}> {` ± ${calculation.permissibleValue}  ${calculation.calibrationValue}`}</td>

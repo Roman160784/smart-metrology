@@ -1,6 +1,8 @@
-import React from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
+import useDebounce from '../../Hooks/useDebounce';
 import { ReportEsoType } from '../../Redux/EsoReducer';
 import { ReportMrp120Type } from '../../Redux/Mrp120Reducer';
+import { useAppDispatch } from '../../Redux/store';
 import { EditableSpan } from '../Common/EditableSpan/EditableSpan';
 import st from './ReportFirstPage.module.css'
 
@@ -11,6 +13,19 @@ changeReportTitle: (reportId: string, key: string, parameter: string) => void
 }
 
 export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFirstPageType) => {
+
+    // const dispatch = useAppDispatch()
+    // const [search, setSearch] = useState<string>('')
+
+    // const debonsedSerchValue = useDebounce( search, 1000)
+
+    // useEffect(() => {
+    //     dispatch(findCustomerTC({search: debonsedSerchValue}))
+    // }, [debonsedSerchValue])
+
+    // const searchHandler = (e: ChangeEvent <HTMLInputElement>) => {
+    //     setSearch(e.currentTarget.value) 
+    // }
 
     return (
         <>
@@ -37,8 +52,11 @@ export const ReportFirstPage = ({changeReportTitle, report,...props} : ReportFir
             </tr>
             <tr>
                 <td>Наименование заказчика</td>
-                <td><EditableSpan title={report.customer} 
-                changeTitle={(title) => {changeReportTitle( report.reportId, 'customer', title)}}/></td>
+                <td>
+                    {/* <input type="text" value={search} onChange={searchHandler}/> */}
+                    <EditableSpan title={report.customer} 
+                changeTitle={(title) => {changeReportTitle( report.reportId, 'customer', title)}}/>
+                </td>
             </tr>
             <tr>
                 <td>Адрес Заказчика</td>

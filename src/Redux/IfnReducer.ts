@@ -34,8 +34,8 @@ export enum modeEnum {
 export enum ValueIfnEnum {
     voltsAC = '~B',
     om = 'Ом',
-    omReact = 'X Ом',
-    omActiv = 'R Ом',
+    omReact = 'X (Ом)',
+    omActiv = 'R (Ом)',
 }
 
 export enum calibrationObjectTypesEnum {
