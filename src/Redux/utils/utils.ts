@@ -8,6 +8,29 @@ export const findMiddleValueFromArray = (arr: number[]) => {
     return +arrMiddleValue.toFixed(4)
 }
 
+//Ищем сумму в процентов процентного вклада 
+
+const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) => {
+    const roundedSum = Math.round(a * 100) / 100 + Math.round(b * 100) / 100 + Math.round(c * 100) / 100;
+    let arr: number[] = [a, b, c];
+
+    if (roundedSum === 100) {
+        return arr;
+    } else {
+        const desiredSum = 100;
+        const sum = arr.reduce((acc, num) => acc + num, 0);
+        const roundedNumbers = arr.map(num => Math.round(num * 100) / 100);
+        const difference = desiredSum - sum;
+        const adjustedNumbers = roundedNumbers.map((num, index) => {
+            if (index === roundedNumbers.length - 1) {
+              return num + difference; // Добавляем разницу к последнему числу
+            }
+            return num; // Остальные числа остаются без изменений
+        });
+        return adjustedNumbers;
+    }
+};
+
 //Ищем погрешность эталона для ЭС0202/2
 export const findStandardErrorForEso = (value: number) => {
     let errorStandardInDot = 0
@@ -141,7 +164,8 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
     let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
     let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
     let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
-    let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+    let resPercent = findValuesForUncertaintyResultPercent(uncertaintyMiddlePercent, uncertaintyUserErrorPercent, uncertaintyStanadardErrorPercent)
+    // let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
     let error = calibrationMiddleValue - calibrationDot
     let permissibleValue = findPermissibleValueForMrp120(calibrationDot, calibrationValue)
     let coefficient = 2
@@ -160,10 +184,14 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
         uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
         uncertaintyUserError: +uncertaintyUserError.toFixed(3),
         uncertaintyResult: +uncertaintyResult.toFixed(3),
-        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
-        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
-        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+        // uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
+        // uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
+        // uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
+        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
+        uncertaintyStanadardErrorPercent: +resPercent[1].toFixed(3),
+        uncertaintyUserErrorPercent: +resPercent[2].toFixed(3),
+        // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+        uncertaintyResultPercent: 100,
         error: +error.toFixed(3),
         permissibleValue: +permissibleValue.toFixed(3),
         expandedUncertainty: +expandedUncertainty.toFixed(2),
@@ -485,7 +513,8 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
     let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
     let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
     let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
-    let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+    let resPercent = findValuesForUncertaintyResultPercent(uncertaintyMiddlePercent, uncertaintyUserErrorPercent, uncertaintyStanadardErrorPercent)
+    // let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
     let error = calibrationMiddleValue - calibrationDot
     let expandedUncertainty = coefficient * uncertaintyResult
     let newCalibrationField: CalculationEsoType = {
@@ -501,10 +530,11 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
         uncertaintyUserError: +uncertaintyUserError.toFixed(3),
         uncertaintyResult: +uncertaintyResult.toFixed(3),
-        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
-        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
-        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
+        uncertaintyStanadardErrorPercent: +resPercent[1].toFixed(3),
+        uncertaintyUserErrorPercent: +resPercent[2].toFixed(3),
+        // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
+        uncertaintyResultPercent: 100,
         error: +error.toFixed(3),
         permissibleValue: +permissibleValue.toFixed(3),
         expandedUncertainty: +expandedUncertainty.toFixed(3),
@@ -673,7 +703,8 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
     let uncertaintyMiddlePercent = findInterestDeposit(uncertaintyMiddle, uncertaintyResult)
     let uncertaintyStanadardErrorPercent = findInterestDeposit(uncertaintyStnadardError, uncertaintyResult)
     let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
-    let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+    // let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
+    let resPercent = findValuesForUncertaintyResultPercent(uncertaintyMiddlePercent, uncertaintyUserErrorPercent, uncertaintyStanadardErrorPercent)
     let error = calibrationMiddleValue - calibrationDot
     let expandedUncertainty = coefficient * uncertaintyResult
 
@@ -694,13 +725,14 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
         standardValueInDot: +calibrationDot.toFixed(4), 
         standardValue: standardValue,
         uncertaintyMiddle: +uncertaintyMiddle.toFixed(4),
-        uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(4),
+        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
         uncertaintyResult: +uncertaintyResult.toFixed(4),
-        uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(4),
+        // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(4),
+        uncertaintyResultPercent: 100,
         uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(4),
-        uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(4),
+        uncertaintyStanadardErrorPercent: +resPercent[2].toFixed(3),
         uncertaintyUserError: +uncertaintyUserError.toFixed(4),
-        uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(4),
+        uncertaintyUserErrorPercent: +resPercent[1].toFixed(3),
         userError: +userError.toFixed(4),
     }
 

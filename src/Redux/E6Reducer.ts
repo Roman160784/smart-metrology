@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { report } from "process"
 import { v1 } from "uuid"
 import { CalculationEsoType, ReportEsoType,} from "./EsoReducer"
 import { RootState } from "./store"
@@ -97,7 +96,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2022'
+                        calibrationDate: '11.2023'
                     },
                     {
                         reportId: param.reportId,
@@ -106,7 +105,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2023'
+                        calibrationDate: '01.2024'
                     },
                 ],
             
@@ -353,7 +352,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'Р40116',
             standardNumber: '090',
             value: '---',
-            calibrationDate: '11.2022'
+            calibrationDate: '11.2023'
         },
         {
             reportId: reportId,
@@ -371,7 +370,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'Testo 511',
             standardNumber: '39113412/607',
             value: '---',
-            calibrationDate: '11.2022'
+            calibrationDate: '11.2023'
         },
         {
             reportId: reportId,
@@ -380,7 +379,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'Testo 605-H1',
             standardNumber: '41110955/406',
             value: '---',
-            calibrationDate: '01.2023'
+            calibrationDate: '01.2024'
         },
     ],
 

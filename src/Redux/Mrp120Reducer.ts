@@ -1,5 +1,4 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
-import { v1 } from 'uuid';
 import {  CalculationEsoType, ReportEsoType, sectorEmirId } from "./EsoReducer";
 import { RootState } from "./store";
 import { createNewCalibrationFieldMRP120, findInterestDeposit, findMiddleValueFromArray, findPermissibleValueForMrp120, findSKO, findStandardErrorForMrp120, findTotalUncertainty, findUncertainty, findUserErrorInDotForMrp120 } from "./utils/utils";
@@ -110,7 +109,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2022'
+                        calibrationDate: '11.2023'
                     },
                     {
                         reportId: param.reportId,
@@ -119,7 +118,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2023'
+                        calibrationDate: '01.2024'
                     },
                 ],
                 
@@ -335,7 +334,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'Testo 511',
                 standardNumber: '39113412/607',
                 value: '---',
-                calibrationDate: '11.2022'
+                calibrationDate: '11.2023'
             },
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
@@ -344,7 +343,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'Testo 605-H1',
                 standardNumber: '41110955/406',
                 value: '---',
-                calibrationDate: '01.2023'
+                calibrationDate: '01.2024'
             },
         ],
         

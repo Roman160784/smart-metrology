@@ -4,12 +4,12 @@ import st from './Certificate.module.css'
 import { CleanCertificate } from './CleanCertificate';
 import { useReactToPrint } from 'react-to-print';
 import { useSelector } from 'react-redux';
-import { selectReportE6, selectReportEso, selectReportIfn, selectReportMrp120 } from '../../../Redux/selectors/eso-report-selectors';
+import { selectReportE6, selectReportEso, selectReportMrp120 } from '../../../Redux/selectors/eso-report-selectors';
 import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { ReportEsoType } from '../../../Redux/EsoReducer';
 import { pathSiteBarEnum } from '../../SideBar/SideBar';
 import { ReportE6Type } from '../../../Redux/E6Reducer';
-import { ReportIfnType } from '../../../Redux/IfnReducer';
+
 
 export const Certificate = () => {
     const navigate = useNavigate()

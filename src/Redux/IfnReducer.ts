@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from "uuid"
-import { CalculationEsoType, ReportEsoType, sectorEmirId } from "./EsoReducer"
+import { CalculationEsoType, ReportEsoType} from "./EsoReducer"
 import { RootState } from "./store"
 import { createNewCalibrationFieldIfn } from "./utils/utils"
 
@@ -24,8 +24,12 @@ export type ReportIfnType = Omit<ReportEsoType, 'typeEsoId' | 'calculation' | 'c
 }
 
 export enum modeEnum {
-    L_N = '<фаза-нуль>',
-    L_L = '<фаза-фаза>',
+    L_N = 'L-N',
+    L_L = 'L-L',
+    L_Nx = 'L-N, (X)',
+    L_Nr = 'L-N, (R)',
+    L_Lr = 'L-L, (X)',
+    L_Lx = 'L-L, (R)',
     om = 'Ом',
     voltsAC = '~B',
 }
@@ -34,8 +38,8 @@ export enum modeEnum {
 export enum ValueIfnEnum {
     voltsAC = '~B',
     om = 'Ом',
-    omReact = 'X (Ом)',
-    omActiv = 'R (Ом)',
+    omReact = 'Ом (X)',
+    omActiv = 'Ом (R)',
 }
 
 export enum calibrationObjectTypesEnum {
@@ -140,7 +144,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2022'
+                        calibrationDate: '11.2023'
                     },
                     {
                         reportId: param.reportId,
@@ -149,7 +153,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2023'
+                        calibrationDate: '01.2024'
                     },
                 ],
 
@@ -288,7 +292,7 @@ export const addNewCalibrationFieldIfnReportTC = createAsyncThunk(
             let calibrationValue = ValueIfnEnum.om
             let calibrationValueSelect = [ValueIfnEnum.om, ValueIfnEnum.omActiv, ValueIfnEnum.omReact, ValueIfnEnum.voltsAC]
             let mode = modeEnum.om
-            let modeSelect = [ modeEnum.om, modeEnum.L_L, modeEnum.L_N,  modeEnum.voltsAC]
+            let modeSelect = [ modeEnum.om, modeEnum.L_L, modeEnum.L_N, modeEnum.voltsAC, modeEnum.L_Lr, modeEnum.L_Lx, modeEnum.L_Nr, modeEnum.L_Nx]
             let standardValue = [
                 { id: v1(), title: ValueIfnEnum.omReact, value: StandardValueEnum.omReact_0_27, checked: false },
                 { id: v1(), title: ValueIfnEnum.omReact, value: StandardValueEnum.omReact_162, checked: false },
@@ -449,7 +453,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'Testo 511',
             standardNumber: '39113412/607',
             value: '---',
-            calibrationDate: '11.2022'
+            calibrationDate: '11.2023'
         },
         {
             reportId: reportId,
@@ -458,7 +462,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'Testo 605-H1',
             standardNumber: '41110955/406',
             value: '---',
-            calibrationDate: '01.2023'
+            calibrationDate: '01.2024'
         },
     ],
 
@@ -473,7 +477,7 @@ const initialState: ReportIfnType[] = [{
             error: 0,
             expandedUncertainty: 0,
             mode: modeEnum.om,
-            modeSelect: [ modeEnum.om, modeEnum.L_L, modeEnum.L_N,  modeEnum.voltsAC],
+            modeSelect: [ modeEnum.om, modeEnum.L_L, modeEnum.L_N, modeEnum.voltsAC, modeEnum.L_Lr, modeEnum.L_Lx, modeEnum.L_Nr, modeEnum.L_Nx],
             permissibleValue: 1,
             reportId: reportId,
             satadardError: 0,

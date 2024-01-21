@@ -1,6 +1,5 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
-import { customerAPI } from "../api/smartMerrologyAPI";
 import { RootState } from "./store";
 import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDotForEso } from "./utils/utils";
 
@@ -341,14 +340,14 @@ export const addReportEsoTC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2022'},
+                        calibrationDate: '11.2023'},
                     {reportId: id,
                         id: v1(),
                         standardName: 'Прибор комбинированный цифровой',
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2023'},
+                        calibrationDate: '01.2024'},
                 ],
                 
                 calculation: [
@@ -419,7 +418,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Р40116',
                 standardNumber: '090',
                 value: '---',
-                calibrationDate: '11.2022'
+                calibrationDate: '11.2023'
             }, 
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
@@ -428,7 +427,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Testo 511',
                 standardNumber: '39113412/607',
                 value: '---',
-                calibrationDate: '11.2022'
+                calibrationDate: '11.2023'
             },
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
@@ -437,7 +436,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Testo 605-H1',
                 standardNumber: '41110955/406',
                 value: '---',
-                calibrationDate: '01.2023'
+                calibrationDate: '01.2024'
             },
         ],
         
