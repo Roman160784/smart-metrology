@@ -156,7 +156,7 @@ export const findPermissibleValueForMrp120 = (dot: number, calibrationValue: str
 export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], calibrationValue: string, calibrationDot: number, reportId: string, calculationId: string) => {
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let satadardError = findStandardErrorForMrp120(calibrationDot, calibrationValue)
-    let userError = findUserErrorInDotForMrp120(calibrationDot, calibrationValue)
+    let userError = findUserErrorInDotForMrp120(calibrationMiddleValue, calibrationValue)
     let uncertaintyMiddle = findSKO(dataForCalibration)
     let uncertaintyStnadardError = findUncertainty(satadardError)
     let uncertaintyUserError = findUncertainty(userError)
@@ -383,7 +383,14 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     } else if (calibrationValue === E6CalibrationValue.om) {
-        permissibleValue = 0.03 * calibrationDot + 3
+        if (calibrationDot > 0 && calibrationDot <= 9.99){
+            permissibleValue = 0.03 * calibrationDot + 0.03 
+        }else if(calibrationDot >= 10 && calibrationDot <= 99.9){
+            permissibleValue = 0.03 * calibrationDot + 0.3
+        }else if(calibrationDot >= 100 && calibrationDot <= 999){
+            permissibleValue = 0.03 * calibrationDot + 3
+        }
+        
     }
     return +permissibleValue.toFixed(4)
 }
@@ -466,7 +473,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = 0.5
         } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
-            userError = findEmrForE6_24(calibrationDot, calibrationValue)
+            userError = findEmrForE6_24(calibrationMiddleValue, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_24(calibrationDot, calibrationValue)
 
@@ -476,7 +483,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = 0.5
         } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
-            userError = findEmrForE6_24(calibrationDot, calibrationValue)
+            userError = findEmrForE6_24(calibrationMiddleValue, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_24_1(calibrationDot, calibrationValue)
 
@@ -486,7 +493,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = 0.5
         } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
-            userError = findEmrForE6_24(calibrationDot, calibrationValue)
+            userError = findEmrForE6_24(calibrationMiddleValue, calibrationValue)
         }
         permissibleValue = findPermissibleValueForE6_30(calibrationDot, calibrationValue)
 
@@ -496,7 +503,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = 0.5
         } else if (calibrationValue !== E6CalibrationValue.volts) {
             satadardError = findStandardErrorForP40116(calibrationDot, calibrationValue)
-            userError = findEmrForE6_24(calibrationDot, calibrationValue)
+            userError = findEmrForE6_24(calibrationMiddleValue, calibrationValue)
         }
 
         if (calibrationObjectType === "ПСИ-2500") {
@@ -664,7 +671,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
             uncertaintyStnadardError = findUncertainty(satadardError)
         } else if (calibrationValue === ValueIfnEnum.om) {
             satadardError = calibrationDot * 0.02 / 100
-            userError = findUserErrorIfnOm(calibrationDot)
+            userError = findUserErrorIfnOm(calibrationMiddleValue)
             uncertaintyStnadardError = findUncertainty(satadardError)
         } else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
             if(calibrationDot > 10) {
@@ -684,7 +691,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
             uncertaintyStnadardError = findUncertainty(satadardError)
         }else if (calibrationValue === ValueIfnEnum.om) {
             satadardError = calibrationDot * 0.02 / 100
-            userError = findUserErrorIfnOm(calibrationDot)
+            userError = findUserErrorIfnOm(calibrationMiddleValue)
             uncertaintyStnadardError = findUncertainty(satadardError)
         }else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
             if(calibrationDot > 10) {
