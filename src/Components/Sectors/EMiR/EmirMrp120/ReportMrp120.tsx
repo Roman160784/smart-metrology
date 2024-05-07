@@ -131,7 +131,7 @@ export const ReportMrp120 = () => {
           </div>
           <div className={st.final}>
 
-            <span>Калибровочное клеймо: </span>
+            <span onClick={() => { navigateToCertificate(report.reportId) }} className={st.certificate}>Свидетельство о калибровке: </span>
             <EditableSpan title={report!.stigma} changeTitle={(title) => { changeReportTitleHandler(report.reportId, 'stigma', title) }} />
           </div>
           <div className={st.final}>
@@ -145,7 +145,6 @@ export const ReportMrp120 = () => {
         </div>
         <div className={st.printer} onClick={onSetLastPageHandler}>
           <FiPrinter onClick={pdfHandler} />
-          <span onClick={() => { navigateToCertificate(report.reportId) }} className={st.certificate}>{'Cоздать свидетельство'}</span>
         </div>
       </div>
     </div>

@@ -465,7 +465,10 @@ export const ReportE6andPsi = () => {
             </span>
           </div>
           <div className={st.final}>
-            <span>Калибровочное клеймо: </span>
+            <span  onClick={() => {
+              navigateToCertificate(report.reportId);
+            }}
+            className={st.certificate}>Свидетельство о калибровке: </span>
             <EditableSpan
               title={report!.stigma}
               changeTitle={(title) => {
@@ -494,14 +497,6 @@ export const ReportE6andPsi = () => {
         </div>
         <div className={st.printer} onClick={onSetLastPageHandler}>
           <FiPrinter onClick={pdfHandler} />
-          <span
-            onClick={() => {
-              navigateToCertificate(report.reportId);
-            }}
-            className={st.certificate}
-          >
-            {"Cоздать свидетельство"}
-          </span>
         </div>
       </div>
     </div>
