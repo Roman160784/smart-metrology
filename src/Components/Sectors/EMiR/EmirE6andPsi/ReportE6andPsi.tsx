@@ -35,10 +35,12 @@ export const ReportE6andPsi = () => {
   const params = useParams<"id">();
   let reportId = params.id;
   const [value, setValue] = useState<string>("");
+  const [lastPage, setLastPage] = useState<number>(3)
+    let pageCounter: number = 3
 
   let reportsE6andPsi = useSelector(selectReportE6);
   let report: ReportE6Type;
-  let lastPage: number = 3;
+  
 
   let element = reportsE6andPsi.find((el) => el.reportId === reportId);
   if (element) {
@@ -56,6 +58,9 @@ export const ReportE6andPsi = () => {
     documentTitle: "Report",
   });
 
+  const onSetLastPageHandler = ()=> {
+    setLastPage(pageCounter)
+  }
   const selectHandler = (
     reportId: string,
     event: ChangeEvent<HTMLSelectElement>
@@ -399,7 +404,7 @@ export const ReportE6andPsi = () => {
         />
       </div>
       {report!.calculation.map((el, i) => {
-        lastPage++;
+        pageCounter++;
         return (
           <div key={i} className={st.page}>
             <div className={st.header}>
@@ -487,7 +492,7 @@ export const ReportE6andPsi = () => {
             />
           </div>
         </div>
-        <div className={st.printer}>
+        <div className={st.printer} onClick={onSetLastPageHandler}>
           <FiPrinter onClick={pdfHandler} />
           <span
             onClick={() => {

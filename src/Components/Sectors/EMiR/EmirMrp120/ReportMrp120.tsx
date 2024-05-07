@@ -27,7 +27,9 @@ export const ReportMrp120 = () => {
   let reportId = params.id
   let reportsMrp120 = useSelector(selectReportMrp120)
   let report: ReportMrp120Type
-  let lastPage: number = 3
+  
+  const [lastPage, setLastPage] = useState<number>(3)
+    let pageCounter: number = 3
 
   let element = reportsMrp120.find(el => el.reportId === reportId)
   if (element) {
@@ -40,6 +42,10 @@ export const ReportMrp120 = () => {
     content: () => componentRef.current!,
     documentTitle: 'Report',
   })
+
+  const onSetLastPageHandler = ()=> {
+    setLastPage(pageCounter)
+  }
 
   const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
     let newValue = e.currentTarget.value
@@ -88,7 +94,7 @@ export const ReportMrp120 = () => {
       </div>
       {
         report!.calculation.map((el, i) => {
-          lastPage++
+          pageCounter++
           return (
             <div key={i} className={st.page}>
               <div className={st.header}>
@@ -137,7 +143,7 @@ export const ReportMrp120 = () => {
             <EditableSpan title={report!.boss} changeTitle={(title) => { changeReportTitleHandler(report.reportId, 'boss', title) }} />
           </div>
         </div>
-        <div className={st.printer}>
+        <div className={st.printer} onClick={onSetLastPageHandler}>
           <FiPrinter onClick={pdfHandler} />
           <span onClick={() => { navigateToCertificate(report.reportId) }} className={st.certificate}>{'Cоздать свидетельство'}</span>
         </div>

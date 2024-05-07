@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react';
+import React, { useRef} from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { addReportEsoTC, removeReportTC, ReportEsoType } from '../../../Redux/EsoReducer';
@@ -7,7 +7,7 @@ import { useAppDispatch } from '../../../Redux/store';
 import {FiTrash} from "react-icons/fi"
 import { Button } from '../Button/Button';
 import st from './AllReports.module.css'
-import { pathEmirEnum } from '../../Sectors/EMiR/EmirNavReports/EmirNavReports';
+
 import { addNewReportMrp120TC, removeReportMrp120TC, ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { v1 } from 'uuid';
 import { addNewReportE6TC, removeReportE6TC, ReportE6Type } from '../../../Redux/E6Reducer';

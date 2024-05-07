@@ -25,8 +25,11 @@ export const ReportEso = () => {
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
   const [value, setValue] = useState<string>('')
+  const [lastPage, setLastPage] = useState<number>(3)
+  let pageCounter: number = 3
 
-  let lastPage:number = 3
+
+
 
   const params = useParams<'id'>();
   let reportId = params.id
@@ -48,7 +51,12 @@ export const ReportEso = () => {
   const pdfHandler = useReactToPrint({
     content: () => componentRef.current!,
     documentTitle: 'Report',
+
   })
+
+  const onSetLastPageHandler = ()=> {
+    setLastPage(pageCounter)
+  }
 
   const changeReportTitleHandler = (id: string, key: string, parameter: string) => {
     dispatch(updateReportTitleTC({ reportId: id, key: key, parameter: parameter }))
@@ -98,7 +106,7 @@ export const ReportEso = () => {
       </div>
       {
         report!.calculation.map((el, i) => {
-          lastPage++
+          pageCounter++ 
           return (
             <div key={i} className={st.page}>
                <div className={st.header}>
@@ -128,7 +136,7 @@ export const ReportEso = () => {
       <div className={st.final}>
         <span>Заключение о соответствии:</span>
         <div className={st.final}>
-          <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} ${report!.serialNumber}` }</span>
+          <span>{`${report!.calibrationObjectName} ${report!.calibrationObjectType} № ${report!.serialNumber}` }</span>
         </div>
         <div className={st.final}>
         <span> <ResultInDot/> </span>
@@ -147,7 +155,7 @@ export const ReportEso = () => {
         <EditableSpan title={report!.boss} changeTitle={(title) => {changeReportTitleHandler( report.reportId, 'boss', title)}}/>
         </div>
       </div>
-      <div className={st.printer}>
+      <div className={st.printer} onClick={onSetLastPageHandler}>
       <FiPrinter onClick={pdfHandler}/>
       <span onClick={() => {navigateToCertificate(report.reportId)}} className={st.certificate}>{'Cоздать свидетельство'}</span>
       </div>
