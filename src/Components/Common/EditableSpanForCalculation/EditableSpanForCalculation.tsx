@@ -3,22 +3,36 @@ import st from './EditableSpanForCalculation.module.css'
 
 type EditableSpanForCalculationPropsType = {
     title: string
-    changeTitle: (title: string) => void
+    changeTitle: (title: number, toFixedValue: number) => void
     }
 
 export const EditableSpanForCalculation = ({title, changeTitle ,...props}: EditableSpanForCalculationPropsType) => {
     
  const [value, setValue] = useState(title)
  const [mode, setEditMode] = useState <boolean>(true)
+ const regex = /^[0-9,]*$/
 
  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    // console.log(e.currentTarget.value);
-    setValue(e.currentTarget.value)   
+    let newValue: string = e.currentTarget.value 
+    if (regex.test(newValue.trim())) {
+        setValue(newValue);
+      }
 }
 
 const onKeyPressHandler = (e: KeyboardEvent <HTMLInputElement>) => {
-    if(value.trim() !== '' &&  e.key === 'Tab'){
-        changeTitle(value)
+    
+    if(e.key === 'Tab'){
+        let toFixedValue: number = 0
+        let valueForCount: number = 0
+        if(value.includes(',')){
+            toFixedValue = value.split(",")[1]?.length || 0;
+            valueForCount = +value.replace(",", ".") 
+        }else{
+            toFixedValue = 0
+            valueForCount = +value
+        }
+        
+        changeTitle(valueForCount, toFixedValue)
         setEditMode(false)
     } 
 }

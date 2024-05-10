@@ -152,8 +152,8 @@ export const findPermissibleValueForMrp120 = (dot: number, calibrationValue: str
     return +permissibleValue.toFixed(3)
 }
 
-//Cоздание нового объекта с расчитанными значениями для MRP-120 
-export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], calibrationValue: string, calibrationDot: number, reportId: string, calculationId: string) => {
+// Cоздание нового объекта с расчитанными значениями для MRP-120 
+export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], calibrationValue: string, calibrationDot: number, reportId: string, calculationId: string, toFixedValue?: number) => {
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let satadardError = findStandardErrorForMrp120(calibrationDot, calibrationValue)
     let userError = findUserErrorInDotForMrp120(calibrationMiddleValue, calibrationValue)
@@ -174,27 +174,27 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
     let newCalibrationField: CalculationEsoType = {
         reportId: reportId,
         calculationId: calculationId,
-        calibrationDot: calibrationDot,
+        calibrationDot: stringHelper(calibrationDot, toFixedValue!),
         testVoltage: '-',
-        dataForCalibration: dataForCalibration,
-        calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
-        satadardError: +satadardError.toFixed(3),
-        userError: +userError.toFixed(3),
-        uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
-        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
-        uncertaintyUserError: +uncertaintyUserError.toFixed(3),
-        uncertaintyResult: +uncertaintyResult.toFixed(3),
+        dataForCalibration: stringArrayHelper(dataForCalibration, toFixedValue!),
+        calibrationMiddleValue: stringHelper(calibrationMiddleValue, toFixedValue!),
+        satadardError: stringHelper(satadardError, toFixedValue!+2),
+        userError: stringHelper(userError, toFixedValue!+2),
+        uncertaintyMiddle: stringHelper(uncertaintyMiddle, toFixedValue!+2),
+        uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, toFixedValue!+2),
+        uncertaintyUserError: stringHelper(uncertaintyUserError, toFixedValue!+2),
+        uncertaintyResult: stringHelper(uncertaintyResult, toFixedValue!+2),
         // uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
         // uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
         // uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
-        uncertaintyStanadardErrorPercent: +resPercent[1].toFixed(3),
-        uncertaintyUserErrorPercent: +resPercent[2].toFixed(3),
+        uncertaintyMiddlePercent: stringHelper(resPercent[0], 2),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[1], 2),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[2], 2),
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-        uncertaintyResultPercent: 100,
-        error: +error.toFixed(3),
-        permissibleValue: +permissibleValue.toFixed(3),
-        expandedUncertainty: +expandedUncertainty.toFixed(2),
+        uncertaintyResultPercent: stringHelper(100, 0),
+        error: stringHelper(error, toFixedValue!),
+        permissibleValue: stringHelper(permissibleValue, toFixedValue!),
+        expandedUncertainty: stringHelper(expandedUncertainty, toFixedValue!+1),
         calibrationValue: calibrationValue,
     }
 
@@ -456,7 +456,7 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
 
 //Cоздание нового объекта с расчитанными значениями для мегомметров E6
 
-export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string) => {
+export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string, toFixedValue: number) => {
 
 
 
@@ -527,24 +527,24 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
     let newCalibrationField: CalculationEsoType = {
         reportId: reportId,
         calculationId: calculationId,
-        calibrationDot: calibrationDot,
+        calibrationDot: stringHelper(calibrationDot, toFixedValue),
         testVoltage: testVoltage,
-        dataForCalibration: dataForCalibration,
-        calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
-        satadardError: +satadardError.toFixed(3),
-        userError: +userError.toFixed(3),
-        uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
-        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
-        uncertaintyUserError: +uncertaintyUserError.toFixed(3),
-        uncertaintyResult: +uncertaintyResult.toFixed(3),
-        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
-        uncertaintyStanadardErrorPercent: +resPercent[2].toFixed(3),
-        uncertaintyUserErrorPercent: +resPercent[1].toFixed(3),
+        dataForCalibration: stringArrayHelper(dataForCalibration, toFixedValue),
+        calibrationMiddleValue: stringHelper(calibrationMiddleValue, toFixedValue),
+        satadardError: stringHelper(satadardError, 5),
+        userError: stringHelper(userError, toFixedValue + 1),
+        uncertaintyMiddle: stringHelper(uncertaintyMiddle, 4),
+        uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, 4),
+        uncertaintyUserError: stringHelper(uncertaintyUserError, 4),
+        uncertaintyResult: stringHelper(uncertaintyResult, 4),
+        uncertaintyMiddlePercent: stringHelper(resPercent[0], 3),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 3),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 3),
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-        uncertaintyResultPercent: 100,
-        error: +error.toFixed(3),
-        permissibleValue: +permissibleValue.toFixed(3),
-        expandedUncertainty: +expandedUncertainty.toFixed(3),
+        uncertaintyResultPercent: '100',
+        error: stringHelper(error, toFixedValue),
+        permissibleValue: stringHelper(permissibleValue, toFixedValue),
+        expandedUncertainty: stringHelper(expandedUncertainty, toFixedValue+1),
         calibrationValue: calibrationValue,
     }
     return newCalibrationField
@@ -652,7 +652,7 @@ const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue
 
 //Cоздание нового объекта с расчитанными значениями для ИФН
 
-export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[]) => {
+export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[], toFixedValue?: number) => {
 
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let uncertaintyMiddle = findSKO(dataForCalibration)
@@ -717,32 +717,65 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
 
     let newCalvulation: NewCalculationIfnType = {
         calculationId: calculationId,
-        calibrationDot: +calibrationDot.toFixed(4),
-        calibrationMiddleValue: +calibrationMiddleValue.toFixed(4),
+        calibrationDot: stringHelper(calibrationDot, toFixedValue!),
+        calibrationMiddleValue: stringHelper(calibrationMiddleValue, toFixedValue!),
         calibrationValue: calibrationValue,
         calibrationValueSelect: calibrationValueSelect,
-        dataForCalibration: dataForCalibration,
-        error: +error.toFixed(4),
-        expandedUncertainty: +expandedUncertainty.toFixed(4),
+        dataForCalibration: stringArrayHelper(dataForCalibration, toFixedValue!),
+        error: stringHelper(error, toFixedValue!),
+        expandedUncertainty: stringHelper(expandedUncertainty, toFixedValue! + 2),
         mode: mode,
         modeSelect: modeSelect,
-        permissibleValue: +permissibleValue.toFixed(4),
+        permissibleValue: stringHelper(permissibleValue, toFixedValue!),
         reportId: reportId,
-        satadardError: +satadardError.toFixed(6),
+        satadardError: stringHelper(satadardError, toFixedValue! + 3),
         standardValueInDot: +calibrationDot.toFixed(4), 
         standardValue: standardValue,
-        uncertaintyMiddle: +uncertaintyMiddle.toFixed(4),
-        uncertaintyMiddlePercent: +resPercent[0].toFixed(3),
-        uncertaintyResult: +uncertaintyResult.toFixed(4),
+        uncertaintyMiddle: stringHelper(uncertaintyMiddle, toFixedValue! + 2),
+        uncertaintyMiddlePercent: stringHelper(resPercent[0], 2),
+        uncertaintyResult: stringHelper(uncertaintyResult, toFixedValue! + 2),
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(4),
-        uncertaintyResultPercent: 100,
-        uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(4),
-        uncertaintyStanadardErrorPercent: +resPercent[2].toFixed(3),
-        uncertaintyUserError: +uncertaintyUserError.toFixed(4),
-        uncertaintyUserErrorPercent: +resPercent[1].toFixed(3),
-        userError: +userError.toFixed(4),
+        uncertaintyResultPercent: '100',
+        uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, toFixedValue! + 2),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 2),
+        uncertaintyUserError: stringHelper(uncertaintyUserError, toFixedValue! + 2),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 2),
+        userError: stringHelper(userError, toFixedValue! + 2),
     }
 
     return newCalvulation
 }
 
+//функции которая принимает число или массив чисел и значение округления приобразует в строку или массив строк и обратно
+export const stringHelper = (value: number, toFixedValue: number) => {
+    let newValue: string = ''
+        newValue = value.toFixed(toFixedValue).replace('.', ',')
+    return newValue   
+}
+export const stringArrayHelper = (arr: number[], toFixedValue: number) => {
+    let newArr: string[] = []
+    newArr = arr.map(el => el.toFixed(toFixedValue).replace('.', ','))
+    return newArr   
+}
+export const numberHelper = (value: string) => { 
+    let valueForCount: number = 0
+   if(value.includes(',')){
+    valueForCount = +value.replace(',', '.');
+   }else{
+    valueForCount = +value
+   }
+      return valueForCount
+}
+export const numberArrHelper = (arr: string[]) => {
+    let numberArrValue: number[] = [];
+    numberArrValue = arr.map((el) => {
+      if (el.includes(',')) {
+        return +el.replace(',', '.');
+      } else {
+        return +el;
+      }
+    });
+    return numberArrValue;
+  };
+// .......................................................................................
+numberHelper('10')

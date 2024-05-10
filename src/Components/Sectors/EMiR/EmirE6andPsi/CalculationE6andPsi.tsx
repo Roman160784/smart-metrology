@@ -10,7 +10,7 @@ import st from '../EmirEso/CalculationEso/CalculationEso.module.css'
 type CalculationE6andPsiPropsType = {
     calculation: CalculationEsoType
     removeCalculationField: (reportId: string, id: string) => void
-    updateDataForCalculation: (reportId: string, calculationId: string, index: number, dot: number) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, dot: number, toFixedValue: number) => void
     updateCalibrationValue: (reportId: string, calculationId: string,  calibrationValue: string) => void
     updateTestVoltage: (reportId: string, calculationId: string,  testVoltage: string) => void
 }
@@ -66,7 +66,7 @@ return (
                                 return (
                                     <tr key={i}>
                                         <td><EditableSpanForCalculation title={el.toString()} 
-             changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, +title)}}/></td>
+             changeTitle={(title, toFixedValue) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, +title, toFixedValue)}}/></td>
                                     </tr>
                                 )
                             })

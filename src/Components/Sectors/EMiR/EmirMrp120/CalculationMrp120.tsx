@@ -8,7 +8,7 @@ import st from '../EmirEso/CalculationEso/CalculationEso.module.css'
 type CalculationMrp120PropsType = {
     calculation: CalculationEsoType
     removeCalculationField: (reportId: string, id: string) => void
-    updateDataForCalculation: (reportId: string, calculationId: string, index: number, dot: number) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, dot: number, toFixedValue: number) => void
     updateCalibrationValue: (reportId: string, calculationId: string, calibrationValue: string) => void
 }
 
@@ -20,7 +20,7 @@ const [selectedValue, setSelectedValue] = useState<string>(calculation.calibrati
 const selectHandler = ( reportId: string, calculationId: string, event: ChangeEvent<HTMLSelectElement>) => {
     const newValue = event.target.value;
     setSelectedValue(newValue);
-    updateCalibrationValue(reportId, calculationId, newValue)
+    updateCalibrationValue(reportId, calculationId, newValue,)
 }
 
     return(
@@ -50,7 +50,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                             return (
                                 <tr key={i}>
                                     <td><EditableSpanForCalculation title={el.toString()} 
-         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, +title)}}/></td>
+         changeTitle={(title, toFixedValue) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, +title, toFixedValue)}}/></td>
                                 </tr>
                             )
                         })

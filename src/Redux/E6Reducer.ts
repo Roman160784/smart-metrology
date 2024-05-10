@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from "uuid"
 import { CalculationEsoType, ReportEsoType,} from "./EsoReducer"
 import { RootState } from "./store"
-import { createNewCalibrationFieldE6 } from "./utils/utils"
+import { createNewCalibrationFieldE6, numberArrHelper, numberHelper } from "./utils/utils"
 
 
 export const E6TypeId = '12345'
@@ -109,28 +109,29 @@ export const addNewReportE6TC = createAsyncThunk(
                     },
                 ],
             
-                calculation: [{
-                    reportId: param.reportId,
-                    calculationId: 'calc2',
-                    calibrationDot: 1,
-                    testVoltage: "500 В",
-                    dataForCalibration: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-                    calibrationMiddleValue: 1,
-                    satadardError: 0,
-                    userError: 0,
-                    uncertaintyMiddle: 0,
-                    uncertaintyStnadardError: 0,
-                    uncertaintyUserError: 0,
-                    uncertaintyResult: 0,
-                    uncertaintyMiddlePercent: 0,
-                    uncertaintyStanadardErrorPercent: 0,
-                    uncertaintyUserErrorPercent: 0,
-                    uncertaintyResultPercent: 0,
-                    error: 0,
-                    permissibleValue: 0,
-                    expandedUncertainty: 0,
-                    calibrationValue: E6CalibrationValue.volts
-                },
+                calculation: [
+                //     {
+                //     reportId: param.reportId,
+                //     calculationId: 'calc2',
+                //     calibrationDot: 1,
+                //     testVoltage: "500 В",
+                //     dataForCalibration: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
+                //     calibrationMiddleValue: 1,
+                //     satadardError: 0,
+                //     userError: 0,
+                //     uncertaintyMiddle: 0,
+                //     uncertaintyStnadardError: 0,
+                //     uncertaintyUserError: 0,
+                //     uncertaintyResult: 0,
+                //     uncertaintyMiddlePercent: 0,
+                //     uncertaintyStanadardErrorPercent: 0,
+                //     uncertaintyUserErrorPercent: 0,
+                //     uncertaintyResultPercent: 0,
+                //     error: 0,
+                //     permissibleValue: 0,
+                //     expandedUncertainty: 0,
+                //     calibrationValue: E6CalibrationValue.volts
+                // },
                 ],
                 stigma: 'BY00045',
                 boss: 'Д. В. Миранович: Начальник сектора ЭМиР ',
@@ -176,19 +177,20 @@ export const removeCalibrationFieldE6TC = createAsyncThunk(
 )
 export const updateDaraForCalculationCalibrationE6TC = createAsyncThunk(
     'e6Report/updateDaraForCalculationCalibrationMrpE6',
-    async (param: { reportId: string, calculationId: string, index: number, dot: number }, { dispatch, getState, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, index: number, dot: number, toFixedValue: number }, { dispatch, getState, rejectWithValue }) => {
         try {
             let state = getState() as RootState
             let report = state.reportE6.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
             let calibrationObjectType = report?.calibrationObjectType
-            let dataForCalibration = calculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el) 
-            let calibrationDot = calculation?.calibrationDot
+            let dataForCalibrationArr = numberArrHelper(calculation!.dataForCalibration)
+            let dataForCalibration = dataForCalibrationArr.map((el, i) => i === param.index ? el = param.dot : el) 
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
             let calibrationValue = calculation?.calibrationValue
             let testVoltage = calculation?.testVoltage
             let newCalibrationField: CalculationEsoType = 
             createNewCalibrationFieldE6(dataForCalibration!, calibrationObjectType!,
-                 testVoltage, calibrationValue, calibrationDot!, param.reportId, param.calculationId)
+                 testVoltage, calibrationValue, calibrationDot!, param.reportId, param.calculationId, param.toFixedValue)
 
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }
@@ -264,12 +266,12 @@ export const updateCalibrationValueE6TC = createAsyncThunk(
             let report = state.reportE6.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
             let calibrationObjectType = report?.calibrationObjectType
-            let dataForCalibration = calculation?.dataForCalibration 
+            let dataForCalibration = numberArrHelper(calculation!.dataForCalibration) 
             let testVoltage = calculation?.testVoltage
-            let calibrationDot = calculation?.calibrationDot
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
             let newCalibrationField: CalculationEsoType = 
             createNewCalibrationFieldE6(dataForCalibration!, calibrationObjectType!, testVoltage, param.calibrationValue, calibrationDot!, 
-                param.reportId, param.calculationId)  
+                param.reportId, param.calculationId, 1)  
                    
             return {reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }
@@ -285,7 +287,7 @@ export const updateCalibrationValueE6TC = createAsyncThunk(
 
 export const addNewCalibrationFieldForE6andPsiTC = createAsyncThunk(
     'e6Report/addNewCalibrationFieldForE6andPsi',
-    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, getState, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, dot: number, toFixedValue: number }, { dispatch, getState, rejectWithValue }) => {
         try {
             
             let state = getState() as RootState
@@ -299,8 +301,8 @@ export const addNewCalibrationFieldForE6andPsiTC = createAsyncThunk(
             let calibrationValue = E6CalibrationValue.mom
             let testVoltage = '500 В'
             
-            let newCalibrationField = createNewCalibrationFieldE6(dataForCalibration, calibrationObjectType!, testVoltage, calibrationValue, param.dot, param.reportId, param.calculationId)
-            return { reportId: param.reportId, calibrationObjectType: calibrationObjectType, newCalibrationField: newCalibrationField}
+            let newCalibrationField = createNewCalibrationFieldE6(dataForCalibration, calibrationObjectType!, testVoltage, calibrationValue, param.dot, param.reportId, param.calculationId, param.toFixedValue)
+            return { reportId: param.reportId, calibrationObjectType: calibrationObjectType, newCalibrationField: newCalibrationField }
         }
         catch (e: any) {
 
@@ -386,23 +388,23 @@ const initialState: ReportE6Type[] = [
     calculation: [{
         reportId: reportId,
         calculationId: 'calc1',
-        calibrationDot: 1,
+        calibrationDot: '1',
         testVoltage: "500 В",
-        dataForCalibration: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1],
-        calibrationMiddleValue: 1,
-        satadardError: 0,
-        userError: 0,
-        uncertaintyMiddle: 0,
-        uncertaintyStnadardError: 0,
-        uncertaintyUserError: 0,
-        uncertaintyResult: 0,
-        uncertaintyMiddlePercent: 0,
-        uncertaintyStanadardErrorPercent: 0,
-        uncertaintyUserErrorPercent: 0,
-        uncertaintyResultPercent: 0,
-        error: 0,
-        permissibleValue: 0,
-        expandedUncertainty: 0,
+        dataForCalibration: ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1'],
+        calibrationMiddleValue: '1',
+        satadardError: '0',
+        userError: '0',
+        uncertaintyMiddle: '0',
+        uncertaintyStnadardError: '0',
+        uncertaintyUserError: '0',
+        uncertaintyResult: '0',
+        uncertaintyMiddlePercent: '0',
+        uncertaintyStanadardErrorPercent: '0',
+        uncertaintyUserErrorPercent: '0',
+        uncertaintyResultPercent: '0',
+        error: '0',
+        permissibleValue: '0',
+        expandedUncertainty: '0',
         calibrationValue: E6CalibrationValue.mom
     },
     ],

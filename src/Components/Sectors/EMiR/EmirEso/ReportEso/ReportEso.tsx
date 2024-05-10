@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, {useRef, useState } from 'react';
 import { ReportFirstPage } from '../../../../ReportFirstPage/ReportFrirstPage';
 import { ReportHeader } from '../../../../ReportHeader/ReportHeder';
 import { useReactToPrint } from 'react-to-print'
@@ -24,7 +24,6 @@ export const ReportEso = () => {
   const componentRef = useRef()
   const navigate = useNavigate()
   const dispatch = useAppDispatch()
-  const [value, setValue] = useState<string>('')
   const [lastPage, setLastPage] = useState<number>(3)
   let pageCounter: number = 3
 
@@ -70,24 +69,17 @@ export const ReportEso = () => {
     dispatch(removeCalculationFieldTC({reportId: reportId, calculationId: id}))
   }
 
-  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number) => {
-    dispatch(updateCalculationDataTC({reportId: reportId, calculationId: calculationId, index: index, testVoltage: testVoltage, dot: dot}))
+  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number, toFixedValue: number) => {
+    dispatch(updateCalculationDataTC({reportId: reportId, calculationId: calculationId, index: index, testVoltage: testVoltage, dot: dot, toFixedValue: toFixedValue}))
   }
 
   const updateTestVoltageHandler = (reportId: string, calculationId: string, testVoltage: string) => {
     dispatch(updateTestVolageCalculationFieldTC({reportId: reportId, calculationId: calculationId, testVoltage: testVoltage}))
   }
 
-  const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newValue = e.currentTarget.value
-    setValue(newValue)
-  }
 
-  const onblurHandler = (reportId: string) => {
-    if (value.trim() !== '') {
-      dispatch(addNewCalibrationFieldTC({reportId: reportId, calculationId: v1(),  dot: +value,}))
-    }
-    setValue('')
+  const onblurHandler = (reportId: string, toFixedValue: number, valueForCount: number) => {
+      dispatch(addNewCalibrationFieldTC({reportId: reportId, calculationId: v1(),  dot: valueForCount, toFixedValue: toFixedValue}))
   }
 
   const navigateToCertificate = (reportId: string) => {
@@ -128,7 +120,7 @@ export const ReportEso = () => {
                 <span className={st.headerTitle}>от {report!.calibrationDate}</span>
                 <span className={st.headerTitle}>страница {lastPage} страниц {lastPage}</span>
             </div>
-            <div className={st.inputBlock}><Input value={value} onChange={inputHandler} onBlur={()=>{onblurHandler(report.reportId)}} />
+            <div className={st.inputBlock}><Input  onBlur={(toFixedValue: number, valueForCount: number)=>{onblurHandler(report.reportId, toFixedValue, valueForCount)}} />
           <span className={st.spanInput}>Добавьте точку калибровки</span></div>
           <div className={st.gym}>
         <Gym/>

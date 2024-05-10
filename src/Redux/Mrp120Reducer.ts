@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import {  CalculationEsoType, ReportEsoType, sectorEmirId } from "./EsoReducer";
 import { RootState } from "./store";
-import { createNewCalibrationFieldMRP120, findInterestDeposit, findMiddleValueFromArray, findPermissibleValueForMrp120, findSKO, findStandardErrorForMrp120, findTotalUncertainty, findUncertainty, findUserErrorInDotForMrp120 } from "./utils/utils";
+import { createNewCalibrationFieldMRP120, findInterestDeposit, findMiddleValueFromArray, findPermissibleValueForMrp120, findSKO, findStandardErrorForMrp120, findTotalUncertainty, findUncertainty, findUserErrorInDotForMrp120, numberArrHelper, numberHelper, stringArrayHelper, stringHelper } from "./utils/utils";
 
 
  const mrp120Id = '1234'
@@ -175,8 +175,8 @@ export const updateCalibrationValueMrp120TC = createAsyncThunk(
             let state = getState() as RootState
             let report = state.reportMrp120.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
-            let dataForCalibration = calculation?.dataForCalibration 
-            let calibrationDot = calculation?.calibrationDot
+            let dataForCalibration = numberArrHelper(calculation!.dataForCalibration)
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
             let newCalibrationField: CalculationEsoType = 
             createNewCalibrationFieldMRP120(dataForCalibration!, param.calibrationValue, calibrationDot!, param.reportId, param.calculationId)
 
@@ -193,16 +193,17 @@ export const updateCalibrationValueMrp120TC = createAsyncThunk(
 
 export const updateDaraForCalculationCalibrationMrp120TC = createAsyncThunk(
     'mrp120Report/updateDaraForCalculationCalibrationMrp120',
-    async (param: { reportId: string, calculationId: string, index: number, dot: number}, { dispatch, getState, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, index: number, dot: number, toFixedValue: number}, { dispatch, getState, rejectWithValue }) => {
         try {
             let state = getState() as RootState
             let report = state.reportMrp120.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
-            let dataForCalibration = calculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el) 
-            let calibrationDot = calculation?.calibrationDot
+            let dataForCalibrationArray = numberArrHelper(calculation!.dataForCalibration)
+            let dataForCalibration = dataForCalibrationArray.map((el, i) => i === param.index ? el = param.dot : el)
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
             let calibrationValue = calculation?.calibrationValue
             let newCalibrationField: CalculationEsoType = 
-            createNewCalibrationFieldMRP120(dataForCalibration!, calibrationValue!, calibrationDot!, param.reportId, param.calculationId)
+            createNewCalibrationFieldMRP120(dataForCalibration!, calibrationValue!, calibrationDot!, param.reportId, param.calculationId, param.toFixedValue)
 
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }
@@ -217,13 +218,12 @@ export const updateDaraForCalculationCalibrationMrp120TC = createAsyncThunk(
 
 export const addNewCalibrationFielMrp120dTC = createAsyncThunk(
     'mrp120Report/addNewCalibrationFieldMrp120',
-    async (param: { reportId: string, calculationId: string, dot: number}, { dispatch, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, dot: number, toFixedValue: number}, { dispatch, rejectWithValue }) => {
         try {
             let dataForCalibration: number[] = []
             for (let index = 0; index < 10; index++) {
                 dataForCalibration.push(param.dot)
             }
-
             let calibrationValue = 'В'
             let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
             let satadardError = findStandardErrorForMrp120(param.dot, calibrationValue)
@@ -244,23 +244,23 @@ export const addNewCalibrationFielMrp120dTC = createAsyncThunk(
             let newCalibrationField: CalculationEsoType = {
                 reportId: param.reportId,
                 calculationId: param.calculationId,
-                calibrationDot: param.dot,
+                calibrationDot: stringHelper(param.dot, param.toFixedValue),
                 testVoltage: '-',
-                dataForCalibration: dataForCalibration,
-                calibrationMiddleValue: +calibrationMiddleValue.toFixed(3),
-                satadardError: +satadardError.toFixed(3),
-                userError: +userError.toFixed(3),
-                uncertaintyMiddle: +uncertaintyMiddle.toFixed(3),
-                uncertaintyStnadardError: +uncertaintyStnadardError.toFixed(3),
-                uncertaintyUserError: +uncertaintyUserError.toFixed(3),
-                uncertaintyResult: +uncertaintyResult.toFixed(3),
-                uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
-                uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
-                uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-                error: +error.toFixed(3),
-                permissibleValue: +permissibleValue.toFixed(3),
-                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                dataForCalibration: stringArrayHelper(dataForCalibration, param.toFixedValue),
+                calibrationMiddleValue: stringHelper(calibrationMiddleValue, param.toFixedValue),
+                satadardError: stringHelper(satadardError, param.toFixedValue + 3),
+                userError: stringHelper(userError, param.toFixedValue + 3),
+                uncertaintyMiddle: stringHelper(uncertaintyMiddle, param.toFixedValue + 3),
+                uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, param.toFixedValue + 3),
+                uncertaintyUserError: stringHelper(uncertaintyUserError, param.toFixedValue + 3),
+                uncertaintyResult: stringHelper(uncertaintyResult, param.toFixedValue + 3),
+                uncertaintyMiddlePercent: stringHelper(uncertaintyMiddlePercent, 2),
+                uncertaintyStanadardErrorPercent: stringHelper(uncertaintyStanadardErrorPercent, 2),
+                uncertaintyUserErrorPercent: stringHelper(uncertaintyUserErrorPercent, 2),
+                uncertaintyResultPercent: stringHelper(uncertaintyResultPercent, 0),
+                error: stringHelper(error, param.toFixedValue),
+                permissibleValue: stringHelper(permissibleValue, param.toFixedValue),
+                expandedUncertainty: stringHelper(expandedUncertainty, param.toFixedValue + 1),
                 calibrationValue: calibrationValue,
             }
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }

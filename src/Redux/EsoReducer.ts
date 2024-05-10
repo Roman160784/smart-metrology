@@ -1,28 +1,28 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from 'uuid';
 import { RootState } from "./store";
-import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDotForEso } from "./utils/utils";
+import { findInterestDeposit, findMiddleValueFromArray, findPermissibleValue, findSKO, findStandardErrorForEso, findTotalUncertainty, findUncertainty, findUserErrorInDotForEso, numberArrHelper, numberHelper, stringArrayHelper, stringHelper } from "./utils/utils";
 
 export type CalculationEsoType = {
     reportId: string
     calculationId: string
-    calibrationDot: number
+    calibrationDot: string
     testVoltage: string
-    dataForCalibration: number[]
-    calibrationMiddleValue: number
-    satadardError: number
-    userError: number
-    uncertaintyMiddle: number
-    uncertaintyStnadardError: number
-    uncertaintyUserError: number
-    uncertaintyResult: number
-    uncertaintyMiddlePercent: number
-    uncertaintyStanadardErrorPercent: number
-    uncertaintyUserErrorPercent: number
-    uncertaintyResultPercent: number
-    error: number
-    permissibleValue: number
-    expandedUncertainty: number
+    dataForCalibration: string[]
+    calibrationMiddleValue: string
+    satadardError: string
+    userError: string
+    uncertaintyMiddle: string
+    uncertaintyStnadardError: string
+    uncertaintyUserError: string
+    uncertaintyResult: string
+    uncertaintyMiddlePercent: string
+    uncertaintyStanadardErrorPercent: string
+    uncertaintyUserErrorPercent: string
+    uncertaintyResultPercent: string
+    error: string
+    permissibleValue: string
+    expandedUncertainty: string
     calibrationValue: string
 }
 
@@ -93,14 +93,17 @@ export const typeEsoId = v1()
 
 export const updateCalculationDataTC = createAsyncThunk(
     'esoReport/updateCalculationData',
-    async (param: { reportId: string, calculationId: string, index: number, testVoltage: string, dot: number },
+    async (param: { reportId: string, calculationId: string, index: number, testVoltage: string, dot: number, toFixedValue: number },
+        
         { dispatch, getState, rejectWithValue }) => {
         try {
+            
             let state = getState() as RootState
             let report = state.reportEso.find(r => r.reportId === param.reportId)
             let newCalculation = report?.calculation.find(el => el.calculationId === param.calculationId)
-            let calibrationDot = newCalculation?.calibrationDot
-            let newDataForCalculation = newCalculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el)
+            let calibrationDot = numberHelper(newCalculation!.calibrationDot)
+            let newArr = numberArrHelper(newCalculation!.dataForCalibration)
+            let newDataForCalculation = newArr.map((el, i) => i === param.index ? el = param.dot : el)
             let calibrationMiddleValue = findMiddleValueFromArray(newDataForCalculation!)
             let satadardError = findStandardErrorForEso(calibrationDot!)
             let userError = findUserErrorInDotForEso(calibrationDot!)
@@ -117,30 +120,32 @@ export const updateCalculationDataTC = createAsyncThunk(
             let coefficient = 2
             let expandedUncertainty = coefficient * uncertaintyResult
 
+    
             let newCalibrationField: CalculationEsoType = {
                 reportId: param.reportId,
                 calculationId: param.calculationId,
-                calibrationDot: calibrationDot!,
+                calibrationDot: stringHelper(calibrationDot!, param.toFixedValue),
                 testVoltage: param.testVoltage,
-                dataForCalibration: newDataForCalculation!,
-                calibrationMiddleValue: calibrationMiddleValue,
-                satadardError: satadardError,
-                userError: userError,
-                uncertaintyMiddle: uncertaintyMiddle,
-                uncertaintyStnadardError: uncertaintyStnadardError,
-                uncertaintyUserError: uncertaintyUserError,
-                uncertaintyResult: uncertaintyResult,
-                uncertaintyMiddlePercent: uncertaintyMiddlePercent,
-                uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
-                uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
-                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-                error: +error.toFixed(3),
-                permissibleValue: permissibleValue,
-                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                dataForCalibration: stringArrayHelper(newDataForCalculation!, param.toFixedValue),
+                calibrationMiddleValue: stringHelper(calibrationMiddleValue, param.toFixedValue),
+                satadardError: stringHelper(satadardError, 5),
+                userError: stringHelper(userError, 5),
+                uncertaintyMiddle: stringHelper(uncertaintyMiddle, 5),
+                uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, 5),
+                uncertaintyUserError: stringHelper(uncertaintyUserError, 5),
+                uncertaintyResult: stringHelper(uncertaintyResult, 5),
+                uncertaintyMiddlePercent: stringHelper(uncertaintyMiddlePercent, 2),
+                uncertaintyStanadardErrorPercent: stringHelper(uncertaintyStanadardErrorPercent, 2),
+                uncertaintyUserErrorPercent: stringHelper(uncertaintyUserErrorPercent, 2),
+                uncertaintyResultPercent: stringHelper(uncertaintyResultPercent, 0),
+                error: stringHelper(error, param.toFixedValue),
+                permissibleValue: stringHelper(permissibleValue, param.toFixedValue),
+                expandedUncertainty: stringHelper(expandedUncertainty, param.toFixedValue + 2),
                 calibrationValue: 'MOм',
             }
 
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
+           
         }
         catch (e: any) {
 
@@ -153,7 +158,7 @@ export const updateCalculationDataTC = createAsyncThunk(
 
 export const addNewCalibrationFieldTC = createAsyncThunk(
     'esoReport/addNewCalibrationField',
-    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, rejectWithValue, }) => {
+    async (param: { reportId: string, calculationId: string, dot: number, toFixedValue: number }, { dispatch, rejectWithValue, }) => {
         try {
 
             //Заполняем массив значениями для вычисления
@@ -191,23 +196,23 @@ export const addNewCalibrationFieldTC = createAsyncThunk(
             let newCalibrationField: CalculationEsoType = {
                 reportId: param.reportId,
                 calculationId: param.calculationId,
-                calibrationDot: param.dot,
+                calibrationDot: stringHelper(param.dot, param.toFixedValue),
                 testVoltage: '500 В',
-                dataForCalibration: dataForCalibration,
-                calibrationMiddleValue: calibrationMiddleValue,
-                satadardError: satadardError,
-                userError: userError,
-                uncertaintyMiddle: uncertaintyMiddle,
-                uncertaintyStnadardError: uncertaintyStnadardError,
-                uncertaintyUserError: uncertaintyUserError,
-                uncertaintyResult: uncertaintyResult,
-                uncertaintyMiddlePercent: uncertaintyMiddlePercent,
-                uncertaintyStanadardErrorPercent: uncertaintyStanadardErrorPercent,
-                uncertaintyUserErrorPercent: uncertaintyUserErrorPercent,
-                uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
-                error: +error.toFixed(3),
-                permissibleValue: permissibleValue,
-                expandedUncertainty: +expandedUncertainty.toFixed(2),
+                dataForCalibration: stringArrayHelper(dataForCalibration, param.toFixedValue),
+                calibrationMiddleValue: stringHelper(calibrationMiddleValue, param.toFixedValue),
+                satadardError: stringHelper(satadardError, 5),
+                userError: stringHelper(userError, 5),
+                uncertaintyMiddle: stringHelper(uncertaintyMiddle, 5),
+                uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, 5),
+                uncertaintyUserError: stringHelper(uncertaintyUserError, 5),
+                uncertaintyResult: stringHelper(uncertaintyResult, 5),
+                uncertaintyMiddlePercent: stringHelper(uncertaintyMiddlePercent, 2),
+                uncertaintyStanadardErrorPercent: stringHelper(uncertaintyStanadardErrorPercent, 2),
+                uncertaintyUserErrorPercent: stringHelper(uncertaintyUserErrorPercent, 2),
+                uncertaintyResultPercent: stringHelper(uncertaintyResultPercent, 0),
+                error: stringHelper(error, param.toFixedValue),
+                permissibleValue: stringHelper(permissibleValue, param.toFixedValue),
+                expandedUncertainty: stringHelper(expandedUncertainty, param.toFixedValue + 1),
                 calibrationValue: 'MOм',
             }
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField }
@@ -444,23 +449,23 @@ const initialState: ReportEsoType[] = [
             {
                 calculationId: '1',
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
-                calibrationDot: 1,
+                calibrationDot: '1',
                 testVoltage: '500 B',
-                dataForCalibration: [1, 3, 3, 4, 1, 1, 1, 1, 1, 1],
-                calibrationMiddleValue: 0,
-                satadardError: 0,
-                userError: 0,
-                uncertaintyMiddle: 0,
-                uncertaintyStnadardError: 0,
-                uncertaintyUserError: 0,
-                uncertaintyResult: 0,
-                uncertaintyMiddlePercent: 0,
-                uncertaintyStanadardErrorPercent: 0,
-                uncertaintyUserErrorPercent: 0,
-                uncertaintyResultPercent: 0,
-                error: 0,
-                permissibleValue: 0,
-                expandedUncertainty: 0,
+                dataForCalibration: ['1', '3', '3', '4', '1', '1', '1', '1', '1', '1'],
+                calibrationMiddleValue: '0',
+                satadardError: '0',
+                userError: '0',
+                uncertaintyMiddle: '0',
+                uncertaintyStnadardError: '0',
+                uncertaintyUserError: '0',
+                uncertaintyResult: '0',
+                uncertaintyMiddlePercent: '0',
+                uncertaintyStanadardErrorPercent: '0',
+                uncertaintyUserErrorPercent: '0',
+                uncertaintyResultPercent: '0',
+                error: '0',
+                permissibleValue: '0',
+                expandedUncertainty: '0',
                 calibrationValue: 'MOм',
             }
         ],

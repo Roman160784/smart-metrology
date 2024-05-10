@@ -2,7 +2,7 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit"
 import { v1 } from "uuid"
 import { CalculationEsoType, ReportEsoType} from "./EsoReducer"
 import { RootState } from "./store"
-import { createNewCalibrationFieldIfn } from "./utils/utils"
+import { createNewCalibrationFieldIfn, numberArrHelper, numberHelper } from "./utils/utils"
 
 
 const traceabilityIfn = 'Обеспечивается прослеживамость до Национальных эталонов электрического сопротивления - НЭ РБ 29-16, напряжения переменного тока в диапазоне частот 10 Гц – 2 ГГц НЭ РБ 5-01'
@@ -181,12 +181,12 @@ export const updateCalibrationValueIfnTC = createAsyncThunk(
             let report = state.reportIfn.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
             let calibrationObjectType = report?.calibrationObjectType
-            let dataForCalibration = calculation?.dataForCalibration 
+            let dataForCalibration = numberArrHelper(calculation!.dataForCalibration )
             let calibrationValueSelect = calculation?.calibrationValueSelect
             let mode = calculation?.mode
             let modeSelect = calculation?.modeSelect
             let standardValue = calculation?.standardValue
-            let calibrationDot = calculation?.calibrationDot
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
 
             let newCalibrationField = createNewCalibrationFieldIfn(calibrationDot!, param.reportId, param.calculationId, dataForCalibration!, calibrationObjectType, param.calibrationValue, calibrationValueSelect!, mode, modeSelect!, standardValue!)
                    
@@ -203,21 +203,22 @@ export const updateCalibrationValueIfnTC = createAsyncThunk(
 
 export const updateDaraForCalculationCalibrationIfnTC = createAsyncThunk(
     'IfnReport/updateDaraForCalculationCalibrationIfn',
-    async (param: { reportId: string, calculationId: string, index: number, dot: number }, { dispatch, getState, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, index: number, dot: number, toFixedValue : number  }, { dispatch, getState, rejectWithValue }) => {
         try {
             let state = getState() as RootState
             let report = state.reportIfn.find(r => r.reportId === param.reportId)
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
             let calibrationObjectType = report?.calibrationObjectType
-            let dataForCalibration = calculation?.dataForCalibration.map((el, i) => i === param.index ? el = param.dot : el) 
-            let calibrationDot = calculation?.calibrationDot
+            let dataForCalibrationArr = numberArrHelper(calculation!.dataForCalibration)
+            let dataForCalibration = dataForCalibrationArr.map((el, i) => i === param.index ? el = param.dot : el) 
+            let calibrationDot = numberHelper(calculation!.calibrationDot)
             let calibrationValue = calculation?.calibrationValue
             let calibrationValueSelect = calculation?.calibrationValueSelect
             let mode = calculation?.mode
             let modeSelect = calculation?.modeSelect
             let standardValue = calculation?.standardValue
             
-            let newCalibrationField = createNewCalibrationFieldIfn(calibrationDot!, param.reportId, param.calculationId, dataForCalibration!, calibrationObjectType, calibrationValue, calibrationValueSelect!, mode, modeSelect!, standardValue!)
+            let newCalibrationField = createNewCalibrationFieldIfn(calibrationDot!, param.reportId, param.calculationId, dataForCalibration!, calibrationObjectType, calibrationValue, calibrationValueSelect!, mode, modeSelect!, standardValue!, param.toFixedValue)
 
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }
@@ -238,7 +239,7 @@ export const updateStandardDataForCalculationCalibrationIfnTC = createAsyncThunk
             let calculation = report?.calculation.find(el => el.calculationId === param.calculationId)
             let standardValue = calculation?.standardValue.map(el => el.id === param.id ? {...el, checked: param.checked} : el)
             let calibrationObjectType = report?.calibrationObjectType
-            let dataForCalibration = calculation?.dataForCalibration
+            let dataForCalibration = numberArrHelper(calculation!.dataForCalibration)
             //
             let calibrationDot = param.standardValueInDot
             let calibrationValue = calculation?.calibrationValue
@@ -247,7 +248,7 @@ export const updateStandardDataForCalculationCalibrationIfnTC = createAsyncThunk
             let modeSelect = calculation?.modeSelect
             
             
-            let newCalibrationField = createNewCalibrationFieldIfn(calibrationDot!, param.reportId, param.calculationId, dataForCalibration!, calibrationObjectType, calibrationValue, calibrationValueSelect!, mode, modeSelect!, standardValue!)
+            let newCalibrationField = createNewCalibrationFieldIfn(calibrationDot!, param.reportId, param.calculationId, dataForCalibration!, calibrationObjectType, calibrationValue, calibrationValueSelect!, mode, modeSelect!, standardValue!, 2)
 
             return { reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }
@@ -278,9 +279,8 @@ export const removeCalibrationFieldIfnTC = createAsyncThunk(
 
 export const addNewCalibrationFieldIfnReportTC = createAsyncThunk(
     'IfnReport/addNewcalibratonFieldIfn',
-    async (param: { reportId: string, calculationId: string, dot: number }, { dispatch, getState, rejectWithValue }) => {
+    async (param: { reportId: string, calculationId: string, dot: number, toFixedValue : number }, { dispatch, getState, rejectWithValue }) => {
         try {
-            
             let state = getState() as RootState
             let report = state.reportIfn.find(r => r.reportId === param.reportId)
             let dataForCalibration: number[] = []
@@ -302,7 +302,7 @@ export const addNewCalibrationFieldIfnReportTC = createAsyncThunk(
                 { id: v1(), title: ValueIfnEnum.omActiv, value: StandardValueEnum.omActiv_140, checked: false },
             ]
 
-            let newCalibrationField = createNewCalibrationFieldIfn(param.dot, param.reportId, param.calculationId, dataForCalibration, calibrationObjectType, calibrationValue, calibrationValueSelect, mode, modeSelect, standardValue)
+            let newCalibrationField = createNewCalibrationFieldIfn(param.dot, param.reportId, param.calculationId, dataForCalibration, calibrationObjectType, calibrationValue, calibrationValueSelect, mode, modeSelect, standardValue, param.toFixedValue)
             return { reportId: param.reportId, calibrationObjectType: calibrationObjectType, newCalibrationField: newCalibrationField}
         }
         catch (e: any) {
@@ -469,18 +469,18 @@ const initialState: ReportIfnType[] = [{
     calculation: [
         {
             calculationId: '11113',
-            calibrationDot: 1,
-            calibrationMiddleValue: 1,
+            calibrationDot: '1',
+            calibrationMiddleValue: '1',
             calibrationValue:ValueIfnEnum.om,
             calibrationValueSelect: [ValueIfnEnum.om, ValueIfnEnum.omActiv, ValueIfnEnum.omReact, ValueIfnEnum.voltsAC],
-            dataForCalibration: [1, 1, 1, 1, 1, 1, 1, 1, 1, 1,],
-            error: 0,
-            expandedUncertainty: 0,
+            dataForCalibration: ['1', '1', '1', '1', '1', '1', '1', '1', '1', '1',],
+            error: '0',
+            expandedUncertainty: '0',
             mode: modeEnum.om,
             modeSelect: [ modeEnum.om, modeEnum.L_L, modeEnum.L_N, modeEnum.voltsAC, modeEnum.L_Lr, modeEnum.L_Lx, modeEnum.L_Nr, modeEnum.L_Nx],
-            permissibleValue: 1,
+            permissibleValue: '1',
             reportId: reportId,
-            satadardError: 0,
+            satadardError: '0',
             standardValueInDot: StandardValueEnum.omReact_0_27,
             standardValue:
                 [
@@ -491,15 +491,15 @@ const initialState: ReportIfnType[] = [{
                     { id: v1(), title: ValueIfnEnum.omActiv, value: StandardValueEnum.omActiv_1_07, checked: false },
                     { id: v1(), title: ValueIfnEnum.omActiv, value: StandardValueEnum.omActiv_140, checked: false },
                 ],
-            uncertaintyMiddle: 0,
-            uncertaintyMiddlePercent: 1,
-            uncertaintyResult: 0,
-            uncertaintyResultPercent: 1,
-            uncertaintyStnadardError: 1,
-            uncertaintyStanadardErrorPercent: 1,
-            uncertaintyUserError: 1,
-            uncertaintyUserErrorPercent: 1,
-            userError: 1,
+            uncertaintyMiddle: '0',
+            uncertaintyMiddlePercent: '1',
+            uncertaintyResult: '0',
+            uncertaintyResultPercent: '1',
+            uncertaintyStnadardError: '1',
+            uncertaintyStanadardErrorPercent: '1',
+            uncertaintyUserError: '1',
+            uncertaintyUserErrorPercent: '1',
+            userError: '1',
         }
     ],
     stigma: 'BY00045',

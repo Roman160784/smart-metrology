@@ -9,7 +9,7 @@ import { ResultTableEsoHeader } from '../../../../Common/ResultTableEsoHeader/Re
 type CalculationEsoPropsType = {
     calculation: CalculationEsoType
     removeCalculationField: (reportId: string, id: string) => void
-    updateDataForCalculation: (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number) => void
+    updateDataForCalculation: (reportId: string, calculationId: string, index: number, testVoltage: string, dot: number, toFixedValue: number) => void
     updateTestVoltage: (reportId: string, calculationId: string,  testVoltage: string) => void
 }
 
@@ -38,7 +38,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
                             return (
                                 <tr key={i}>
                                     <td><EditableSpanForCalculation title={el.toString()} 
-         changeTitle={(title) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title)}}/></td>
+         changeTitle={(title, toFixedValue) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title, toFixedValue)}}/></td>
                                 </tr>
                             )
                         })

@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useRef, useState } from 'react';
+import React, {useRef, useState } from 'react';
 import { FiPrinter } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
@@ -23,7 +23,6 @@ export const ReportMrp120 = () => {
   const navigate = useNavigate()
   const componentRef = useRef()
   const params = useParams<'id'>();
-  const [value, setValue] = useState<string>('')
   let reportId = params.id
   let reportsMrp120 = useSelector(selectReportMrp120)
   let report: ReportMrp120Type
@@ -47,16 +46,9 @@ export const ReportMrp120 = () => {
     setLastPage(pageCounter)
   }
 
-  const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newValue = e.currentTarget.value
-    setValue(newValue)
-  }
-
-  const onblurHandler = (reportId: string) => {
-    if (value.trim() !== '') {
-      dispatch(addNewCalibrationFielMrp120dTC({ reportId: reportId, calculationId: v1(), dot: +value, }))
-    }
-    setValue('')
+ 
+  const onblurHandler = (reportId: string, toFixedValue: number, valueForCount: number) => {
+  dispatch(addNewCalibrationFielMrp120dTC({ reportId: reportId, calculationId: v1(), dot: valueForCount, toFixedValue: toFixedValue}))
   }
   
   const changeReportTitleHandler = (id: string, key: string, parameter: string) => {
@@ -66,8 +58,8 @@ export const ReportMrp120 = () => {
     dispatch(changeStandardCalibrationDateTC({reportId: reportId, key: key, parameter: title, id: id}))
   }
 
-  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, dot: number) => {
-      dispatch(updateDaraForCalculationCalibrationMrp120TC({reportId: reportId, calculationId: calculationId, index: index, dot: dot}))
+  const updateDataForCalculation = (reportId: string, calculationId: string, index: number, dot: number, toFixedValue: number) => {
+      dispatch(updateDaraForCalculationCalibrationMrp120TC({reportId: reportId, calculationId: calculationId, index: index, dot: dot, toFixedValue: toFixedValue}))
       
   }
   const removeCalculationField = (reportId: string, id: string) => {
@@ -116,7 +108,7 @@ export const ReportMrp120 = () => {
           <span className={st.headerTitle}>от {report!.calibrationDate}</span>
           <span className={st.headerTitle}>страница {lastPage} страниц {lastPage}</span>
         </div>
-        <div className={st.inputBlock}><Input value={value} onChange={inputHandler} onBlur={() => { onblurHandler(report.reportId) }} />
+        <div className={st.inputBlock}><Input  onBlur={(toFixedValue: number, valueForCount: number)=>{onblurHandler(report.reportId, toFixedValue, valueForCount)}} />
           <span className={st.spanInput}>Добавьте точку калибровки</span></div>
         <div className={st.gym}>
           <Gym />

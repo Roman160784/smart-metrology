@@ -15,7 +15,8 @@ type CalculatonIfnPropsType = {
     reportId: string,
     calculationId: string,
     index: number,
-    dot: number
+    dot: number,
+    toFixedValue: number
   ) => void;
   updateCalibrationValue: (
     reportId: string,
@@ -165,12 +166,13 @@ export const CalculatonIfn = ({
                 <td>
                   <EditableSpanForCalculation
                     title={el.toString()}
-                    changeTitle={(title) => {
+                    changeTitle={(title, toFixedValue) => {
                       updateDataForCalculation(
                         calculation.reportId,
                         calculation.calculationId,
                         i,
-                        +title
+                        +title,
+                        toFixedValue
                       );
                     }}
                   />

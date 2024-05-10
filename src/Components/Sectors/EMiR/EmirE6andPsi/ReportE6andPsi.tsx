@@ -34,7 +34,7 @@ export const ReportE6andPsi = () => {
   const navigate = useNavigate();
   const params = useParams<"id">();
   let reportId = params.id;
-  const [value, setValue] = useState<string>("");
+  
   const [lastPage, setLastPage] = useState<number>(3)
     let pageCounter: number = 3
 
@@ -75,22 +75,10 @@ export const ReportE6andPsi = () => {
     );
   };
 
-  const inputHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    let newValue = e.currentTarget.value;
-    setValue(newValue);
-  };
+ 
 
-  const onblurHandler = (reportId: string) => {
-    if (value.trim() !== "") {
-      dispatch(
-        addNewCalibrationFieldForE6andPsiTC({
-          reportId: reportId,
-          calculationId: v1(),
-          dot: +value,
-        })
-      );
-    }
-    setValue("");
+  const onblurHandler = (reportId: string, toFixedValue: number, valueForCount: number) => {
+    dispatch(addNewCalibrationFieldForE6andPsiTC({reportId: reportId, calculationId: v1(),  dot: valueForCount, toFixedValue: toFixedValue}));
   };
 
   const changeReportTitleHandler = (
@@ -123,14 +111,14 @@ export const ReportE6andPsi = () => {
     reportId: string,
     calculationId: string,
     index: number,
-    dot: number
+    dot: number, toFixedValue: number
   ) => {
     dispatch(
       updateDaraForCalculationCalibrationE6TC({
         reportId: reportId,
         calculationId: calculationId,
         index: index,
-        dot: dot,
+        dot: dot, toFixedValue: toFixedValue
       })
     );
   };
@@ -439,13 +427,7 @@ export const ReportE6andPsi = () => {
           </span>
         </div>
         <div className={st.inputBlock}>
-          <Input
-            value={value}
-            onChange={inputHandler}
-            onBlur={() => {
-              onblurHandler(report.reportId);
-            }}
-          />
+        <Input  onBlur={(toFixedValue: number, valueForCount: number)=>{onblurHandler(report.reportId, toFixedValue, valueForCount)}} />
           <span className={st.spanInput}>Добавьте точку калибровки</span>
         </div>
         <div className={st.gym}>
