@@ -228,7 +228,6 @@ export const findStandardErrorForVoltmetrCV8500 = (calibrationDot: number) => {
 //Расчёт погрешности эталона для мера-иммитатора Р40116
 
 export const findStandardErrorForP40116 = (calibrationDot: number, calibrationValue: string) => {
-    debugger
     let standardErronInDot = 0
     if (calibrationValue === E6CalibrationValue.kom) {
         if (calibrationDot <= 100) {
