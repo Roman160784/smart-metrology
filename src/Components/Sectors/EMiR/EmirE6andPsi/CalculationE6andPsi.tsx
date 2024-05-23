@@ -45,6 +45,7 @@ return (
                                 <option value={E6CalibrationValue.kom}>{E6CalibrationValue.kom}</option>
                                 <option value={E6CalibrationValue.om}>{E6CalibrationValue.om}</option>
                                 <option value={E6CalibrationValue.volts}>{E6CalibrationValue.volts}</option>
+                                <option value={E6CalibrationValue.miom}>{E6CalibrationValue.miom}</option>
                                 </select>
                                 {` При U =  `}
                                 <EditableSpan title={calculation.testVoltage} changeTitle={(title) => 

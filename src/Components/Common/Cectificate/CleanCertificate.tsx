@@ -10,7 +10,7 @@ import { ReportEsoType } from '../../../Redux/EsoReducer';
 import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { ResultInDot } from '../ResultInDot/ResultInDot';
 import { ReportE6Type } from '../../../Redux/E6Reducer';
-import { ReportIfnType } from '../../../Redux/IfnReducer';
+
 
 type CleanCetrificatePropsType = {
     report: ReportEsoType | ReportMrp120Type | ReportE6Type 
@@ -63,7 +63,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Объект калибровки</span>
                     <span className={st.certificateNumber}>
-                        {report.calibrationObjectName} {report.calibrationObjectType}
+                         {report.calibrationObjectType}
                     </span>
                     <div>
                         <span className={st.serialNumber}>зав. №</span>

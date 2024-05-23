@@ -423,8 +423,8 @@ const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue
 
     return +permissibleValue.toFixed(3)
 }
-//Ищем допускаемое значене для ПСИ-2510 ПСИ-2530
 
+//Ищем допускаемое значене для ПСИ-2510 ПСИ-2530
 const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue: string) => {
     let permissibleValue = 0
     if (calibrationValue === E6CalibrationValue.volts) {
@@ -454,6 +454,50 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
     return +permissibleValue.toFixed(3)
 }
 
+//ищем емр для ис
+const findUserErrorIS = (calibrationMiddleValue : number, calibrationValue : string) => {
+    let userError = 0
+    if(calibrationValue === E6CalibrationValue.miom && calibrationMiddleValue >= 1 &&  calibrationMiddleValue <= 999) {
+        userError = 0.5
+    }else if (calibrationValue === E6CalibrationValue.om && calibrationMiddleValue >= 0.01 &&  calibrationMiddleValue <= 9.99) {
+        userError = 0.005
+    }else if (calibrationValue === E6CalibrationValue.om && calibrationMiddleValue >= 10 &&  calibrationMiddleValue <= 99.9) {
+        userError = 0.05
+    }else if (calibrationValue === E6CalibrationValue.om && calibrationMiddleValue >= 100 &&  calibrationMiddleValue <= 999) {
+        userError = 0.5
+    }else if (calibrationValue === E6CalibrationValue.kom && calibrationMiddleValue >= 0.01 &&  calibrationMiddleValue <= 9.99) {
+        userError = 0.005
+    }
+
+    return +userError.toFixed(4)
+}
+
+//ищем погрешность эталона Р4834 
+const findStandardErrorIsP4834 = (calibrationMiddleValue: number) => {
+    let absoluteTolerance = 0.05 * calibrationMiddleValue / 100;
+  return +absoluteTolerance.toFixed(7);
+}
+
+//Ищем допускаемые значения для ИС
+const findPermissibleValueIS = (calibrationDot: number, calibrationValue: string) => {
+    let permissibleValue = 0
+    if (calibrationValue === E6CalibrationValue.miom) {
+        permissibleValue = 0.03 * calibrationDot + 3
+    }else if (calibrationValue === E6CalibrationValue.om) {
+            if (calibrationDot >= 0.01 &&  calibrationDot <= 9.99 ){
+                permissibleValue = 0.03 * calibrationDot + 0.03
+            }else if(calibrationDot >= 10 &&  calibrationDot <= 99.9){
+                permissibleValue = 0.03 * calibrationDot + 0.3
+            } else if(calibrationDot >= 100 &&  calibrationDot <= 999){
+                permissibleValue = 0.03 * calibrationDot + 3
+            }
+    } else if(calibrationValue === E6CalibrationValue.kom) {
+        permissibleValue = 0.03 * calibrationDot + 0.03
+    }
+
+    return +permissibleValue.toFixed(4)
+}
+
 //Cоздание нового объекта с расчитанными значениями для мегомметров E6
 
 export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string, toFixedValue: number) => {
@@ -467,7 +511,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
     let permissibleValue = 0
     let coefficient = 2
 
-    if (calibrationObjectType === "Е6-24") {
+    if (calibrationObjectType === "Мегаомметр Е6-24") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
@@ -477,7 +521,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         }
         permissibleValue = findPermissibleValueForE6_24(calibrationDot, calibrationValue)
 
-    } else if (calibrationObjectType === "Е6-24/1" || calibrationObjectType === "Е6-24/2") {
+    } else if (calibrationObjectType === "Мегаомметр Е6-24/1" || calibrationObjectType === "Мегаомметр Е6-24/2") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
@@ -487,7 +531,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         }
         permissibleValue = findPermissibleValueForE6_24_1(calibrationDot, calibrationValue)
 
-    } else if (calibrationObjectType === "Е6-31" || calibrationObjectType === "Е6-31/1" || calibrationObjectType === "Е6-32") {
+    } else if (calibrationObjectType === "Мегаомметр Е6-31" || calibrationObjectType === "Мегаомметр Е6-31/1" || calibrationObjectType === "Е6-32") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
@@ -497,7 +541,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         }
         permissibleValue = findPermissibleValueForE6_30(calibrationDot, calibrationValue)
 
-    } else if (calibrationObjectType === "ПСИ-2500" || calibrationObjectType === "ПСИ-2510" || calibrationObjectType === "ПСИ-2530") {
+    } else if (calibrationObjectType === "Мегаомметр ПСИ-2500" || calibrationObjectType === "Мегаомметр ПСИ-2510" || calibrationObjectType === "Мегаомметр ПСИ-2530") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
@@ -506,14 +550,17 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
             userError = findEmrForE6_24(calibrationMiddleValue, calibrationValue)
         }
 
-        if (calibrationObjectType === "ПСИ-2500") {
+        if (calibrationObjectType === "Мегаомметр ПСИ-2500") {
             permissibleValue = findPermissibleValueForPSI2500(calibrationDot, calibrationValue)
-        } else if (calibrationObjectType === "ПСИ-2510" || calibrationObjectType === "ПСИ-2530") {
+        } else if (calibrationObjectType === "Мегаомметр ПСИ-2510" || calibrationObjectType === "Мегаомметр ПСИ-2530") {
             permissibleValue = findPermissibleValueForPSI2510(calibrationDot, calibrationValue)
         }
 
+    } else if (calibrationObjectType === "Измеритель сопротивления заземления ИС-10" || calibrationObjectType === "Измеритель сопротивления заземления ИС-10/1" || calibrationObjectType === "Измеритель сопротивления заземления ИС-20" || calibrationObjectType === "Измеритель сопротивления заземления ИС-20/1") {
+        userError = findUserErrorIS(calibrationMiddleValue, calibrationValue)
+        satadardError = findStandardErrorIsP4834(calibrationMiddleValue)
+        permissibleValue = findPermissibleValueIS(calibrationDot, calibrationValue)
     }
-
     let uncertaintyStnadardError = findUncertainty(satadardError)
     let uncertaintyUserError = findUncertainty(userError)
     let uncertaintyResult = findTotalUncertainty(uncertaintyMiddle, uncertaintyStnadardError, uncertaintyUserError)

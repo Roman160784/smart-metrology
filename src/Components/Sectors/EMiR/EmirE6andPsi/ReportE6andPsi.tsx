@@ -27,20 +27,18 @@ import { FiPrinter } from "react-icons/fi";
 import { CalculationE6andPsi } from "./CalculationE6andPsi";
 import { v1 } from "uuid";
 
-
 export const ReportE6andPsi = () => {
   const dispatch = useAppDispatch();
   const componentRef = useRef();
   const navigate = useNavigate();
   const params = useParams<"id">();
   let reportId = params.id;
-  
-  const [lastPage, setLastPage] = useState<number>(3)
-    let pageCounter: number = 3
+
+  const [lastPage, setLastPage] = useState<number>(3);
+  let pageCounter: number = 3;
 
   let reportsE6andPsi = useSelector(selectReportE6);
   let report: ReportE6Type;
-  
 
   let element = reportsE6andPsi.find((el) => el.reportId === reportId);
   if (element) {
@@ -58,9 +56,9 @@ export const ReportE6andPsi = () => {
     documentTitle: "Report",
   });
 
-  const onSetLastPageHandler = ()=> {
-    setLastPage(pageCounter)
-  }
+  const onSetLastPageHandler = () => {
+    setLastPage(pageCounter);
+  };
   const selectHandler = (
     reportId: string,
     event: ChangeEvent<HTMLSelectElement>
@@ -75,10 +73,19 @@ export const ReportE6andPsi = () => {
     );
   };
 
- 
-
-  const onblurHandler = (reportId: string, toFixedValue: number, valueForCount: number) => {
-    dispatch(addNewCalibrationFieldForE6andPsiTC({reportId: reportId, calculationId: v1(),  dot: valueForCount, toFixedValue: toFixedValue}));
+  const onblurHandler = (
+    reportId: string,
+    toFixedValue: number,
+    valueForCount: number
+  ) => {
+    dispatch(
+      addNewCalibrationFieldForE6andPsiTC({
+        reportId: reportId,
+        calculationId: v1(),
+        dot: valueForCount,
+        toFixedValue: toFixedValue,
+      })
+    );
   };
 
   const changeReportTitleHandler = (
@@ -111,14 +118,16 @@ export const ReportE6andPsi = () => {
     reportId: string,
     calculationId: string,
     index: number,
-    dot: number, toFixedValue: number
+    dot: number,
+    toFixedValue: number
   ) => {
     dispatch(
       updateDaraForCalculationCalibrationE6TC({
         reportId: reportId,
         calculationId: calculationId,
         index: index,
-        dot: dot, toFixedValue: toFixedValue
+        dot: dot,
+        toFixedValue: toFixedValue,
       })
     );
   };
@@ -182,24 +191,27 @@ export const ReportE6andPsi = () => {
                 <td>Объект калибровки</td>
                 <td>
                   {" "}
-                  {`Мегаомметр   `}
                   <select
                     value={selectedValue}
                     onChange={(selectedValue) => {
                       selectHandler(report.reportId, selectedValue);
                     }}
                   >
-                    <option value="Е6-24" selected={true}>
-                      Е6-24
+                    <option value="Мегаомметр Е6-24" selected={true}>
+                    Мегаомметр Е6-24
                     </option>
-                    <option value="Е6-24/1">Е6-24/1</option>
-                    <option value="Е6-24/2">Е6-24/2</option>
-                    <option value="Е6-31">Е6-31</option>
-                    <option value="Е6-31/1">Е6-31/1</option>
-                    <option value="Е6-32">Е6-32</option>
-                    <option value="ПСИ-2500">ПСИ-2500</option>
-                    <option value="ПСИ-2510">ПСИ-2510</option>
-                    <option value="ПСИ-2530">ПСИ-2530</option>
+                    <option value="Мегаомметр Е6-24/1"> Мегаомметр Е6-24/1</option>
+                    <option value="Мегаомметр Е6-24/2"> Мегаомметр Е6-24/2</option>
+                    <option value="Мегаомметр Е6-31"> Мегаомметр Е6-31</option>
+                    <option value="Мегаомметр Е6-31/1"> Мегаомметр Е6-31/1</option>
+                    <option value="Мегаомметр Е6-32"> Мегаомметр Е6-32</option>
+                    <option value="Мегаомметр ПСИ-2500"> Мегаомметр ПСИ-2500</option>
+                    <option value="Мегаомметр ПСИ-2510"> Мегаомметр ПСИ-2510</option>
+                    <option value="Мегаомметр ПСИ-2530"> Мегаомметр ПСИ-2530</option>
+                    <option value="Измеритель сопротивления заземления ИС-10"> Измеритель сопротивления заземления ИС-10</option>
+                    <option value="Измеритель сопротивления заземления ИС-10/1"> Измеритель сопротивления заземления ИС-10/1</option>
+                    <option value="Измеритель сопротивления заземления ИС-20"> Измеритель сопротивления заземления ИС-20</option>
+                    <option value="Измеритель сопротивления заземления ИС-20/1"> Измеритель сопротивления заземления ИС-20/1</option>
                   </select>
                 </td>
               </tr>
@@ -427,7 +439,11 @@ export const ReportE6andPsi = () => {
           </span>
         </div>
         <div className={st.inputBlock}>
-        <Input  onBlur={(toFixedValue: number, valueForCount: number)=>{onblurHandler(report.reportId, toFixedValue, valueForCount)}} />
+          <Input
+            onBlur={(toFixedValue: number, valueForCount: number) => {
+              onblurHandler(report.reportId, toFixedValue, valueForCount);
+            }}
+          />
           <span className={st.spanInput}>Добавьте точку калибровки</span>
         </div>
         <div className={st.gym}>
@@ -436,7 +452,7 @@ export const ReportE6andPsi = () => {
         <div className={st.final}>
           <span>Заключение о соответствии:</span>
           <div className={st.final}>
-            <span>{`${report!.calibrationObjectName} ${
+            <span>{` ${
               report!.calibrationObjectType
             } № ${report!.serialNumber}`}</span>
           </div>
@@ -447,10 +463,14 @@ export const ReportE6andPsi = () => {
             </span>
           </div>
           <div className={st.final}>
-            <span  onClick={() => {
-              navigateToCertificate(report.reportId);
-            }}
-            className={st.certificate}>Свидетельство о калибровке: </span>
+            <span
+              onClick={() => {
+                navigateToCertificate(report.reportId);
+              }}
+              className={st.certificate}
+            >
+              Свидетельство о калибровке:{" "}
+            </span>
             <EditableSpan
               title={report!.stigma}
               changeTitle={(title) => {
@@ -484,4 +504,3 @@ export const ReportE6andPsi = () => {
     </div>
   );
 };
-

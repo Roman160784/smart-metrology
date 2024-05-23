@@ -12,7 +12,8 @@ export enum E6CalibrationValue {
     om = 'Ом',
     mom = 'МОм',
     kom = 'кОм',
-    gom = 'ГОм'
+    gom = 'ГОм',
+    miom = 'мОм'
 }
 
 const traceabilityE6 = 'Обеспечивается прослеживаемость результатов измерений до Национальных эталонов электрического сопротивления - НЭ РБ 29-16б, напряжения переменного тока в диапазоне частот 10 Гц – 2 ГГц НЭ РБ 5-01'
@@ -43,7 +44,7 @@ export const addNewReportE6TC = createAsyncThunk(
                 sectorEmirId: '11111',
                 typeE6Id: typeE6Id,
                 reportId: param.reportId,
-                reportNumber: '0000/23/2160к',
+                reportNumber: '0000/24/2160к',
                 calibrationObjectName: 'Мегаомметр',
                 calibrationObjectType : 'Е6-31',
                 serialNumber: '1111',
@@ -51,7 +52,7 @@ export const addNewReportE6TC = createAsyncThunk(
                 customer: 'РУП "Гомельэнерго"',
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-                calibrationDate: '11.11.2023',
+                calibrationDate: '11.11.2024',
                 method: 'МК.ГМ 1580 - 2013, МК.ГМ 2186- 2019 Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
@@ -319,7 +320,7 @@ const initialState: ReportE6Type[] = [
     sectorEmirId: '11111',
     typeE6Id: typeE6Id,
     reportId: reportId,
-    reportNumber: '123/23/2160к',
+    reportNumber: '123/24/2160к',
     calibrationObjectName: 'Мегаомметр',
     calibrationObjectType: 'Е6-31',
     serialNumber: '1111',
@@ -327,7 +328,7 @@ const initialState: ReportE6Type[] = [
     customer: 'РУП "Гомельэнерго"',
     adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
     calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-    calibrationDate: '11.11.2023',
+    calibrationDate: '11.11.2024',
     method: 'МК.ГМ 1580 - 2013, МК.ГМ 2186- 2019 Метод прямых измерений',
     temperature: '21,0',
     relativeHumidity: '31,8',
@@ -363,7 +364,16 @@ const initialState: ReportE6Type[] = [
             standardType: 'МСР-60М',
             standardNumber: '03544',
             value: '---',
-            calibrationDate: '03.2023'
+            calibrationDate: '03.2024'
+        },
+        {
+            reportId: reportId,
+            id: v1(),
+            standardName: 'Магазин сопротивлений',
+            standardType: 'Р4834',
+            standardNumber: '03447',
+            value: '---',
+            calibrationDate: '03.2024'
         },
         {
             reportId: reportId,

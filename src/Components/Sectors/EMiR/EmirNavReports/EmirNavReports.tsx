@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink, Route, Routes } from 'react-router-dom'; 
+import { NavLink} from 'react-router-dom'; 
 import st from './EmirNavReports.module.css'
 
 export enum pathEmirEnum {
@@ -26,7 +26,7 @@ export const EmirNavReports = () => {
             </div>
             <div className={st.block}>
                 <NavLink className={st.navigation} to={pathEmirEnum.e6All}>
-                    <span className={st.navigation}> {`Мегаомметры E6 / ПСИ`} </span>
+                    <span className={st.navigation}> {`Мегаомметры E6 / ПСИ / ИС`} </span>
                 </NavLink>
             </div>
             <div className={st.block}>
