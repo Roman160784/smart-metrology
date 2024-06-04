@@ -135,7 +135,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'МСР-60М',
                         standardNumber: '03544',
                         value: '---',
-                        calibrationDate: '03.2023'
+                        calibrationDate: '03.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -444,7 +444,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'МСР-60М',
             standardNumber: '03544',
             value: '---',
-            calibrationDate: '03.2023'
+            calibrationDate: '03.2024'
         },
         {
             reportId: reportId,
