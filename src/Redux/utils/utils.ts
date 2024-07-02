@@ -270,7 +270,7 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
     } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.mom) {
-        if (calibrationDot > 1 && calibrationDot <= 9.99) {
+        if (calibrationDot >= 1 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3

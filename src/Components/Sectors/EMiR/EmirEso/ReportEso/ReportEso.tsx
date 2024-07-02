@@ -134,7 +134,9 @@ export const ReportEso = () => {
         <span> <ResultInDot/> </span>
         </div>
         <div className={st.final}>
-          <span className={st.certificate} onClick={() => {navigateToCertificate(report.reportId)}}>Свидетельство о калибровке </span>
+        
+   
+          <span className={st.certificate} onClick={() => {navigateToCertificate(report.reportId)}}> Свидетельство о калибровке </span>
           <EditableSpan title={report!.stigma} changeTitle={(title) => {changeReportTitleHandler( report.reportId, 'stigma', title)}}/>
         </div>
         <div className={st.final}>
