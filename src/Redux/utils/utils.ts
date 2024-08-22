@@ -531,7 +531,7 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         }
         permissibleValue = findPermissibleValueForE6_24_1(calibrationDot, calibrationValue)
 
-    } else if (calibrationObjectType === "Мегаомметр Е6-31" || calibrationObjectType === "Мегаомметр Е6-31/1" || calibrationObjectType === "Е6-32") {
+    } else if (calibrationObjectType === "Мегаомметр Е6-31" || calibrationObjectType === "Мегаомметр Е6-31/1" || calibrationObjectType === "Мегаомметр Е6-32") {
         if (calibrationValue === E6CalibrationValue.volts) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
             userError = 0.5
