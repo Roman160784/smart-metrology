@@ -193,7 +193,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 </div>
                 <div className={st.correspondence}>
                     <span> Заключение о соответствии : </span>
-                    <span> {report.calibrationObjectName} </span>
+                    {/* <span> {report.calibrationObjectName} </span> */}
                     <span> {report.calibrationObjectType}</span>
                     <span>{` № ${report.serialNumber}`}</span>
                 </div>

@@ -270,11 +270,11 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
     } else if (calibrationValue === E6CalibrationValue.kom) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.mom) {
-        if (calibrationDot >= 1 && calibrationDot <= 9.99) {
+        if (calibrationDot >= 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
@@ -302,7 +302,7 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
             userError = 0.005
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             userError = 0.05
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             userError = 0.5
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
@@ -341,7 +341,7 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
@@ -369,7 +369,7 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
             permissibleValue = calibrationDot * 3 / 100 + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 3 / 100 + 0.3
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 3 / 100 + 3
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
@@ -410,7 +410,7 @@ const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue
             permissibleValue = 0.03 * calibrationDot + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 0.03 + 0.3
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 0.03 + 3
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
@@ -438,7 +438,7 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
             permissibleValue = 0.025 * calibrationDot + 0.03
         } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = calibrationDot * 0.025 + 0.3
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 0.025 + 3
         }
     } else if (calibrationValue === E6CalibrationValue.gom) {
