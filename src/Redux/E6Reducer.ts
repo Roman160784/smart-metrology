@@ -44,7 +44,7 @@ export const addNewReportE6TC = createAsyncThunk(
                 sectorEmirId: '11111',
                 typeE6Id: typeE6Id,
                 reportId: param.reportId,
-                reportNumber: '0000/24/2160к',
+                reportNumber: '0000/25/2160к',
                 calibrationObjectName: 'Мегаомметр',
                 calibrationObjectType : 'Е6-31',
                 serialNumber: '1111',
@@ -52,7 +52,7 @@ export const addNewReportE6TC = createAsyncThunk(
                 customer: 'РУП "Гомельэнерго"',
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-                calibrationDate: '11.11.2024',
+                calibrationDate: '11.11.2025',
                 method: 'МК.ГМ 1580 - 2013, МК.ГМ 2186- 2019 Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
@@ -70,7 +70,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'ЦВ8500/3',
                         standardNumber: '037',
                         value: '---',
-                        calibrationDate: '10.2023'
+                        calibrationDate: '10.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -79,16 +79,16 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
-                        calibrationDate: '11.2023'
+                        calibrationDate: '11.2024'
                     },
                     {
                         reportId: param.reportId,
                         id: v1(),
                         standardName: 'Магазин сопротивлений',
                         standardType: 'МСР-60М',
-                        standardNumber: '03544',
+                        standardNumber: '03260',
                         value: '---',
-                        calibrationDate: '03.2023'
+                        calibrationDate: '03.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -97,7 +97,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2023'
+                        calibrationDate: '11.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -106,7 +106,7 @@ export const addNewReportE6TC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2024'
+                        calibrationDate: '01.2025'
                     },
                 ],
             
@@ -320,7 +320,7 @@ const initialState: ReportE6Type[] = [
     sectorEmirId: '11111',
     typeE6Id: typeE6Id,
     reportId: reportId,
-    reportNumber: '123/24/2160к',
+    reportNumber: '123/25/2160к',
     calibrationObjectName: 'Мегаомметр',
     calibrationObjectType: 'Е6-31',
     serialNumber: '1111',
@@ -328,7 +328,7 @@ const initialState: ReportE6Type[] = [
     customer: 'РУП "Гомельэнерго"',
     adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
     calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-    calibrationDate: '11.11.2024',
+    calibrationDate: '11.11.2025',
     method: 'МК.ГМ 1580 - 2013, МК.ГМ 2186- 2019 Метод прямых измерений',
     temperature: '21,0',
     relativeHumidity: '31,8',
@@ -346,7 +346,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'ЦВ8500/3',
             standardNumber: '037',
             value: '---',
-            calibrationDate: '10.2023'
+            calibrationDate: '10.2024'
         },
         {
             reportId: reportId,
@@ -355,14 +355,14 @@ const initialState: ReportE6Type[] = [
             standardType: 'Р40116',
             standardNumber: '090',
             value: '---',
-            calibrationDate: '11.2023'
+            calibrationDate: '11.2024'
         },
         {
             reportId: reportId,
             id: v1(),
             standardName: 'Магазин сопротивлений',
             standardType: 'МСР-60М',
-            standardNumber: '03544',
+            standardNumber: '03260',
             value: '---',
             calibrationDate: '03.2024'
         },
@@ -382,7 +382,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'Testo 511',
             standardNumber: '39113412/607',
             value: '---',
-            calibrationDate: '11.2023'
+            calibrationDate: '11.2024'
         },
         {
             reportId: reportId,
@@ -391,7 +391,7 @@ const initialState: ReportE6Type[] = [
             standardType: 'Testo 605-H1',
             standardNumber: '41110955/406',
             value: '---',
-            calibrationDate: '01.2024'
+            calibrationDate: '01.2025'
         },
     ],
 

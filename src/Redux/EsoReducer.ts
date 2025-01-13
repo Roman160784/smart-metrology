@@ -311,7 +311,7 @@ export const addReportEsoTC = createAsyncThunk(
                 sectorEmirId: sectorEmirId,
                 typeEsoId: typeEsoId,
                 reportId: id,
-                reportNumber: '0000/24/2160к',
+                reportNumber: '0000/25/2160к',
                 calibrationObjectName: '',
                 calibrationObjectType: 'Мегаомметр ЭС0202/2-Г',
                 serialNumber: '1111',
@@ -319,7 +319,7 @@ export const addReportEsoTC = createAsyncThunk(
                 customer: 'РУП "Гомельэнерго',
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-                calibrationDate: '11.11.2024',
+                calibrationDate: '11.11.2025',
                 method: 'МК.ГМ 1580 - 2013, Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
@@ -337,7 +337,7 @@ export const addReportEsoTC = createAsyncThunk(
                         standardType: 'Р40116',
                         standardNumber: '090',
                         value: '---',
-                        calibrationDate: '11.2023'
+                        calibrationDate: '11.2024'
                     },
                     {reportId: id,
                         id: v1(),
@@ -345,14 +345,14 @@ export const addReportEsoTC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2023'},
+                        calibrationDate: '11.2024'},
                     {reportId: id,
                         id: v1(),
                         standardName: 'Прибор комбинированный цифровой',
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2024'},
+                        calibrationDate: '01.2025'},
                 ],
                 
                 calculation: [
@@ -397,7 +397,7 @@ const initialState: ReportEsoType[] = [
         sectorEmirId: sectorEmirId,
         typeEsoId: typeEsoId,
         reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
-        reportNumber: '83/24/2160к',
+        reportNumber: '83/25/2160к',
         calibrationObjectName: '',
         calibrationObjectType: 'Мегаомметр ЭС0202/2-Г',
         serialNumber: '1111',
@@ -405,7 +405,7 @@ const initialState: ReportEsoType[] = [
         customer: 'РУП "Гомельэнерго"',
         adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
         calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-        calibrationDate: '11.11.2024',
+        calibrationDate: '11.11.2025',
         method: 'МК.ГМ 1580 - 2013, Метод прямых измерений',
         temperature: '21,0',
         relativeHumidity: '31,8',
@@ -423,7 +423,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Р40116',
                 standardNumber: '090',
                 value: '---',
-                calibrationDate: '11.2023'
+                calibrationDate: '11.2024'
             }, 
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
@@ -432,7 +432,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Testo 511',
                 standardNumber: '39113412/607',
                 value: '---',
-                calibrationDate: '11.2023'
+                calibrationDate: '11.2024'
             },
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad504',
@@ -441,7 +441,7 @@ const initialState: ReportEsoType[] = [
                 standardType: 'Testo 605-H1',
                 standardNumber: '41110955/406',
                 value: '---',
-                calibrationDate: '01.2024'
+                calibrationDate: '01.2025'
             },
         ],
         

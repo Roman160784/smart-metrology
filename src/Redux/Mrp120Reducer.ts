@@ -56,7 +56,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                 sectorEmirId: sectorEmirId,
                 typeMrp120Id: mrp120Id,
                 reportId: param.reportId,
-                reportNumber: '0000/23/2160к',
+                reportNumber: '0000/25/2160к',
                 calibrationObjectName: '',
                 calibrationObjectType: 'Измеритель напряжения прикосновения и параметров защитного отключения MRP-120',
                 serialNumber: '1111',
@@ -64,7 +64,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                 customer: 'РУП "Гомельэнерго',
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-                calibrationDate: '11.11.2023',
+                calibrationDate: '11.11.2025',
                 method: 'МК.ГМ 2114-2018 , Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
@@ -82,7 +82,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'ЦВ8500/3',
                         standardNumber: '037',
                         value: '---',
-                        calibrationDate: '10.2023'
+                        calibrationDate: '10.2024'
                     }, 
                     {
                         reportId: param.reportId,
@@ -91,7 +91,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'ЦА8500/1',
                         standardNumber: '043',
                         value: '---',
-                        calibrationDate: '10.2023'
+                        calibrationDate: '10.2024'
                     }, 
                     {
                         reportId: param.reportId,
@@ -100,7 +100,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'ERS-2',
                         standardNumber: '69',
                         value: '---',
-                        calibrationDate: '07.2023'
+                        calibrationDate: '07.2024'
                     }, 
                     {
                         reportId: param.reportId,
@@ -109,7 +109,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2023'
+                        calibrationDate: '11.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -118,7 +118,7 @@ export const addNewReportMrp120TC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2024'
+                        calibrationDate: '01.2025'
                     },
                 ],
                 
@@ -281,7 +281,7 @@ const initialState: ReportMrp120Type [] = [{
     sectorEmirId: sectorEmirId,
     typeMrp120Id: mrp120Id,
         reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
-        reportNumber: '123/24/2160к',
+        reportNumber: '123/25/2160к',
         calibrationObjectName: '',
         calibrationObjectType: 'Измеритель напряжения прикосновения и параметров защитного отключения MRP-120',
         serialNumber: '1111',
@@ -289,7 +289,7 @@ const initialState: ReportMrp120Type [] = [{
         customer: 'РУП "Гомельэнерго"',
         adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
         calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-        calibrationDate: '11.11.2024',
+        calibrationDate: '11.11.2025',
         method: 'МК.ГМ 2114-2018      Метод прямых измерений',
         temperature: '21,0',
         relativeHumidity: '31,8',
@@ -307,7 +307,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'ЦВ8500/3',
                 standardNumber: '037',
                 value: '---',
-                calibrationDate: '10.2023'
+                calibrationDate: '10.2024'
             }, 
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
@@ -316,7 +316,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'ЦА8500/1',
                 standardNumber: '043',
                 value: '---',
-                calibrationDate: '10.2023'
+                calibrationDate: '10.2024'
             }, 
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
@@ -325,7 +325,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'ERS-2',
                 standardNumber: '69',
                 value: '---',
-                calibrationDate: '07.2023'
+                calibrationDate: '07.2024'
             }, 
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
@@ -334,7 +334,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'Testo 511',
                 standardNumber: '39113412/607',
                 value: '---',
-                calibrationDate: '11.2023'
+                calibrationDate: '11.2024'
             },
             {
                 reportId: '88131ea2-5f79-11ee-8918-e3627ebad505',
@@ -343,7 +343,7 @@ const initialState: ReportMrp120Type [] = [{
                 standardType: 'Testo 605-H1',
                 standardNumber: '41110955/406',
                 value: '---',
-                calibrationDate: '01.2024'
+                calibrationDate: '01.2025'
             },
         ],
         

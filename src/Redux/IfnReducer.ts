@@ -82,7 +82,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                 sectorEmirId: '11111',
                 typeIfnId: ifnId,
                 reportId: param.reportId,
-                reportNumber: '0000/24/2160к',
+                reportNumber: '0000/25/2160к',
                 calibrationObjectType: calibrationObjectTypesEnum.ifn200,
                 allCalibrationObjectTypes: [calibrationObjectTypesEnum.ifn200, calibrationObjectTypesEnum.ifn300, calibrationObjectTypesEnum.ifn300_1],
                 serialNumber: '1111',
@@ -90,7 +90,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                 customer: 'РУП "Гомельэнерго"',
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-                calibrationDate: '11.11.2024',
+                calibrationDate: '11.11.2025',
                 method: 'МК.ГМ 2114-2018      Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
@@ -133,7 +133,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         id: v1(),
                         standardName: 'Магазин сопротивлений',
                         standardType: 'МСР-60М',
-                        standardNumber: '03544',
+                        standardNumber: '03260',
                         value: '---',
                         calibrationDate: '03.2024'
                     },
@@ -391,7 +391,7 @@ const initialState: ReportIfnType[] = [{
     sectorEmirId: '11111',
     typeIfnId: ifnId,
     reportId: reportId,
-    reportNumber: '123/24/2160к',
+    reportNumber: '123/25/2160к',
     calibrationObjectType: calibrationObjectTypesEnum.ifn200,
     allCalibrationObjectTypes: [calibrationObjectTypesEnum.ifn200, calibrationObjectTypesEnum.ifn300, calibrationObjectTypesEnum.ifn300_1],
     serialNumber: '1111',
@@ -399,7 +399,7 @@ const initialState: ReportIfnType[] = [{
     customer: 'РУП "Гомельэнерго"',
     adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
     calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-    calibrationDate: '11.11.2024',
+    calibrationDate: '11.11.2025',
     method: 'МК.ГМ 2114-2018      Метод прямых измерений',
     temperature: '21,0',
     relativeHumidity: '31,8',
@@ -417,7 +417,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'ЦВ8500/3',
             standardNumber: '037',
             value: '---',
-            calibrationDate: '10.2023'
+            calibrationDate: '10.2024'
         },
         {
             reportId: reportId,
@@ -426,7 +426,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'РЛПА.685442.003',
             standardNumber: '0067',
             value: '---',
-            calibrationDate: '09.2023'
+            calibrationDate: '09.2024'
         },
         {
             reportId: reportId,
@@ -435,14 +435,14 @@ const initialState: ReportIfnType[] = [{
             standardType: 'РЛПА.685442.003-1',
             standardNumber: '0067',
             value: '---',
-            calibrationDate: '09.2023'
+            calibrationDate: '09.2024'
         },
         {
             reportId: reportId,
             id: v1(),
             standardName: 'Магазин сопротивлений',
             standardType: 'МСР-60М',
-            standardNumber: '03544',
+            standardNumber: '03260',
             value: '---',
             calibrationDate: '03.2024'
         },
@@ -453,7 +453,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'Testo 511',
             standardNumber: '39113412/607',
             value: '---',
-            calibrationDate: '11.2023'
+            calibrationDate: '11.2024'
         },
         {
             reportId: reportId,
@@ -462,7 +462,7 @@ const initialState: ReportIfnType[] = [{
             standardType: 'Testo 605-H1',
             standardNumber: '41110955/406',
             value: '---',
-            calibrationDate: '01.2024'
+            calibrationDate: '01.2025'
         },
     ],
 
