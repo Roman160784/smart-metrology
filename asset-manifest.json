@@ -1,16 +1,16 @@
 {
   "files": {
     "main.css": "/smart-metrology/static/css/main.98185456.css",
-    "main.js": "/smart-metrology/static/js/main.1160ebb7.js",
+    "main.js": "/smart-metrology/static/js/main.766fff31.js",
     "static/js/787.9bd62e3f.chunk.js": "/smart-metrology/static/js/787.9bd62e3f.chunk.js",
     "static/media/gcscms-headimg.png": "/smart-metrology/static/media/gcscms-headimg.4f31cc0105d9f165b1cb.png",
     "index.html": "/smart-metrology/index.html",
     "main.98185456.css.map": "/smart-metrology/static/css/main.98185456.css.map",
-    "main.1160ebb7.js.map": "/smart-metrology/static/js/main.1160ebb7.js.map",
+    "main.766fff31.js.map": "/smart-metrology/static/js/main.766fff31.js.map",
     "787.9bd62e3f.chunk.js.map": "/smart-metrology/static/js/787.9bd62e3f.chunk.js.map"
   },
   "entrypoints": [
     "static/css/main.98185456.css",
-    "static/js/main.1160ebb7.js"
+    "static/js/main.766fff31.js"
   ]
 }
