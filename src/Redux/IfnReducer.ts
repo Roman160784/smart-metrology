@@ -49,9 +49,9 @@ export enum calibrationObjectTypesEnum {
 }
 
 export enum StandardValueEnum {
-    omActiv_0_33 = 0.33,
-    omActiv_1_07 = 1.10,
-    omActiv_140 = 140,
+    omActiv_0_33 = 0.32,
+    omActiv_1_07 = 1.07,
+    omActiv_140 = 139,
     omReact_0_27 = 0.27,
     omReact_2_89 = 2.89,
     omReact_162 = 162,
@@ -91,7 +91,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                 adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
                 calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
                 calibrationDate: '11.11.2025',
-                method: 'МК.ГМ 2114-2018      Метод прямых измерений',
+                method: 'МК.ГМ 2186-2019      Метод прямых измерений',
                 temperature: '21,0',
                 relativeHumidity: '31,8',
                 pressure: '100,1',
@@ -400,7 +400,7 @@ const initialState: ReportIfnType[] = [{
     adresCustumer: '246028, г Гомель ул. Головацкого 19/212',
     calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
     calibrationDate: '11.11.2025',
-    method: 'МК.ГМ 2114-2018      Метод прямых измерений',
+    method: 'МК.ГМ 2186-2019      Метод прямых измерений',
     temperature: '21,0',
     relativeHumidity: '31,8',
     pressure: '100,1',
