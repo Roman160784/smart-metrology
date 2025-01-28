@@ -161,7 +161,7 @@ return (
                             <td className={''}>{calculation.testVoltage}</td>
                             <td className={''}>{`${calculation.calibrationMiddleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.error}  ${calculation.calibrationValue}`}</td>
-                            <td className={''}> {` ± ${calculation.permissibleValue}  ${calculation.calibrationValue}`}</td>
+                            <td className={''}> {` ±${calculation.permissibleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.expandedUncertainty}  ${calculation.calibrationValue}`}</td>
                         </tr>
                     </tbody>
