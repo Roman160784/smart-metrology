@@ -143,7 +143,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                             <td className={''}>{`${calculation.calibrationDot} ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.calibrationMiddleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.error}  ${calculation.calibrationValue}`}</td>
-                            <td className={''}> {` ± ${calculation.permissibleValue}  ${calculation.calibrationValue}`}</td>
+                            <td className={''}> {` ±${calculation.permissibleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.expandedUncertainty}  ${calculation.calibrationValue}`}</td>
                         </tr>
                     </tbody>

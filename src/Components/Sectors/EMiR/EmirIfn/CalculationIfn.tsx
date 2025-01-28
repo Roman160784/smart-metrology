@@ -303,7 +303,7 @@ export const CalculatonIfn = ({
               >{`${calculation.error}  ${calculation.calibrationValue}`}</td>
               <td className={""}>
                 {" "}
-                {` ± ${calculation.permissibleValue}  ${calculation.calibrationValue}`}
+                {` ±${calculation.permissibleValue}  ${calculation.calibrationValue}`}
               </td>
               <td
                 className={""}

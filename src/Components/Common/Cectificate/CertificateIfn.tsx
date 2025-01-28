@@ -198,7 +198,7 @@ export const CertificateIfn = () => {
                                             <td className={''}>{el.mode}</td>
                                             <td className={''}>{`${el.calibrationMiddleValue}  ${el.calibrationValue}`}</td>
                                             <td className={''}>{`${el.error}  ${el.calibrationValue}`}</td>
-                                            <td className={''}> {` ± ${el.permissibleValue}  ${el.calibrationValue}`}</td>
+                                            <td className={''}> {` ±${el.permissibleValue}  ${el.calibrationValue}`}</td>
                                             <td className={''}>{`${el.expandedUncertainty}  ${el.calibrationValue}`}</td>
                                         </tr>
                                     )

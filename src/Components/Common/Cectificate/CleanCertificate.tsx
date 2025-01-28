@@ -179,7 +179,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                                             <td className={''}>{el.testVoltage}</td>
                                             <td className={''}>{`${el.calibrationMiddleValue}  ${el.calibrationValue}`}</td>
                                             <td className={''}>{`${el.error}  ${el.calibrationValue}`}</td>
-                                            <td className={''}> {` ± ${el.permissibleValue}  ${el.calibrationValue}`}</td>
+                                            <td className={''}> {` ±${el.permissibleValue}  ${el.calibrationValue}`}</td>
                                             <td className={''}>{`${el.expandedUncertainty}  ${el.calibrationValue}`}</td>
                                         </tr>
                                     )
