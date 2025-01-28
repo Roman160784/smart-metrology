@@ -11,7 +11,9 @@ export const findMiddleValueFromArray = (arr: number[]) => {
 //Ищем сумму в процентов процентного вклада 
 
 const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) => {
+    
     const roundedSum = Math.round(a * 100) / 100 + Math.round(b * 100) / 100 + Math.round(c * 100) / 100;
+    
     let arr: number[] = [a, b, c];
 
     if (roundedSum === 100) {
@@ -27,6 +29,7 @@ const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) 
             }
             return num; // Остальные числа остаются без изменений
         });
+        
         return adjustedNumbers;
     }
 };
