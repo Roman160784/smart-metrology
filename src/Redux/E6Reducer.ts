@@ -300,7 +300,7 @@ export const addNewCalibrationFieldForE6andPsiTC = createAsyncThunk(
 
             let calibrationObjectType = report?.calibrationObjectType 
             let calibrationValue = E6CalibrationValue.mom
-            let testVoltage = '500 В'
+            let testVoltage = 'Uисп = 500 В'
             
             let newCalibrationField = createNewCalibrationFieldE6(dataForCalibration, calibrationObjectType!, testVoltage, calibrationValue, param.dot, param.reportId, param.calculationId, param.toFixedValue)
             return { reportId: param.reportId, calibrationObjectType: calibrationObjectType, newCalibrationField: newCalibrationField }

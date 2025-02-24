@@ -5,7 +5,7 @@ import { calibrationObjectTypesEnum, modeEnum, NewCalculationIfnType, StandardVa
 // Ищем среднее значение из массива
 export const findMiddleValueFromArray = (arr: number[]) => {
     let arrMiddleValue = arr.reduce((ak, el) => ak + el) / arr.length
-    return +arrMiddleValue.toFixed(4)
+    return arrMiddleValue
 }
 
 //Ищем сумму в процентов процентного вклада 
@@ -16,22 +16,23 @@ const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) 
     
     let arr: number[] = [a, b, c];
 
-    if (roundedSum === 100) {
-        return arr;
-    } else {
-        const desiredSum = 100;
-        const sum = arr.reduce((acc, num) => acc + num, 0);
-        const roundedNumbers = arr.map(num => Math.round(num * 100) / 100);
-        const difference = desiredSum - sum;
-        const adjustedNumbers = roundedNumbers.map((num, index) => {
-            if (index === roundedNumbers.length - 1) {
-              return num + difference; // Добавляем разницу к последнему числу
-            }
-            return num; // Остальные числа остаются без изменений
-        });
+    // if (roundedSum === 100) {
+    //     return arr;
+    // } else {
+    //     const desiredSum = 100;
+    //     const sum = arr.reduce((acc, num) => acc + num, 0);
+    //     const roundedNumbers = arr.map(num => Math.round(num * 100) / 100);
+    //     const difference = desiredSum - sum;
+    //     const adjustedNumbers = roundedNumbers.map((num, index) => {
+    //         if (index === roundedNumbers.length - 1) {
+    //           return num + difference; // Добавляем разницу к последнему числу
+    //         }
+    //         return num; // Остальные числа остаются без изменений
+    //     });
         
-        return adjustedNumbers;
-    }
+    //     return adjustedNumbers;
+    // }
+    return arr
 };
 
 //Ищем погрешность эталона для ЭС0202/2
@@ -40,13 +41,13 @@ export const findStandardErrorForEso = (value: number) => {
     let error = 0
     if (value < 10) {
         error = value * 0.02 / 100
-        errorStandardInDot = +error.toFixed(5)
+        errorStandardInDot = error
     } else if (value > 10 || value < 100) {
         error = value * 0.05 / 100
-        errorStandardInDot = +error.toFixed(5)
+        errorStandardInDot = error
     } else if (value > 100) {
         error = value * 0.1 / 100
-        errorStandardInDot = +error.toFixed(5)
+        errorStandardInDot = error
     }
     return errorStandardInDot
 }
@@ -54,44 +55,44 @@ export const findStandardErrorForEso = (value: number) => {
 //Ищем ошибку оператора для ЭС0202/2
 export const findUserErrorInDotForEso = (value: number) => {
     let err = value * 5 / 100
-    return +err.toFixed(5)
+    return err
 }
 
 //Расчет СКО
 export const findSKO = (arr: number[]) => {
-    let goodArr = arr.map(el => +el.toFixed(4))
+    let goodArr = arr.map(el => el)
     let middle = goodArr.reduce((el, ak) => el + ak) / arr.length
-    let newArr = goodArr.map(el => +el.toFixed(4) - +middle.toFixed(4))
+    let newArr = goodArr.map(el => el - middle)
     let moduleArr = newArr.map(el => Math.abs(el) * Math.abs(el))
     let sumModuleArrMiddleValue = moduleArr.reduce((el, ac) => el + ac) / arr.length
     let sko = Math.sqrt(sumModuleArrMiddleValue)
     let res = sko / Math.sqrt(arr.length)
-    return +res.toFixed(5)
+    return res
 }
 
 //Расчёт неопределённости 
 export const findUncertainty = (value: number) => {
     let uncertainty = value / Math.sqrt(3)
-    return +uncertainty.toFixed(5)
+    return uncertainty
 }
 
 //Расчёт сумарной неопределённости
 export const findTotalUncertainty = (a: number, b: number, c: number,) => {
     let sum = Math.pow(a, 2) + Math.pow(b, 2) + Math.pow(c, 2)
     let res = Math.sqrt(sum)
-    return +res.toFixed(5)
+    return res
 }
 
 //Расчёт процентного вклада
 export const findInterestDeposit = (a: number, b: number) => {
     let res = (Math.pow(a, 2) / Math.pow(b, 2)) * 100
-    return +res.toFixed(2)
+    return res
 }
 
 //Расчёт допускаемого значения 
 export const findPermissibleValue = (dot: number, value: number) => {
     let result = dot * value / 100
-    return +result.toFixed(2)
+    return result
 }
 //Расчёт погрешность эталона для MRP120
 export const findStandardErrorForMrp120 = (dot: number, calibrationValue: string) => {
@@ -124,7 +125,7 @@ export const findStandardErrorForMrp120 = (dot: number, calibrationValue: string
             standardErronInDot = 0.005 * dot + 0.2
         }
     }
-    return +standardErronInDot.toFixed(3)
+    return standardErronInDot
 }
 
 //Ищем единицу младшего разряда для MRP120 
@@ -139,7 +140,7 @@ export const findUserErrorInDotForMrp120 = (dot: number, calibrationValue: strin
             userError = 0.5
         }
     }
-    return +userError.toFixed(2)
+    return userError
 }
 
 //Расчёт допускаемого значения в точке для MRP 120 
@@ -152,7 +153,7 @@ export const findPermissibleValueForMrp120 = (dot: number, calibrationValue: str
     } else if (calibrationValue === 'мА') {
         permissibleValue = 0.05 * dot
     }
-    return +permissibleValue.toFixed(3)
+    return permissibleValue
 }
 
 // Cоздание нового объекта с расчитанными значениями для MRP-120 
@@ -190,9 +191,9 @@ export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], ca
         // uncertaintyMiddlePercent: +uncertaintyMiddlePercent.toFixed(3),
         // uncertaintyStanadardErrorPercent: +uncertaintyStanadardErrorPercent.toFixed(3),
         // uncertaintyUserErrorPercent: +uncertaintyUserErrorPercent.toFixed(3),
-        uncertaintyMiddlePercent: stringHelper(resPercent[0], 2),
-        uncertaintyStanadardErrorPercent: stringHelper(resPercent[1], 2),
-        uncertaintyUserErrorPercent: stringHelper(resPercent[2], 2),
+        uncertaintyMiddlePercent: stringHelper(resPercent[0], 3),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[1], 3),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[2], 3),
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
         uncertaintyResultPercent: stringHelper(100, 0),
         error: stringHelper(error, toFixedValue!),
@@ -225,7 +226,7 @@ export const findStandardErrorForVoltmetrCV8500 = (calibrationDot: number) => {
     } else if (calibrationDot > 450 && calibrationDot <= 600) {
         standardErronInDot = 600 * standardCVCA8500Class / 100
     }
-    return +standardErronInDot.toFixed(3)
+    return standardErronInDot
 }
 
 //Расчёт погрешности эталона для мера-иммитатора Р40116
@@ -260,7 +261,7 @@ export const findStandardErrorForP40116 = (calibrationDot: number, calibrationVa
         standardErronInDot = calibrationDot * 0.02 / 100
     }
 
-    return +standardErronInDot.toFixed(9)
+    return standardErronInDot
 }
 
 // Расчёт допускаемых значений для Е6-24
@@ -291,7 +292,7 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     }
-    return +permissibleValue.toFixed(4)
+    return permissibleValue
 }
 
 //Находим ошибку емр для мегаомметров Е6-24, Е6-24/1
@@ -326,7 +327,7 @@ const findEmrForE6_24 = (calibrationDot: number, calibrationValue: string) => {
         }
 
     }
-    return +userError.toFixed(4)
+    return userError
 }
 
 
@@ -358,7 +359,7 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
             permissibleValue = calibrationDot * 15 / 100 + 10
         }
     }
-    return +permissibleValue.toFixed(4)
+    return permissibleValue
 }
 // Ищем допускаемое значение для Е6-31, 31, 31/1
 const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: string) => {
@@ -395,7 +396,7 @@ const findPermissibleValueForE6_30 = (calibrationDot: number, calibrationValue: 
         }
         
     }
-    return +permissibleValue.toFixed(4)
+    return permissibleValue
 }
 
 //Ищем допускаемое значене для ПСИ-2500
@@ -424,7 +425,7 @@ const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue
         }
     }
 
-    return +permissibleValue.toFixed(3)
+    return permissibleValue
 }
 
 //Ищем допускаемое значене для ПСИ-2510 ПСИ-2530
@@ -454,7 +455,7 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
         }
     }
 
-    return +permissibleValue.toFixed(3)
+    return permissibleValue
 }
 
 //ищем емр для ис
@@ -472,13 +473,13 @@ const findUserErrorIS = (calibrationMiddleValue : number, calibrationValue : str
         userError = 0.005
     }
 
-    return +userError.toFixed(4)
+    return userError
 }
 
 //ищем погрешность эталона Р4834 
 const findStandardErrorIsP4834 = (calibrationMiddleValue: number) => {
     let absoluteTolerance = 0.05 * calibrationMiddleValue / 100;
-  return +absoluteTolerance.toFixed(7);
+  return absoluteTolerance
 }
 
 //Ищем допускаемые значения для ИС
@@ -498,7 +499,7 @@ const findPermissibleValueIS = (calibrationDot: number, calibrationValue: string
         permissibleValue = 0.03 * calibrationDot + 0.03
     }
 
-    return +permissibleValue.toFixed(4)
+    return permissibleValue
 }
 
 //Cоздание нового объекта с расчитанными значениями для мегомметров E6
@@ -587,9 +588,9 @@ export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibr
         uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, 4),
         uncertaintyUserError: stringHelper(uncertaintyUserError, 4),
         uncertaintyResult: stringHelper(uncertaintyResult, 4),
-        uncertaintyMiddlePercent: stringHelper(resPercent[0], 3),
-        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 3),
-        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 3),
+        uncertaintyMiddlePercent: stringHelper(resPercent[0], 4),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 4),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 4),
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(3),
         uncertaintyResultPercent: '100',
         error: stringHelper(error, toFixedValue),
@@ -612,7 +613,7 @@ const findUserErrorIfnOm = (calibrationDot: number) => {
         userError = 0.5
     }
 
-    return +userError.toFixed(4)
+    return userError
 }
 
 //неопределённость катушек индуктиыности ИИ1 ИИ2 для активного сопротивления
@@ -624,7 +625,7 @@ const uncertaintyStnadardErrorRactiv_Reactiv = (calibrationDot: number) => {
         uncertaintyStnadardError = 0.01 / 2
     }
 
-    return +uncertaintyStnadardError.toFixed(3)
+    return uncertaintyStnadardError
 }
 
 // Ищем допускаемые значения для ифн200
@@ -663,7 +664,7 @@ const findPermissibleValueForIfn_200 = (calibrationDot: number, calibrationValue
     } 
 
 
-    return +permissibleValue.toFixed(3)
+    return permissibleValue
 }
 
 // ищем допускаемые значения для ифн-300 и ифн300/1
@@ -697,7 +698,7 @@ const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue
     } 
 
 
-    return +permissibleValue.toFixed(3)
+    return permissibleValue
 }
 
 //Cоздание нового объекта с расчитанными значениями для ИФН
@@ -787,9 +788,9 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
         // uncertaintyResultPercent: +uncertaintyResultPercent.toFixed(4),
         uncertaintyResultPercent: '100',
         uncertaintyStnadardError: stringHelper(uncertaintyStnadardError, toFixedValue! + 2),
-        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 2),
-        uncertaintyUserError: stringHelper(uncertaintyUserError, toFixedValue! + 2),
-        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 2),
+        uncertaintyStanadardErrorPercent: stringHelper(resPercent[2], 3),
+        uncertaintyUserError: stringHelper(uncertaintyUserError, toFixedValue! + 3),
+        uncertaintyUserErrorPercent: stringHelper(resPercent[1], 3),
         userError: stringHelper(userError, toFixedValue! + 2),
     }
 

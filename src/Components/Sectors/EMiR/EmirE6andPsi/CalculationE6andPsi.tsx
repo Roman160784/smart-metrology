@@ -47,7 +47,7 @@ return (
                                 <option value={E6CalibrationValue.volts}>{E6CalibrationValue.volts}</option>
                                 <option value={E6CalibrationValue.miom}>{E6CalibrationValue.miom}</option>
                                 </select>
-                                {` При U =  `}
+                                {`  `}
                                 <EditableSpan title={calculation.testVoltage} changeTitle={(title) => 
                             {updateTestVoltageHandler(calculation.reportId, calculation.calculationId, title)}}/>
                                 
