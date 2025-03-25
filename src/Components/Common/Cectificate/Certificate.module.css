@@ -67,6 +67,12 @@ text-decoration: underline;
     font-size: 10px;
 }
 
+.sig{
+    text-align: center;
+    font-size: 10px;
+    padding-left: 70px;
+}
+
 .adres{
     text-align: center;
     text-decoration: underline;

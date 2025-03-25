@@ -120,11 +120,11 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                         <tr>
                             <td className={''}>Rx</td>
                             <td className={''}>{calculation.calibrationMiddleValue}</td>
-                            <td className={''}>   </td>
-                            <td className={''}>    </td>
-                            <td className={''}>  </td>
-                            <td className={''}>  </td>
-                            <td className={''}>   </td>
+                            <td className={''}>-</td>
+                            <td className={''}>-</td>
+                            <td className={''}>-</td>
+                            <td className={''}>{calculation.uncertaintyResult}</td>
+                            <td className={''}>-</td>
                             <td className={''}>{calculation.uncertaintyResult}</td>
                             <td className={''}>{calculation.uncertaintyResultPercent}</td>
                         </tr>

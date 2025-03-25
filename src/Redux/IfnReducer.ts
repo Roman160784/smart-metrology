@@ -284,6 +284,8 @@ export const addNewCalibrationFieldIfnReportTC = createAsyncThunk(
             let state = getState() as RootState
             let report = state.reportIfn.find(r => r.reportId === param.reportId)
             let dataForCalibration: number[] = []
+            
+            
             for (let index = 0; index < 10; index++) {
                 dataForCalibration.push(param.dot)
             }

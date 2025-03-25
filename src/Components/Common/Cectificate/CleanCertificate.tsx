@@ -82,6 +82,7 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Калибровочное клеймо-наклейка</span>
                     <span className={st.certificateNumber}>{report.stigma}</span>
+                    <div className={st.sig}>{`(порядковый номер) `}</div>
                 </div>
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Метод калибровки</span>

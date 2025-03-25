@@ -3,10 +3,18 @@ import { CalculationEsoType } from "../EsoReducer"
 import { calibrationObjectTypesEnum, modeEnum, NewCalculationIfnType, StandardValueEnum, StandardValueType, ValueIfnEnum } from "../IfnReducer"
 
 // Ищем среднее значение из массива
+// export const findMiddleValueFromArray = (arr: number[]) => {
+//     let arrMiddleValue = arr.reduce((ak, el) => ak + el) / arr.length
+
+//     return arrMiddleValue
+// }
+
 export const findMiddleValueFromArray = (arr: number[]) => {
-    let arrMiddleValue = arr.reduce((ak, el) => ak + el) / arr.length
-    return arrMiddleValue
-}
+    const arrMiddleValue = arr.reduce((acc, el) => acc + el, 0) / arr.length;
+    const roundedMiddleValue = Math.round(arrMiddleValue * 100000) / 100000; 
+    
+    return roundedMiddleValue;
+};
 
 //Ищем сумму в процентов процентного вклада 
 
@@ -25,15 +33,17 @@ const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) 
     //     const difference = desiredSum - sum;
     //     const adjustedNumbers = roundedNumbers.map((num, index) => {
     //         if (index === roundedNumbers.length - 1) {
-    //           return num + difference; // Добавляем разницу к последнему числу
+    //           return num + difference; 
     //         }
-    //         return num; // Остальные числа остаются без изменений
+    //         return num; 
     //     });
         
     //     return adjustedNumbers;
     // }
     return arr
 };
+
+
 
 //Ищем погрешность эталона для ЭС0202/2
 export const findStandardErrorForEso = (value: number) => {
@@ -450,7 +460,7 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
             permissibleValue = 0.05 * calibrationDot + 0.05
         } else if (calibrationDot > 10 && calibrationDot <= 99.9) {
             permissibleValue = 0.05 * calibrationDot + 0.5
-        } else if (calibrationDot >= 100 && calibrationDot <= 999) {
+        } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 0.05 + 5
         }
     }
@@ -492,7 +502,7 @@ const findPermissibleValueIS = (calibrationDot: number, calibrationValue: string
                 permissibleValue = 0.03 * calibrationDot + 0.03
             }else if(calibrationDot >= 10 &&  calibrationDot <= 99.9){
                 permissibleValue = 0.03 * calibrationDot + 0.3
-            } else if(calibrationDot >= 100 &&  calibrationDot <= 999){
+            } else if(calibrationDot >= 100 &&  calibrationDot <= 1000){
                 permissibleValue = 0.03 * calibrationDot + 3
             }
     } else if(calibrationValue === E6CalibrationValue.kom) {
@@ -672,7 +682,7 @@ const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue
     let permissibleValue = 0
     
     if (calibrationValue === ValueIfnEnum.voltsAC) {
-        permissibleValue = 0.025 * calibrationDot + 3
+        permissibleValue = 0.025 * calibrationDot + 0.3
     } else if (calibrationValue === ValueIfnEnum.om) {
         if (calibrationDot >= 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.03 * calibrationDot + 0.03
@@ -738,7 +748,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
     } else if (calibrationObjectType === calibrationObjectTypesEnum.ifn300 || calibrationObjectType ===  calibrationObjectTypesEnum.ifn300_1){
         if (calibrationValue === ValueIfnEnum.voltsAC) {
             satadardError = findStandardErrorForVoltmetrCV8500(calibrationDot)
-            userError = 0.5
+            userError = 0.05
             uncertaintyStnadardError = findUncertainty(satadardError)
         }else if (calibrationValue === ValueIfnEnum.om) {
             satadardError = calibrationDot * 0.02 / 100
@@ -763,6 +773,8 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
     let uncertaintyUserErrorPercent = findInterestDeposit(uncertaintyUserError, uncertaintyResult)
     // let uncertaintyResultPercent = uncertaintyMiddlePercent + uncertaintyUserErrorPercent + uncertaintyStanadardErrorPercent
     let resPercent = findValuesForUncertaintyResultPercent(uncertaintyMiddlePercent, uncertaintyUserErrorPercent, uncertaintyStanadardErrorPercent)
+    
+    
     let error = calibrationMiddleValue - calibrationDot
     let expandedUncertainty = coefficient * uncertaintyResult
 
