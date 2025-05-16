@@ -430,7 +430,7 @@ const findPermissibleValueForPSI2500 = (calibrationDot: number, calibrationValue
     } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.05 * calibrationDot + 0.05
-        } else if (calibrationDot > 10) {
+        } else if (calibrationDot >= 10) {
             permissibleValue = 0
         }
     }
@@ -458,7 +458,7 @@ const findPermissibleValueForPSI2510 = (calibrationDot: number, calibrationValue
     } else if (calibrationValue === E6CalibrationValue.gom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = 0.05 * calibrationDot + 0.05
-        } else if (calibrationDot > 10 && calibrationDot <= 99.9) {
+        } else if (calibrationDot >= 10 && calibrationDot <= 99.9) {
             permissibleValue = 0.05 * calibrationDot + 0.5
         } else if (calibrationDot >= 100 && calibrationDot <= 1000) {
             permissibleValue = calibrationDot * 0.05 + 5
