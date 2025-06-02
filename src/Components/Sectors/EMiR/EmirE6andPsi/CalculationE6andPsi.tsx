@@ -37,7 +37,7 @@ return (
     <table className={st.arrayTable} border={1}>
                     <tbody>
                         <tr>
-                            <td>{`Калибруемая отметка `} 
+                            <td>{`Калибруемая точка `} 
                                 <select value={selectedValue} onChange={(selectedValue)=>
                                     {selectHandler( calculation.reportId, calculation.calculationId, selectedValue)}}>
                                 <option value={E6CalibrationValue.mom} selected={true}>{E6CalibrationValue.mom}</option>
@@ -113,7 +113,7 @@ return (
                             </tr>
                             <tr>
                                 <td className={''}>ΔR0</td>
-                                <td className={''}>-</td>
+                                <td className={''}>0</td>
                                 <td className={''}>{calculation.satadardError}</td>
                                 <td className={''}>B</td>
                                 <td className={''}>прямоугольное</td>
@@ -125,7 +125,7 @@ return (
     
                             <tr>
                                 <td className={''}>δind</td>
-                                <td className={''}>-</td>
+                                <td className={''}>0</td>
                                 <td className={''}>{calculation.userError}</td>
                                 <td className={''}>B</td>
                                 <td className={''}>прямоугольное</td>

@@ -63,7 +63,7 @@ export const CalculatonIfn = ({
         <tbody>
           <tr>
             <td>
-              {`Калибруемая отметка`}
+              {`Точка калибровки`}
               <SuperSelect
                 onChangeOption={(option) => {
                   updateCalibrationValue(
@@ -230,7 +230,7 @@ export const CalculatonIfn = ({
             </tr>
             <tr>
               <td className={""}>ΔR0</td>
-              <td className={""}>-</td>
+              <td className={""}>0</td>
               <td className={""}>{calculation.satadardError}</td>
               <td className={""}>B</td>
               <td className={""}>прямоугольное</td>
@@ -244,7 +244,7 @@ export const CalculatonIfn = ({
 
             <tr>
               <td className={""}>δind</td>
-              <td className={""}>-</td>
+              <td className={""}>0</td>
               <td className={""}>{calculation.userError}</td>
               <td className={""}>B</td>
               <td className={""}>прямоугольное</td>
@@ -280,13 +280,13 @@ export const CalculatonIfn = ({
         <table border={1} className={st.calculationResultTable}>
           <tbody>
             <tr>
-              <td className={""}>Калибруемая точка</td>
+              <td className={""}>Точка клибровки</td>
               <td className={""}>Режим измерений</td>
-              <td className={""}>Полученное значение</td>
+              <td className={""}>Измеренное значение</td>
               <td className={""}>Абсолютная погрешность</td>
               <td className={""}>
                 {" "}
-                {`Предел основной абсолютной погрешности `}{" "}
+                {`Пределы допускаемой основной абсолютной погрешности измерений`}{" "}
               </td>
               <td className={""}>Расширенная неопределенность</td>
             </tr>

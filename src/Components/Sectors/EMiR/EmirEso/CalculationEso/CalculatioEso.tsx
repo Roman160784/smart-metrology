@@ -20,7 +20,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
             <table className={st.arrayTable} border={1}>
                 <tbody>
                     <tr>
-                        <td>{`Калибруемая отметка (${calculation.calibrationValue}) при напряжении `} 
+                        <td>{`Точка калибровки (${calculation.calibrationValue}) при напряжении `} 
                         
                          <EditableSpan title={calculation.testVoltage} changeTitle={(title) => 
                             {updateTestVoltage(calculation.reportId, calculation.calculationId, title)}}/> </td>
@@ -84,7 +84,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
                         </tr>
                         <tr>
                             <td className={''}>ΔR0</td>
-                            <td className={''}>-</td>
+                            <td className={''}>0</td>
                             <td className={''}>{calculation.satadardError}</td>
                             <td className={''}>B</td>
                             <td className={''}>прямоугольное</td>
@@ -96,7 +96,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
 
                         <tr>
                             <td className={''}>δind</td>
-                            <td className={''}>-</td>
+                            <td className={''}>0</td>
                             <td className={''}>{calculation.userError}</td>
                             <td className={''}>B</td>
                             <td className={''}>прямоугольное</td>

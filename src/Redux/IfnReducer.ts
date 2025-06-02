@@ -7,7 +7,7 @@ import { createNewCalibrationFieldIfn, numberArrHelper, numberHelper } from "./u
 
 const traceabilityIfn = 'Обеспечивается прослеживамость до Национальных эталонов электрического сопротивления - НЭ РБ 29-16, напряжения переменного тока в диапазоне частот 10 Гц – 2 ГГц НЭ РБ 5-01'
 const mathModelIfn = 'Rx = Ri0 +ΔR0 +δind'
-const mathModelDataIfn = ['Rx – показания калибруемого устройства, Ом, R Ом, X Ом, ~B', 'ΔR0 – основная абсолютная погрешность эталона, Ом, R Ом, X Ом, ~B', 'δind – поправка, обусловленная разрешающей способностью, Ом, R Ом, X Ом, ~B']
+const mathModelDataIfn = ['Rx – показания калибруемого устройства, Ом, (R Ом, X Ом, ~B)', 'ΔR0 – основная абсолютная погрешность эталона, Ом, (R Ом, X Ом, ~B)', 'δind – поправка, обусловленная разрешающей способностью, Ом, (R Ом, X Ом, ~B)']
 
 export type NewCalculationIfnType = Omit<CalculationEsoType,   'testVoltage'> & {
     calibrationValueSelect: string[]
