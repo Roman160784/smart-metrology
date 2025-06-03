@@ -54,7 +54,7 @@ return (
                                 
                               </td>
                             <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
-                            <td>{`Измеренное значени (${calculation.calibrationValue})`}</td>
+                            <td>{`Измеренное значение (${calculation.calibrationValue})`}</td>
     
                         </tr>
                         <tr>

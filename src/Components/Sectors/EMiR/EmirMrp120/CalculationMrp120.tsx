@@ -37,7 +37,7 @@ const selectHandler = ( reportId: string, calculationId: string, event: ChangeEv
                             </select>
                           </td>
                         <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
-                        <td>{`Измеренное значени (${calculation.calibrationValue})`}</td>
+                        <td>{`Измеренное значение (${calculation.calibrationValue})`}</td>
 
                     </tr>
                     <tr>

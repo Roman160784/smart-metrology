@@ -92,7 +92,7 @@ export const CalculatonIfn = ({
               {`Значение эталона в калибруемой отметке (${calculation.calibrationValue})`}
             </td>
             <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
-            <td>{`Измеренное значени (${calculation.calibrationValue})`}</td>
+            <td>{`Измеренное значение (${calculation.calibrationValue})`}</td>
           </tr>
           <tr>
             <td rowSpan={11}>{calculation.calibrationDot}</td>

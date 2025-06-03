@@ -25,7 +25,7 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
                          <EditableSpan title={calculation.testVoltage} changeTitle={(title) => 
                             {updateTestVoltage(calculation.reportId, calculation.calculationId, title)}}/> </td>
                         <td>{`Среднее значение (${calculation.calibrationValue})`}</td>
-                        <td>{`Измеренное значени (${calculation.calibrationValue})`}</td>
+                        <td>{`Измеренное значение (${calculation.calibrationValue})`}</td>
 
                     </tr>
                     <tr>
