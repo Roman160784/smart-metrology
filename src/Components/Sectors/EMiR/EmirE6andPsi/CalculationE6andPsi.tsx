@@ -37,7 +37,7 @@ return (
     <table className={st.arrayTable} border={1}>
                     <tbody>
                         <tr>
-                            <td>{`Калибруемая точка `} 
+                            <td>{`Точка калибровки `} 
                                 <select value={selectedValue} onChange={(selectedValue)=>
                                     {selectHandler( calculation.reportId, calculation.calculationId, selectedValue)}}>
                                 <option value={E6CalibrationValue.mom} selected={true}>{E6CalibrationValue.mom}</option>

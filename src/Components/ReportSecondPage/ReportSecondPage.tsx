@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ReportE6Type } from '../../Redux/E6Reducer';
 import { ReportEsoType } from '../../Redux/EsoReducer';
 import { ReportIfnType } from '../../Redux/IfnReducer';
@@ -16,6 +16,13 @@ type ReportSecondPagePropsType = {
 
 
 export const ReportSecondPage = ({report, changeStandardDate, lastPage, ...props}: ReportSecondPagePropsType) => {
+
+  const [mathModelData, setMathModeData] = useState<string[]>(report.mathModelData)
+
+  const setMathModeDataHandler = (title: string, i: number) => {
+    const newMathModelData = mathModelData.map((el, index) =>  index === i ? title : el)
+    setMathModeData(newMathModelData)
+  }
 
     return (
         <div>
@@ -69,9 +76,11 @@ export const ReportSecondPage = ({report, changeStandardDate, lastPage, ...props
                     где:
                 </div>
               {
-                report.mathModelData.map((el, i) => {
+                mathModelData.map((el, i) => {
                     return(
-                        <div key={i}>{el}</div>
+                        <div key={i}>
+                            <EditableSpan title={el} changeTitle={(el) => setMathModeDataHandler(el, i)}/>
+                        </div>
                     )
                 })
               }

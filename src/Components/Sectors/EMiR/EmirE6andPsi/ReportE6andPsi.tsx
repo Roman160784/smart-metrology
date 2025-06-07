@@ -59,6 +59,7 @@ export const ReportE6andPsi = () => {
   const onSetLastPageHandler = () => {
     setLastPage(pageCounter);
   };
+  
   const selectHandler = (
     reportId: string,
     event: ChangeEvent<HTMLSelectElement>
@@ -198,20 +199,50 @@ export const ReportE6andPsi = () => {
                     }}
                   >
                     <option value="Мегаомметр Е6-24" selected={true}>
-                    Мегаомметр Е6-24
+                      Мегаомметр Е6-24
                     </option>
-                    <option value="Мегаомметр Е6-24/1"> Мегаомметр Е6-24/1</option>
-                    <option value="Мегаомметр Е6-24/2"> Мегаомметр Е6-24/2</option>
+                    <option value="Мегаомметр Е6-24/1">
+                      {" "}
+                      Мегаомметр Е6-24/1
+                    </option>
+                    <option value="Мегаомметр Е6-24/2">
+                      {" "}
+                      Мегаомметр Е6-24/2
+                    </option>
                     <option value="Мегаомметр Е6-31"> Мегаомметр Е6-31</option>
-                    <option value="Мегаомметр Е6-31/1"> Мегаомметр Е6-31/1</option>
+                    <option value="Мегаомметр Е6-31/1">
+                      {" "}
+                      Мегаомметр Е6-31/1
+                    </option>
                     <option value="Мегаомметр Е6-32"> Мегаомметр Е6-32</option>
-                    <option value="Мегаомметр ПСИ-2500"> Мегаомметр ПСИ-2500</option>
-                    <option value="Мегаомметр ПСИ-2510"> Мегаомметр ПСИ-2510</option>
-                    <option value="Мегаомметр ПСИ-2530"> Мегаомметр ПСИ-2530</option>
-                    <option value="Измеритель сопротивления заземления ИС-10"> Измеритель сопротивления заземления ИС-10</option>
-                    <option value="Измеритель сопротивления заземления ИС-10/1"> Измеритель сопротивления заземления ИС-10/1</option>
-                    <option value="Измеритель сопротивления заземления ИС-20"> Измеритель сопротивления заземления ИС-20</option>
-                    <option value="Измеритель сопротивления заземления ИС-20/1"> Измеритель сопротивления заземления ИС-20/1</option>
+                    <option value="Мегаомметр ПСИ-2500">
+                      {" "}
+                      Мегаомметр ПСИ-2500
+                    </option>
+                    <option value="Мегаомметр ПСИ-2510">
+                      {" "}
+                      Мегаомметр ПСИ-2510
+                    </option>
+                    <option value="Мегаомметр ПСИ-2530">
+                      {" "}
+                      Мегаомметр ПСИ-2530
+                    </option>
+                    <option value="Измеритель сопротивления заземления ИС-10">
+                      {" "}
+                      Измеритель сопротивления заземления ИС-10
+                    </option>
+                    <option value="Измеритель сопротивления заземления ИС-10/1">
+                      {" "}
+                      Измеритель сопротивления заземления ИС-10/1
+                    </option>
+                    <option value="Измеритель сопротивления заземления ИС-20">
+                      {" "}
+                      Измеритель сопротивления заземления ИС-20
+                    </option>
+                    <option value="Измеритель сопротивления заземления ИС-20/1">
+                      {" "}
+                      Измеритель сопротивления заземления ИС-20/1
+                    </option>
                   </select>
                 </td>
               </tr>
@@ -452,9 +483,9 @@ export const ReportE6andPsi = () => {
         <div className={st.final}>
           <span>Заключение о соответствии:</span>
           <div className={st.final}>
-            <span>{` ${
-              report!.calibrationObjectType
-            } № ${report!.serialNumber}`}</span>
+            <span>{` ${report!.calibrationObjectType} № ${
+              report!.serialNumber
+            }`}</span>
           </div>
           <div className={st.final}>
             <span>
