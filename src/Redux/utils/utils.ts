@@ -282,7 +282,7 @@ let findPermissibleValueForE6_24 = (calibrationDot: number, calibrationValue: st
     } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.kom) {
-        permissibleValue = 0
+        permissibleValue = calibrationDot * 3 / 100 + 3
     } else if (calibrationValue === E6CalibrationValue.mom) {
         if (calibrationDot >= 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
@@ -349,7 +349,7 @@ const findPermissibleValueForE6_24_1 = (calibrationDot: number, calibrationValue
     } else if (calibrationValue === E6CalibrationValue.om) {
         permissibleValue = 0
     } else if (calibrationValue === E6CalibrationValue.kom) {
-        permissibleValue = 0
+        permissibleValue = calibrationDot * 3 / 100 + 3
     } else if (calibrationValue === E6CalibrationValue.mom) {
         if (calibrationDot > 0.01 && calibrationDot <= 9.99) {
             permissibleValue = calibrationDot * 3 / 100 + 0.03
