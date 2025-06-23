@@ -85,10 +85,10 @@ export const addNewReportE6TC = createAsyncThunk(
                         reportId: param.reportId,
                         id: v1(),
                         standardName: 'Магазин сопротивлений',
-                        standardType: 'МСР-60М',
-                        standardNumber: '03260',
+                        standardType: 'Р4834',
+                        standardNumber: '03447',
                         value: '---',
-                        calibrationDate: '03.2024'
+                        calibrationDate: '02.2025'
                     },
                     {
                         reportId: param.reportId,
@@ -361,19 +361,10 @@ const initialState: ReportE6Type[] = [
             reportId: reportId,
             id: v1(),
             standardName: 'Магазин сопротивлений',
-            standardType: 'МСР-60М',
-            standardNumber: '03260',
-            value: '---',
-            calibrationDate: '03.2024'
-        },
-        {
-            reportId: reportId,
-            id: v1(),
-            standardName: 'Магазин сопротивлений',
             standardType: 'Р4834',
             standardNumber: '03447',
             value: '---',
-            calibrationDate: '03.2024'
+            calibrationDate: '02.2025'
         },
         {
             reportId: reportId,

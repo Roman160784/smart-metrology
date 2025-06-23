@@ -488,8 +488,9 @@ const findUserErrorIS = (calibrationMiddleValue : number, calibrationValue : str
 
 //ищем погрешность эталона Р4834 
 const findStandardErrorIsP4834 = (calibrationMiddleValue: number) => {
-    let absoluteTolerance = 0.05 * calibrationMiddleValue / 100;
-  return absoluteTolerance
+    let absoluteTolerance = 0.02 + 0.00000025 * (1000000/calibrationMiddleValue - 1)
+    let res = calibrationMiddleValue * absoluteTolerance / 100
+  return res
 }
 
 //Ищем допускаемые значения для ИС
@@ -731,7 +732,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
             userError = 0.5
             uncertaintyStnadardError = findUncertainty(satadardError)
         } else if (calibrationValue === ValueIfnEnum.om) {
-            satadardError = calibrationDot * 0.02 / 100
+            satadardError = findStandardErrorIsP4834(calibrationDot)
             userError = findUserErrorIfnOm(calibrationMiddleValue)
             uncertaintyStnadardError = findUncertainty(satadardError)
         } else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {
@@ -751,7 +752,7 @@ export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: s
             userError = 0.05
             uncertaintyStnadardError = findUncertainty(satadardError)
         }else if (calibrationValue === ValueIfnEnum.om) {
-            satadardError = calibrationDot * 0.02 / 100
+            satadardError = findStandardErrorIsP4834(calibrationDot)
             userError = findUserErrorIfnOm(calibrationMiddleValue)
             uncertaintyStnadardError = findUncertainty(satadardError)
         }else if (calibrationValue === ValueIfnEnum.omActiv || calibrationValue === ValueIfnEnum.omReact) {

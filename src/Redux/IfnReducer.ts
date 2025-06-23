@@ -108,7 +108,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'ЦВ8500/3',
                         standardNumber: '037',
                         value: '---',
-                        calibrationDate: '10.2023'
+                        calibrationDate: '10.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -117,7 +117,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'РЛПА.685442.003',
                         standardNumber: '0067',
                         value: '---',
-                        calibrationDate: '09.2023'
+                        calibrationDate: '09.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -126,16 +126,16 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'РЛПА.685442.003-1',
                         standardNumber: '0067',
                         value: '---',
-                        calibrationDate: '09.2023'
+                        calibrationDate: '09.2024'
                     },
                     {
                         reportId: param.reportId,
                         id: v1(),
                         standardName: 'Магазин сопротивлений',
-                        standardType: 'МСР-60М',
-                        standardNumber: '03260',
+                        standardType: 'Р4834',
+                        standardNumber: '03447',
                         value: '---',
-                        calibrationDate: '03.2024'
+                        calibrationDate: '02.2025'
                     },
                     {
                         reportId: param.reportId,
@@ -144,7 +144,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'Testo 511',
                         standardNumber: '39113412/607',
                         value: '---',
-                        calibrationDate: '11.2023'
+                        calibrationDate: '11.2024'
                     },
                     {
                         reportId: param.reportId,
@@ -153,7 +153,7 @@ export const addNewReportIfnTC = createAsyncThunk(
                         standardType: 'Testo 605-H1',
                         standardNumber: '41110955/406',
                         value: '---',
-                        calibrationDate: '01.2024'
+                        calibrationDate: '01.2025'
                     },
                 ],
 
@@ -443,10 +443,10 @@ const initialState: ReportIfnType[] = [{
             reportId: reportId,
             id: v1(),
             standardName: 'Магазин сопротивлений',
-            standardType: 'МСР-60М',
-            standardNumber: '03260',
+            standardType: 'Р4834',
+            standardNumber: '03447',
             value: '---',
-            calibrationDate: '03.2024'
+            calibrationDate: '02.2025'
         },
         {
             reportId: reportId,
