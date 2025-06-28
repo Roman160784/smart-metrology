@@ -70,14 +70,30 @@ export const findUserErrorInDotForEso = (value: number) => {
 
 //Расчет СКО
 export const findSKO = (arr: number[]) => {
-    let goodArr = arr.map(el => el)
-    let middle = goodArr.reduce((el, ak) => el + ak) / arr.length
-    let newArr = goodArr.map(el => el - middle)
-    let moduleArr = newArr.map(el => Math.abs(el) * Math.abs(el))
-    let sumModuleArrMiddleValue = moduleArr.reduce((el, ac) => el + ac) / arr.length
-    let sko = Math.sqrt(sumModuleArrMiddleValue)
-    let res = sko / Math.sqrt(arr.length)
-    return res
+    // let goodArr = arr.map(el => el)
+    // let middle = goodArr.reduce((el, ak) => el + ak) / arr.length
+    // let newArr = goodArr.map(el => el - middle)
+    // let moduleArr = newArr.map(el => Math.abs(el) * Math.abs(el))
+    // let sumModuleArrMiddleValue = moduleArr.reduce((el, ac) => el + ac) / arr.length
+    // let sko = Math.sqrt(sumModuleArrMiddleValue)
+    // let res = sko / Math.sqrt(arr.length)
+    // return res
+    
+    const n = arr.length;
+    // Среднее
+    const mean = arr.reduce((sum, val) => sum + val, 0) / n;
+
+    // Дисперсия с поправкой на выборку (n - 1)
+    const squaredDiffs = arr.map(val => (val - mean) ** 2);
+    const variance = squaredDiffs.reduce((sum, val) => sum + val, 0) / (n - 1);
+
+    // СКО
+    const stdDev = Math.sqrt(variance);
+
+    // SEM (стандартная ошибка среднего)
+    const sem = stdDev / Math.sqrt(n);
+
+    return sem;
 }
 
 //Расчёт неопределённости 
