@@ -1,4 +1,4 @@
-import { log } from "console";
+
 import React, { useState } from "react";
 import * as XLSX from "xlsx";
 
@@ -82,7 +82,7 @@ const exportTableToExcel = () => {
     }
   };
 
-  console.log("белгим", file2Data[0]);
+
 
   const arrayFronOei = file1Data.filter(
     (el) =>
@@ -91,7 +91,7 @@ const exportTableToExcel = () => {
   );
 
   const onClicHandler = () => {
-    console.log("хер там");
+    
 
     const certsInFirst = new Set();
 
