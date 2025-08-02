@@ -4,6 +4,7 @@ import st from './SideBar.module.css'
 
 export enum pathSiteBarEnum {
     mainAria = '/',
+    helpReport = '/helpReport',
     elictric = '/elictric',
     mechanics = '/mechanics',
     chemists = '/chemists',
@@ -22,6 +23,11 @@ export const SideBar = () => {
         <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.mainAria}>
             <span className={st.navigation}> Основное меню</span>
+            </NavLink>
+        </div>
+        <div className={st.block}>
+            <NavLink className={st.navigation} to={pathSiteBarEnum.helpReport}>
+            <span className={st.navigation}>Очёт по OEI</span>
             </NavLink>
         </div>
         <div className={st.block}>

@@ -17,6 +17,7 @@ import { Mi } from '../Sectors/MI/Mi';
 import { Tti } from '../Sectors/TTI/Tti';
 import { pathSiteBarEnum, SideBar } from '../SideBar/SideBar';
 import st from './MainPage.module.css'
+import { ReportHelper } from '../Sectors/ReportHelper/reportHelper';
 
 export const MainPage = () => {
     return (
@@ -29,6 +30,7 @@ export const MainPage = () => {
                 <div className={st.child2}>
                     <Routes>
                         <Route path={pathSiteBarEnum.mainAria} element={<MainAria />} />
+                        <Route path={pathSiteBarEnum.helpReport} element={<ReportHelper />} />
                         <Route path={pathSiteBarEnum.elictric} element={<EmirNavReports />} />
                         <Route path={pathSiteBarEnum.chemists} element={<Fhi />} />
                         <Route path={pathSiteBarEnum.geometry} element={<Gi />} />
