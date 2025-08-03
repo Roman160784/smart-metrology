@@ -163,7 +163,7 @@ const exportTableToExcel = () => {
       </div>
       <div>
         <button onClick={onClicHandler}>
-          Найти недостающие свидетельства
+          Найти недостающие свидетельства!
         </button>
       </div>
 
