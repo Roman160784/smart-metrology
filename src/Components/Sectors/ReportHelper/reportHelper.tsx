@@ -5,7 +5,7 @@ import * as XLSX from "xlsx";
 export const ReportHelper = () => {
   const [file1Data, setFile1Data] = useState<any[]>([]);
   const [file2Data, setFile2Data] = useState<any[]>([]);
-  const [code, setCode] = useState<string>("-");
+  const [code, setCode] = useState<string>("-6025");
   const [month, setMonth] = useState<string>("");
   const [diference, setDiference] = useState<any[]>([]);
 
@@ -139,7 +139,7 @@ const exportTableToExcel = () => {
       </div>
 
       <div style={{ marginBottom: "10px" }}>
-        Файл из oei.by{" "}
+        Файл из oei.by без изменений{" "}
         <input
           type="file"
           accept=".xlsx, .xls, .csv"
@@ -151,7 +151,7 @@ const exportTableToExcel = () => {
       </div>
 
       <div style={{ marginBottom: "10px" }}>
-        Файл из базы БелГИМ{" "}
+        Файл из базы БелГИМ за отчётный месяц{" "}
         <input
           type="file"
           accept=".xlsx, .xls, .csv"
