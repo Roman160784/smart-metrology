@@ -92,9 +92,7 @@ const exportTableToExcel = () => {
 
   const onClicHandler = () => {
     
-
     const certsInFirst = new Set();
-
     for (const obj1 of file1Data) {
       const cert1Raw = obj1['"Номер свидетельства"'];
       if (typeof cert1Raw !== "string") continue;
@@ -112,6 +110,34 @@ const exportTableToExcel = () => {
     });
 
     setDiference(diderentInSecond);
+  };
+
+  const onClickHandlerNew = () => {
+    const certsInFirst = new Set();
+  
+    for (const obj1 of file1Data) {
+      const cert1Raw = obj1['"Номер свидетельства"'];
+      if (typeof cert1Raw !== 'string') continue;
+      const parts = cert1Raw.split('-');
+      if (parts.length < 2) continue;
+      certsInFirst.add(parts[1].trim());
+    }
+  
+    const differentInSecond = file2Data.filter((obj2) => {
+      const cert2Raw = obj2['"№ свидетельства"'];
+      if (typeof cert2Raw !== 'string') return false;
+  
+      let cert2Cleaned = cert2Raw.trim().replace(/^'+|'+$/g, '');
+  
+      if (cert2Cleaned.length > 9) {
+        const parts = cert2Cleaned.split(',');
+        cert2Cleaned = parts[parts.length - 1].trim();
+      }
+  
+      return !certsInFirst.has(cert2Cleaned);
+    });
+  
+    setDiference(differentInSecond);
   };
 
   const keys = Object.keys(diference[0] || {});
@@ -162,9 +188,13 @@ const exportTableToExcel = () => {
         </div>
       </div>
       <div>
-        <button onClick={onClicHandler}>
+      <button style={{  color: "green",  }} onClick={onClickHandlerNew}>
           Найти недостающие свидетельства!
         </button>
+        <button style={{  color: "red", marginLeft: "20px"}} onClick={onClicHandler}>
+          Найти недостающие свидетельства, включая несколько клейм в одном свидетельстве!
+        </button>
+        
       </div>
 
       <div>
