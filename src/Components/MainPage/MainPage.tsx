@@ -18,6 +18,7 @@ import { Tti } from '../Sectors/TTI/Tti';
 import { pathSiteBarEnum, SideBar } from '../SideBar/SideBar';
 import st from './MainPage.module.css'
 import { ReportHelper } from '../Sectors/ReportHelper/reportHelper';
+import { CounterHelper } from '../Sectors/EMiR/CountersHelper/counterHelper';
 
 export const MainPage = () => {
     return (
@@ -42,6 +43,7 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.mrpAll} element={<AllReports />} />
                         <Route path={pathEmirEnum.ifnAll} element={<AllReports />} />
                         <Route path={pathEmirEnum.reportEso} element={<ReportEso />} />
+                        <Route path={pathEmirEnum.counterHelper} element={<CounterHelper />} />
                         <Route path={pathEmirEnum.certificate} element={<Certificate />} />
                         <Route path={pathEmirEnum.reportMrp120} element={<ReportMrp120 />} />
                         <Route path={pathEmirEnum.reportE6andPsi} element={<ReportE6andPsi/>} />

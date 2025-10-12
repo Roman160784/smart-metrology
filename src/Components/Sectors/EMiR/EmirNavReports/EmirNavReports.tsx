@@ -3,6 +3,7 @@ import { NavLink} from 'react-router-dom';
 import st from './EmirNavReports.module.css'
 
 export enum pathEmirEnum {
+    counterHelper = '/counterHelper',
     esoAll = '/eso',
     e6All = '/e6',
     mrpAll = '/mrp',
@@ -37,6 +38,11 @@ export const EmirNavReports = () => {
             <div className={st.block}>
                 <NavLink className={st.navigation} to={pathEmirEnum.ifnAll}>
                     <span className={st.navigation}> ИФН</span>
+                </NavLink>
+            </div>
+            <div className={st.block}>
+                <NavLink className={st.navigation} to={pathEmirEnum.counterHelper}>
+                    <span className={st.navigation}>Счётчики</span>
                 </NavLink>
             </div>
             
