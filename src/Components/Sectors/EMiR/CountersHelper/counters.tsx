@@ -38,12 +38,12 @@ export const Counters = (props: CountersPropsType) => {
         {props.rows?.map((el: any, i: number) => (
           <tr key={el.id}>
             <td>{i + 1}</td>
-            <td>
+            <td data-type="string">
               <EditableSpan title={el.stigma} changeTitle={(title) => {props.changeStigma(title, props.countersID, el.id, i)}} />
             </td>
-            <td>
+            <td data-type="string">
   {props.isExportMode ? (
-    <span>{ el.counterNumber}</span>
+    <span>{`'${el.counterNumber}`}</span>
   ) : (
     <input
     autoFocus

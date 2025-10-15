@@ -230,7 +230,7 @@ export const CounterHelper = () => {
         if (!result[row.modification]) result[row.modification] = [];
         result[row.modification].push({
           stigma: row.stigma,
-          counterNumber: row.counterNumber,
+          counterNumber: `'${row.counterNumber}`,
         });
       });
     });
