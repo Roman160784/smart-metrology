@@ -1,4 +1,4 @@
-import React, { ChangeEvent, useState } from 'react';
+import React, { ChangeEvent, useEffect, useState } from 'react';
 import st from './EditableSpan.module.css'
 
 
@@ -11,6 +11,10 @@ export const EditableSpan = ({title, changeTitle, ...props}: EditableSpanPropsTy
 
  const [value, setValue] = useState(title)
  const [mode, setEditMode] = useState <boolean>(false)
+
+ useEffect(() => {
+    setValue(title);
+  }, [title]);
 
  const onChangeHandler = (e: ChangeEvent<HTMLInputElement>) => {
     // console.log(e.currentTarget.value);
