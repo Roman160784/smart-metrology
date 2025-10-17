@@ -43,6 +43,7 @@ export const Counters = (props: CountersPropsType) => {
             </td>
             <td data-type="string">
   {props.isExportMode ? (
+    //
     <span>{`'${el.counterNumber}`}</span>
   ) : (
     <input

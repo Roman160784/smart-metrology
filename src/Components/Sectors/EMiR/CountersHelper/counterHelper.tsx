@@ -24,10 +24,9 @@ type RowsStateType = {
 export const CounterHelper = () => {
   const componentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
   const currentPrintRef = useRef<HTMLDivElement | null>(null);
-  // const currentTableRef = useRef<HTMLTableElement | null>(null);
   const tableRefs = useRef<{ [key: string]: HTMLTableElement | null }>({});
 
-// const [currentExportId, setCurrentExportId] = useState<string | null>(null);
+
 
   // хук печати (один на всё)
   const printHandler = useReactToPrint({
@@ -49,6 +48,7 @@ export const CounterHelper = () => {
   const savedRows = localStorage.getItem("rows");
 
   const [isExportMode, setIsExportMode] = useState(false);
+  const [disabledMap, setDisabledMap] = useState<{ [id: string]: boolean }>({});
   const [showConfirmModal, setShowConfirmModal] = useState(false);
   const [selectedId, setSelectedId] = useState<string | null>(null);
   const [modTables, setModTables] = useState<{
@@ -138,16 +138,32 @@ export const CounterHelper = () => {
     rowId: string
   ) => {
     const newValue = e.currentTarget.value;
-    const modification = newValue.slice(0, 3);
-    const counterNumber = newValue.slice(3);
+   
 
     setRows((prev) => ({
       ...prev,
       [counterId]: prev[counterId].map((el) =>
-        el.id === rowId ? { ...el, modification, counterNumber } : el
+        el.id === rowId ? { ...el, counterNumber: newValue} : el
       ),
     }));
   };
+
+  const handleModification = (counterId : string) => {
+
+
+    setRows((prev) => {
+      const updatedRows = prev[counterId].map((el) => {
+        const modification = el.counterNumber.slice(0, 3);
+        const counterNumber = el.counterNumber.slice(3);
+  
+        return { ...el, modification, counterNumber };
+      });
+  
+      return { ...prev, [counterId]: updatedRows };
+    });
+
+    
+  }
 
   const inputHandler = (
     e: React.KeyboardEvent<HTMLInputElement>,
@@ -171,10 +187,6 @@ export const CounterHelper = () => {
   };
 
   
-//  ????
-
-
-
   const { onDownload } = useDownloadExcel({
     
     currentTableRef: selectedId ? tableRefs.current[selectedId] : null,
@@ -183,14 +195,23 @@ export const CounterHelper = () => {
   });
 
   
-  const handleExport = () => {
+  // const handleExport = () => {
+  //   setIsExportMode(true);
+  //   setTimeout(() => {
+  //     onDownload();
+  //     setIsExportMode(false);
+  //   }, 100);
+  //   setDisabled(true)
+  // };
+
+  const handleExport = (id: string) => {
     setIsExportMode(true);
     setTimeout(() => {
       onDownload();
       setIsExportMode(false);
+      setDisabledMap(prev => ({ ...prev, [id]: true })); 
     }, 100);
   };
-
 
 
   //
@@ -230,6 +251,7 @@ export const CounterHelper = () => {
         if (!result[row.modification]) result[row.modification] = [];
         result[row.modification].push({
           stigma: row.stigma,
+          //
           counterNumber: `'${row.counterNumber}`,
         });
       });
@@ -238,10 +260,17 @@ export const CounterHelper = () => {
     setModTables(result);
   };
 
-  const saveHandler = (id:string) => {
-    alert('Сохранено')
-    setSelectedId(id)
-  }
+  // const saveHandler = (id:string) => {
+  //   setDisabled(false)
+  //   alert('Сохранено')
+  //   setSelectedId(id)
+  // }
+
+  const saveHandler = (id: string) => {
+    setDisabledMap(prev => ({ ...prev, [id]: false }));
+    setSelectedId(id);
+    alert('Сохранено');
+  };
 
   return (
     <div style={{ padding: "20px" }}>
@@ -304,9 +333,16 @@ export const CounterHelper = () => {
                 </span>
                 <span style={{ marginTop: "10px", marginLeft: "10px" }}>
                   <Button
-                    disabled={false}
+                    disabled={disabledMap[el.id] ?? true}
                     title={"Экспорт"}
-                    onClick={() => handleExport()}
+                    onClick={() => handleExport(el.id)}
+                  />
+                </span>
+                <span style={{ marginTop: "10px", marginLeft: "10px" }}>
+                  <Button
+                    disabled={false}
+                    title={"Выделить модификацию"}
+                    onClick={() => handleModification(el.id)}
                   />
                 </span>
                 <span style={{ marginTop: "10px", marginLeft: "10px" }}>
@@ -382,9 +418,9 @@ export const CounterHelper = () => {
                 </span>
                 <span style={{ marginTop: "10px", marginLeft: "10px" }}>
                   <Button
-                    disabled={false}
+                    disabled={disabledMap[mod] ?? true}
                     title={"Экспорт"}
-                    onClick={() => handleExport()}
+                    onClick={() => handleExport(mod)}
                   />
                 </span>
                 </div>
