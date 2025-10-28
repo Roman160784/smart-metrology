@@ -1,0 +1,57 @@
+.pageWrapper {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 20px;
+    background-color: #f0f0f0;
+    min-height: 100vh;
+  }
+  
+  .page {
+    width: 390mm;
+    height: 274mm;
+    background-color: white;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+    position: relative;
+    box-sizing: border-box;
+  
+    /* поля листа */
+    padding-top: 10mm;
+    padding-left: 10mm;
+    padding-right: 10mm;
+    padding-bottom: 10mm;
+  }
+
+  .pageNumber {
+    position: absolute;
+    top: 15mm; 
+    right: 5mm; 
+    font-family: "Times New Roman", serif;
+    font-size: 14pt;
+  }
+  
+  .protocolTitle {
+    text-align: center;        
+    font-family: "Times New Roman", serif;
+    font-size: 16pt;           
+    margin: 10px 0;  
+    margin-top: 20px;          
+  }
+
+  .title {      
+    font-family: "Times New Roman", serif;
+    font-size: 14pt;           
+    margin: 10px 0; 
+  }
+
+  .standartTable {
+    width: 100%; 
+    text-align: center;
+    border-collapse: collapse;
+    font-family: "Times New Roman", serif;
+    font-size: 14pt;
+  }
+
+  .el{
+    margin-top: 6px;
+  }

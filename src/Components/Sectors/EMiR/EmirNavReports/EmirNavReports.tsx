@@ -4,6 +4,7 @@ import st from './EmirNavReports.module.css'
 
 export enum pathEmirEnum {
     counterHelper = '/counterHelper',
+    reportTransformer04kV05s = '/ReportTransformer04kV05s',
     esoAll = '/eso',
     e6All = '/e6',
     mrpAll = '/mrp',
@@ -43,6 +44,11 @@ export const EmirNavReports = () => {
             <div className={st.block}>
                 <NavLink className={st.navigation} to={pathEmirEnum.counterHelper}>
                     <span className={st.navigation}>Счётчики</span>
+                </NavLink>
+            </div>
+            <div className={st.block}>
+                <NavLink className={st.navigation} to={pathEmirEnum.reportTransformer04kV05s}>
+                    <span className={st.navigation}>Трансформаторы 0,4 кВ</span>
                 </NavLink>
             </div>
             
