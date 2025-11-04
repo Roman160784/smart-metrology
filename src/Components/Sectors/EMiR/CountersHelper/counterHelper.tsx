@@ -297,7 +297,7 @@ export const CounterHelper = () => {
               }}
             >
               <table
-                ref={(table) => (tableRefs.current[el.id] = table)}
+                
                 border={1}
                 style={{
                   borderCollapse: "collapse",

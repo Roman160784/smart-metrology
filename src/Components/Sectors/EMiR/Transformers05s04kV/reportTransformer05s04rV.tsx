@@ -1,5 +1,4 @@
 import React, {
-  ChangeEvent,
   useState,
   useRef,
   useEffect,
@@ -14,6 +13,14 @@ import { useReactToPrint } from "react-to-print";
 import { DataInput } from "../../../Common/DataInput/DataInput";
 import { ConfirmModal } from "../../../Common/ModalWindow/ModalWindow";
 import { useDownloadExcel } from "react-export-table-to-excel";
+import { Button } from "../../../Common/Button/Button";
+
+type TransformerGroupType = {
+  transformerName: string;
+  cofficient: string;
+  transformers: transformerType[];
+};
+
 
 type standarsTransformersType = {
   id: string
@@ -52,12 +59,19 @@ export type ReportTransformer04kV05sType = {
 };
 
 export const ReportTransformer04kV05s = () => {
-  const [pageCount, setPageCount] = useState<number>(1);
+  // const [pageCount, setPageCount] = useState<number>(1);
   const currentPrintRef = useRef<HTMLDivElement | null>(null);
   const currentExelRef = useRef<HTMLDivElement | null>(null);
+
+  const tableRefs = useRef<{ [key: number]: HTMLTableElement | null }>({});
+
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isExporting, setIsExporting] = useState(false);
   const [lastPage, setLastPage] = useState(2);
+  const [sortedTransformers, setSortedTransformers] = useState<TransformerGroupType[]>([])
+  const [disabled, setDisabled] = useState<boolean>(true)
+  const [index, setIndex] = useState<number>(0)
+ 
   // const componentRefs = useRef<{ [key: string]: HTMLDivElement | null }>({});
 
    // хук печати (один на всё)
@@ -311,6 +325,56 @@ const removeAlltransformers = () => {
     }, 300);
   };
 
+  const typeSort = () => {
+
+    if (!report?.transformer || report.transformer.length === 0) return [];
+
+    const groups: Record<string, transformerType[]> = {}; 
+  
+    report.transformer.forEach(t => {
+      const name = t.transformerName.trim();
+      const coef = t.cofficient.trim();
+      const key = `${name}_${coef}`;
+      if (!groups[key]) {
+        groups[key] = [];
+      }
+      groups[key].push(t); 
+    });
+  
+    setSortedTransformers(
+      Object.entries(groups).map(([key, items]) => {
+        const [transformerName, cofficient] = key.split("_");
+        return {
+          transformerName,
+          cofficient,
+          transformers: items,
+        };
+      })
+    )
+  }
+
+
+  const saveTableForExport = (j: number) => {
+    setIndex(j);
+    setDisabled(false);
+    alert(`Таблица ${j + 1} сохранена для экспорта`);
+  };
+
+  const onDownloadHandler = (mod: string, coef: string) => {
+    const filename = `Таблица_${mod}_${coef}.xlsx`;
+    onDownload();
+    setDisabled(true);
+  } 
+  
+ 
+  const { onDownload } = useDownloadExcel({
+    currentTableRef: index !== null ? tableRefs.current[index] : null,
+    filename: "Таблица", 
+    sheet: "Data",
+  });
+  
+
+  
   return (
     <div ref={currentPrintRef} className={st.pageWrapper}>
       <div  className={st.page}>
@@ -400,6 +464,8 @@ const removeAlltransformers = () => {
             </table>
             <button onClick={() => setIsModalOpen(true)}>очистить поле</button>
             <button onClick={handleExportExcel}>📄 Экспорт в Excel</button>
+           {/*  */}
+            <button onClick={typeSort}>Сортиовать по типу и модификации</button>
             {isModalOpen && (
       <ConfirmModal
         title="Очистка всех данных"
@@ -436,7 +502,36 @@ const removeAlltransformers = () => {
       </div>
   </div>
 ))}  
+<div>
+{sortedTransformers.length > 0 ? (
+  sortedTransformers.map((el, i) => (
+    <div key={i}>
+      {/* <p>{`${el.transformerName} коэф ${el.cofficient}`}</p> */}
+
+      <table ref={(el) => (tableRefs.current[i] = el)}>
+        <thead>
+          <tr>
+          {`${el.transformerName} коэф ${el.cofficient}`}
+          </tr>
+        </thead>
+        <tbody>
+          {el.transformers.map((t, j) => (
+           
+            <tr key={j}>
+              <td>{t.stigma}</td>
+              <td>{t.serialNumber}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+      <Button disabled={false} title={"Cохранить"} onClick={()=> {saveTableForExport(i)}}/>
+      <Button disabled={disabled} title={"Экспорт Exel"} onClick={() => {onDownloadHandler(el.transformerName, el.cofficient)}}/>
+    </div>
+  ))
+) : []}
+</div>
       </div>
+      
     </div>
   );
 };
