@@ -272,7 +272,7 @@ export const updateCalibrationValueE6TC = createAsyncThunk(
             let calibrationDot = numberHelper(calculation!.calibrationDot)
             let newCalibrationField: CalculationEsoType = 
             createNewCalibrationFieldE6(dataForCalibration!, calibrationObjectType!, testVoltage, param.calibrationValue, calibrationDot!, 
-                param.reportId, param.calculationId, 1)  
+                param.reportId, param.calculationId, )  
                    
             return {reportId: param.reportId, calculationId: param.calculationId, newCalibrationField}
         }

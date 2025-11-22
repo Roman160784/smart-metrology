@@ -2,6 +2,7 @@ import React from 'react';
 import st from './ReportHeader.module.css'
 import bgca from '../../Pictures/bgca.jpg'
 import iso from '../../Pictures/iso.png'
+import { Bsca } from '../Common/BSCA/bsca';
 
 
 export const ReportHeader = () => {
@@ -22,7 +23,9 @@ export const ReportHeader = () => {
                 уполномочивании №16
                 <br />
                 <br />
-                <img className={st.pic} src={bgca} alt="bgca" />
+                <Bsca/>
+                {/* <img className={st.pic} src={bgca} alt="bgca" /> */}
+                <br />
                 <img className={st.pic2} src={iso} alt="iso" />
             </div>
             

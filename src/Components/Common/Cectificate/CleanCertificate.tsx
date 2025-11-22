@@ -10,6 +10,9 @@ import { ReportEsoType } from '../../../Redux/EsoReducer';
 import { ReportMrp120Type } from '../../../Redux/Mrp120Reducer';
 import { ResultInDot } from '../ResultInDot/ResultInDot';
 import { ReportE6Type } from '../../../Redux/E6Reducer';
+import { Bsca } from '../BSCA/bsca';
+import { Upolnom } from '../BSCA/Upolnomochivanie/upoln';
+import { LogoBlock } from '../BSCA/LogoBlock/logoBloc';
 
 
 type CleanCetrificatePropsType = {
@@ -37,17 +40,20 @@ export const CleanCertificate = ({ report, ...props }: CleanCetrificatePropsType
                         </div>
                     </div>
                 </div>
-                <div className={st.picturesBlock}>
-                    <span >
+                <LogoBlock/>
+                {/* <div className={st.picturesBlock}>
+                    <span className={st.pictures}>
+                        <Bsca/>
                         <img className={st.pictures} src={bgca} alt="BGCA" />
                     </span>
                     <span >
+                        <Upolnom/>
                         <img className={st.pictures} src={certif} alt="BGCA" />
                     </span>
                     <span >
                         <img className={st.picturesIso} src={iso} alt="BGCA" />
                     </span>
-                </div>
+                </div> */}
                 <div className={st.certificateTitle}>
                     <h2>Свидетельство о калибровке</h2>
                 </div>

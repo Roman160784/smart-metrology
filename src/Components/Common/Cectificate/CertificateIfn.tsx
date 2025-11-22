@@ -12,6 +12,7 @@ import { selectReportIfn } from '../../../Redux/selectors/eso-report-selectors';
 import { useParams } from 'react-router-dom';
 import { ReportIfnType } from '../../../Redux/IfnReducer';
 import { useReactToPrint } from 'react-to-print';
+import { LogoBlock } from '../BSCA/LogoBlock/logoBloc';
 
 
 
@@ -56,7 +57,8 @@ export const CertificateIfn = () => {
                         </div>
                     </div>
                 </div>
-                <div className={st.picturesBlock}>
+                <LogoBlock/>
+                {/* <div className={st.picturesBlock}>
                     <span >
                         <img className={st.pictures} src={bgca} alt="BGCA" />
                     </span>
@@ -66,7 +68,7 @@ export const CertificateIfn = () => {
                     <span >
                         <img className={st.picturesIso} src={iso} alt="BGCA" />
                     </span>
-                </div>
+                </div> */}
                 <div className={st.certificateTitle}>
                     <h2>Свидетельство о калибровке</h2>
                 </div>

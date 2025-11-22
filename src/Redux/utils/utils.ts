@@ -183,7 +183,7 @@ export const findPermissibleValueForMrp120 = (dot: number, calibrationValue: str
 }
 
 // Cоздание нового объекта с расчитанными значениями для MRP-120 
-export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], calibrationValue: string, calibrationDot: number, reportId: string, calculationId: string, toFixedValue?: number) => {
+export const createNewCalibrationFieldMRP120 = (dataForCalibration: number[], calibrationValue: string, calibrationDot: number, reportId: string, calculationId: string, toFixedValue: number = 3) => {
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let satadardError = findStandardErrorForMrp120(calibrationDot, calibrationValue)
     let userError = findUserErrorInDotForMrp120(calibrationMiddleValue, calibrationValue)
@@ -531,7 +531,7 @@ const findPermissibleValueIS = (calibrationDot: number, calibrationValue: string
 
 //Cоздание нового объекта с расчитанными значениями для мегомметров E6
 
-export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string, toFixedValue: number) => {
+export const createNewCalibrationFieldE6 = (dataForCalibration: number[], calibrationObjectType: string, testVoltage: string = '-', calibrationValue: string = E6CalibrationValue.volts, calibrationDot: number, reportId: string, calculationId: string, toFixedValue: number = 3) => {
 
 
 
@@ -730,7 +730,7 @@ const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue
 
 //Cоздание нового объекта с расчитанными значениями для ИФН
 
-export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[], toFixedValue?: number) => {
+export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[], toFixedValue: number = 3) => {
 
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let uncertaintyMiddle = findSKO(dataForCalibration)
