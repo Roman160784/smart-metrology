@@ -1,14 +1,14 @@
-
+/* 
 .container{
     display: flex;
     flex-direction: column;
-    /* overflow: auto; */
+    
     gap: 253px;
 }
 .page{
     margin-top: 25px;
-    width: 515px;
-    height: 810px;
+    width: 170mm;
+    height: 280mm;
     border: 1px solid black;
     margin-left: 4%;
     margin-right: 1.0%;
@@ -16,6 +16,42 @@
     transform: scaleX(1.4) scaleY(1.3);
     margin-bottom: 30px; 
 }
+
+@media print {
+
+    .page {
+      page-break-after: always;
+      break-after: page;
+      page-break-inside: avoid;
+      break-inside: avoid;
+      height: 320mm !important;
+      width: 240mm !important;
+      transform: none !important;
+      overflow: visible !important;
+    }
+  
+    .container {
+      overflow: visible !important;
+      gap: 0 !important;
+    }
+  }
+  
+  @media print {
+    .container {
+      display: block !important;
+    }
+  }
+  
+.page{
+    margin-top: 14px;
+    width: 240mm;
+    height: 350mm;
+    border: 1px solid black;
+    margin-left: 4%;
+    margin-right: 1%;
+   
+}
+
 
 .certificateHeader{
     padding-top: 25px;
@@ -47,7 +83,7 @@
 
 .certificateNumberBlock{
     padding-top: 10px;
-    padding-left: 10px;
+    padding-left: 20px;
 }
 .certificateTitleB{
 padding-left: 4%;
@@ -55,7 +91,9 @@ padding-left: 4%;
 
 .certificateNumber{
 padding-left: 2%;
-text-decoration: underline;
+border-bottom: 1.5px solid #333; 
+  padding-bottom: 2px; 
+  line-height: 1.4;
 }
 
 .serialNumber{
@@ -198,4 +236,260 @@ padding-left: 60%;
 .adressLastPage{
     text-align: center;
     font-size: 5px;
+} */
+
+
+/* === БАЗОВЫЕ СТИЛИ ДЛЯ ЭКРАНА === */
+
+.container {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
 }
+
+.page {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 8mm;              
+    margin: 0 auto 20px auto;
+    background: white;
+    border: 2px solid #000;      
+    box-sizing: border-box;      
+    page-break-inside: avoid;
+    font-size: 14pt;
+}
+.page2 {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 8mm;              
+    margin: 0 auto 20px auto;
+    background: white;
+    border: 2px solid #000;      
+    box-sizing: border-box;      
+    page-break-inside: avoid;
+    font-size: 11.5pt;
+}
+
+.pageCount{
+    padding-left: 72%;
+    font-size: 20px;
+}
+
+.certificateTitleDate{
+    padding-left: 20%;
+    font-size: 20px;
+}
+
+.info{
+    text-align: left;
+    font-size: 18px;
+    font-style: italic;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.dateBlock{
+    padding-top: 50px;
+    padding-left: 60%;
+}
+
+.pageNumber2{
+    padding-left: 34%;
+}
+
+.pageNumberTable{
+    padding-left: 25%; 
+}
+
+.standardsTable{
+    text-align: center;
+    font-size: 12px;
+    padding-left: 15px;
+    padding-right: 15px;
+}
+
+.aboutSrandards{
+    padding-left: 25px;
+    padding-right: 25px;
+    font-size: 12px;
+    border-bottom: 1.5px solid #333; 
+    line-height: 1;
+}
+
+.weatherBlock{
+    padding-left: 5px;
+    font-size: 12px;
+    
+}
+
+.weatherDown{
+    padding-left: 20%;
+    text-decoration: overline;
+}
+.pageNumberTable2{
+    padding-left: 18px;
+}
+
+/* === ТИПОГРАФИКА === */
+.aboutSrandards,
+.weatherDown,
+.pageNumberTable2,
+.certificateHeader,
+.certificateTitle,
+.si,
+.sig,
+.adres,
+.info {
+    text-align: center;
+}
+
+.certificateNumber {
+    padding-left: 2%;
+    border-bottom: 1.5px solid #333; 
+    line-height: 1.4;
+}
+
+.bossBlock {
+    padding-top: 20px;
+}
+
+.boss {
+    padding-left: 30%;
+    text-decoration: underline;
+}
+.adres {
+    border-bottom: 1.5px solid #333; 
+    line-height: 1.4;
+}
+.adressLastPage{
+    text-align: center;
+    font-size: 10px;
+}
+
+.sis{
+    padding-left: 40%;
+}
+
+.naming2page{
+    text-align: center;
+    padding-left: 10%;
+    font-size: 12px;
+}
+
+.resultTableBlock{
+    font-size: 10px;
+    text-align: center;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+.gym{
+    margin-top: 2px;
+    margin-left: 10px;
+    margin-right: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border: 1px solid black;
+    font-size: 10px;
+}
+
+.sign {
+    padding-left: 10px;
+    display: flex;
+    flex-direction: row;
+   
+}
+
+.face{
+    padding-left: 12%;
+}
+
+.faceDiscription{
+    padding-left: 53%;
+    font-size: 12px;
+    text-decoration: overline;
+}
+/* === ПЕЧАТЬ === */
+@media print {
+
+    @page {
+        size: A4;
+        margin: 0;
+    }
+
+    body {
+        margin: 0 !important;
+        padding: 0 !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+        background: white !important;
+    }
+
+    .container {
+        display: block !important;
+        overflow: visible !important;
+        gap: 0 !important;
+        width: 100% !important;
+    }
+
+    .page, .page2 {
+        width: 210mm !important;
+        min-height: 297mm !important;
+
+        padding: 15mm !important; /* внутренний отступ для содержимого */
+        margin: 0 auto !important;
+
+        box-sizing: border-box;
+
+        page-break-after: always !important;
+        break-after: page !important;
+
+        page-break-inside: avoid !important;
+        break-inside: avoid !important;
+
+        /* Рамка с внутренним отступом 5 мм */
+        border: 2px solid #000 !important;
+        position: relative;
+
+        overflow: visible !important;
+        transform: none !important;
+        display: block !important;
+
+        background: white !important;
+        -webkit-print-color-adjust: exact;
+        print-color-adjust: exact;
+    }
+
+    /* Внутренний блок для рамки с отступом 5 мм */
+    .page::before {
+        content: "";
+        position: absolute;
+        top: 5mm;
+        left: 5mm;
+        right: 5mm;
+        bottom: 5mm;
+        border: 2px solid #000;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+    .page2::before {
+        content: "";
+        position: absolute;
+        top: 5mm;
+        left: 5mm;
+        right: 5mm;
+        bottom: 5mm;
+        border: 2px solid #000;
+        box-sizing: border-box;
+        pointer-events: none;
+    }
+
+    img {
+        max-width: 100% !important;
+        height: auto !important;
+        page-break-inside: avoid !important;
+    }
+
+}
+
+
+

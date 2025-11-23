@@ -78,7 +78,7 @@ export const CertificateIfn = () => {
                 <div className={st.certificateNumberBlock}>
                     <span className={st.certificateTitleB}>Номер свидетельства</span>
                     <span className={st.certificateNumber}>{report!.stigma}</span>
-                    <span className={st.certificateTitleB}>Дата калибровки</span>
+                    <span className={st.certificateTitleDate}>Дата калибровки</span>
                     <span className={st.certificateNumber}>{report!.calibrationDate}</span>
                 </div>
                 <div className={st.certificateNumberBlock}>
@@ -132,11 +132,11 @@ export const CertificateIfn = () => {
                     <span className={st.certificateNumber}>{report!.calibrationDate}</span>
                 </div>
             </div>
-            <div className={st.page}>
+            <div className={st.page2}>
                 <div className={st.seconPageHeaderCetrificate}>
                     <span className={st.certificateTitleB}>Свидетельство о калибровке</span>
                     <span className={st.certificateNumber}>{report!.stigma}</span>
-                    <span className={st.pageNumber}>Страница 2 из 2</span>
+                    <span className={st.pageNumber2}>Страница 2 из 2</span>
                 </div>
                 <div className={st.calibration}>
                     <span>Калибровка выполнена с помощью</span>
@@ -169,19 +169,19 @@ export const CertificateIfn = () => {
                     </span>
                 </div>
                 <div className={st.evidance}>
-                    <span className={st.si}>{`(наименование эталонов и их статус/идентификация/доказательство прослеживаемости)`}</span>
+                    <span className={st.naming2page}>{`(наименование эталонов и их статус/идентификация/доказательство прослеживаемости)`}</span>
                 </div>
                 <div className={st.weatherBlock}>
-                    <span className={st.weather}>Условия калибровки: </span>
-                    <span className={st.weather}>Температура воздуха: {report!.temperature} ºС;</span>
-                    <span className={st.weather}>Относительная влажность воздуха: {report!.relativeHumidity}%;</span>
-                    <span className={st.weather}>Атмосферное давление: {report!.pressure} кПа;</span>
-                    <span className={st.weather}>Напряжение питающей сети: {report!.supplyVoltage} В;</span>
-                    <span className={st.weather}>Частота питающей сети: {report!.frequency} Гц;</span>
+                    <span className={st.weather}> Условия калибровки: </span>
+                    <span className={st.weather}> Температура воздуха: {report!.temperature} ºС;</span>
+                    <span className={st.weather}> Относительная влажность воздуха: {report!.relativeHumidity}%;</span>
+                    <span className={st.weather}> Атмосферное давление: {report!.pressure} кПа;</span>
+                    <span className={st.weather}> Напряжение питающей сети: {report!.supplyVoltage} В;</span>
+                    <span className={st.weather}> Частота питающей сети: {report!.frequency} Гц;</span>
 
                 </div>
                 <div className={st.weatherDown}>
-                    <span className={st.si}>{`(условия окружающей среды и другие влияющие факторы)`}</span>
+                    <span className={st.naming2page}>{`(условия окружающей среды и другие влияющие факторы)`}</span>
                 </div>
                 <div className={st.calibration}>
                     <span>Результаты калибровки, включая неопределенность</span>
@@ -230,7 +230,7 @@ export const CertificateIfn = () => {
                     <span>Межкалибровочный интервал не должен превышать 12 месяцев </span>
                 </div>
                 <div className={st.sign}>
-                    <span>Подпись лица, выполнившего калибровку </span>
+                    <span>Подпись лица, выполнившего калибровку: </span>
                     <span className={st.face}>{report!.engineer}</span>
                 </div>
                 <div>
