@@ -126,7 +126,7 @@ export const CertificateIfn = () => {
                     <span className={st.certificateTitleB}>Подпись</span>
                     <span className={st.boss}>{report!.boss}</span>
                 </div>
-                <div className={st.si}>{`(инициалы, фамилия, должность служащего)  `}</div>
+                <div className={st.sis}>{`(инициалы, фамилия, должность служащего)  `}</div>
                 <div className={st.dateBlock}>
                     <span className={st.dateTitle}>Дата выдачи</span>
                     <span className={st.certificateNumber}>{report!.calibrationDate}</span>
