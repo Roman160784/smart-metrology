@@ -1,0 +1,384 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    min-height: 100vh;
+    padding: 20px;
+    background-color: #f5f5f5;
+    box-sizing: border-box;
+  }
+  
+  .pageFrame {
+    width: 210mm;
+    min-height: 297mm;
+    padding: 10mm;
+    background-color: white;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    box-sizing: border-box;
+    position: relative;
+    page-break-inside: avoid;
+    break-inside: avoid;
+  }
+  
+  .pageFrame::before {
+    content: '';
+    position: absolute;
+    top: 10mm;
+    left: 10mm;
+    right: 10mm;
+    bottom: 10mm;
+    border: 1px solid #000;
+    pointer-events: none;
+  }
+  
+  /* Верхний блок */
+  .topSection {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    margin-top: 5mm;
+    width: 100%;
+  }
+  
+  .organizationLeft {
+    width: 60%;
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    line-height: 1.1;
+    margin-left: 30px
+  }
+  
+  .organizationLeft p {
+    margin: 0 0 0.5mm 0;
+    padding: 0;
+  }
+  
+  .logosRight {
+    width: 40%;
+    text-align: right;
+    margin-top: -5mm;
+  }
+  
+  .bscaLogo {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    margin-bottom: 3mm;
+  }
+  
+  .isoLogo {
+    height: 15mm;
+    width: auto;
+    object-fit: contain;
+  }
+  
+  /* Центральный заголовок */
+  .centerTitle {
+    text-align: center;
+    margin-top: 8mm;
+    margin-bottom: 8mm;
+  }
+  
+  .centerTitle h1 {
+    font-family: 'Times New Roman', serif;
+    font-size: 18pt;
+    font-weight: bold;
+    margin: 0 0 2mm 0;
+    text-transform: uppercase;
+  }
+  
+  .address {
+    display: flex;
+    flex-direction: column;
+    font-family: 'Times New Roman', serif;
+    font-size: 11pt;
+    line-height: 1.1;
+  }
+  
+  .address span {
+    margin: 0.2mm 0;
+  }
+  
+  /* Основная информация */
+  .mainInfo {
+    margin-top: 5mm;
+    margin-bottom: 5mm;
+  }
+  
+  .protocol {
+    text-align: center;
+    font-family: 'Times New Roman', serif;
+    font-size: 13pt;
+    margin-bottom: 3mm;
+  }
+  
+  .organizer {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    margin: 1mm 0 2mm 10mm;
+  }
+  
+  .date {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 1mm 0 3mm 10mm;
+  }
+  
+  /* Секции */
+  .section {
+    margin-bottom: 5mm;
+  }
+  
+  .sectionTitle {
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+    font-weight: bold;
+    margin: 2mm 0 2mm 10mm;
+  }
+  
+  /* Таблицы */
+  .table {
+    width: calc(100% - 20mm);
+    margin-left: 10mm;
+    margin-right: 10mm;
+    border-collapse: collapse;
+    font-family: 'Times New Roman', serif;
+    font-size: 10pt;
+    margin-top: 2mm;
+    margin-bottom: 3mm;
+  }
+  
+  .table th {
+    border: 1px solid #000;
+    padding: 1mm;
+    text-align: center;
+    font-weight: bold;
+    background-color: #f5f5f5;
+    line-height: 1;
+  }
+  
+  .table td {
+    border: 1px solid #000;
+    padding: 0.8mm;
+    text-align: center;
+    line-height: 1;
+  }
+  
+  .conditionsTable {
+    width: calc(100% - 20mm);
+    margin-left: 10mm;
+    margin-right: 10mm;
+    border-collapse: collapse;
+    font-family: 'Times New Roman', serif;
+    font-size: 10pt;
+    margin-top: 2mm;
+    margin-bottom: 3mm;
+  }
+  
+  .conditionsTable td {
+    padding: 0.8mm;
+    border: 1px solid #000;
+    line-height: 1;
+  }
+  
+  .conditionName {
+    width: 70%;
+    font-weight: bold;
+    padding-left: 2mm !important;
+  }
+  
+  .conditionValue {
+    width: 30%;
+    text-align: center;
+  }
+  
+/* Колонтитул для второго листа */
+.pageHeader {
+    width: 100%;
+    margin-bottom: 15mm;
+  }
+  
+  .protocolHeader {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: 'Times New Roman', serif;
+    font-size: 10pt;
+    margin-top: 5mm;
+    padding: 0 10mm;
+  }
+  
+  /* Контент второго листа */
+  .sheetContent {
+    width: 100%;
+    min-height: 240mm; /* Оставляем место для контента */
+  }
+
+  .equipmentInfo {
+    margin-left: 10mm;
+    margin-right: 10mm;
+    font-family: 'Times New Roman', serif;
+    font-size: 12pt;
+  }
+  
+  .equipmentRow {
+    display: flex;
+    align-items: baseline;
+    margin-bottom: 1mm;
+    min-height: 6mm;
+  }
+  
+  .equipmentLabel {
+    font-weight: bold;
+    min-width: 70mm;
+    white-space: nowrap;
+  }
+  
+  .equipmentValue {
+    flex: 1;
+    /* Убрано border-bottom */
+    margin-left: 5mm;
+    min-height: 5mm;
+  }
+
+
+/* Основной контейнер для таблицы */
+.tableContainer {
+    margin: 25px 0;
+    page-break-inside: avoid; /* Чтобы таблица не разрывалась при печати */
+  }
+  
+  /* Заголовок таблицы */
+  .tableCaption {
+    font-size: 14px;
+    font-weight: 500;
+    color: #000;
+    margin-bottom: 2px;
+    margin-left: 10px;
+    text-align: left;
+    padding-bottom: 5px;
+    
+  }
+  
+  /* Основная таблица */
+  .measurementsTable {
+    margin-left: 1%;
+    margin-right: 1%;
+    width: 98%;
+    border-collapse: collapse;
+    border: 1px solid #000;
+    font-size: 12px;
+    font-family: 'Times New Roman', serif;
+    line-height: 1.4;
+    margin-bottom: 6px;
+  }
+  
+  /* Заголовки таблицы */
+  .measurementsTable thead {
+    border-bottom: 2px solid #000;
+  }
+  
+  .measurementsTable th {
+    padding: 2px 2px;
+    text-align: center;
+    font-weight: 600;
+    border: 1px solid #000;
+    vertical-align: middle;
+  }
+  
+  /* Тело таблицы */
+  .measurementsTable tbody tr {
+    border-bottom: 1px solid #000;
+  }
+  
+  .measurementsTable td {
+    padding: 2px 8px;
+    border: 1px solid #000;
+    text-align: center;
+    vertical-align: middle;
+  }
+  
+  /* Второй столбец (наименование) */
+  .measurementsTable td:nth-child(2) {
+    text-align: left;
+    padding-left: 10px;
+  }
+  
+  /* Границы для вложенных заголовков */
+  .measurementsTable thead tr:last-child th {
+    border-top: 1px solid #000;
+  }
+  
+  /* Адаптивность */
+  @media (max-width: 768px) {
+    .tableContainer {
+      margin: 15px 0;
+    }
+    
+    .measurementsTable {
+      font-size: 11px;
+    }
+    
+    .measurementsTable th,
+    .measurementsTable td {
+      padding: 5px 4px;
+    }
+  }
+  
+  /* Печать */
+  @media print {
+    .tableContainer {
+      margin: 20px 0;
+    }
+    
+    .measurementsTable {
+      border: 1px solid #000 !important;
+    }
+    
+    .measurementsTable th,
+    .measurementsTable td {
+      border: 1px solid #000 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+    
+    .measurementsTable thead {
+      border-bottom: 2px solid #000 !important;
+    }
+  }
+
+
+
+
+  .buttonsContainer {
+    display: flex;
+    gap: 15px;
+    margin-left: 8px;
+    margin-top: 2px;
+    padding-top: 4px;
+    justify-content: flex-start;
+  }
+
+
+
+
+  /* Печать */
+  @media print {
+    .container {
+      background: none;
+      padding: 0;
+      min-height: auto;
+    }
+    
+    .pageFrame {
+      box-shadow: none;
+      width: 210mm;
+      height: 297mm;
+      margin: 0;
+      padding: 10mm;
+    }
+
+    
+
+
+  }

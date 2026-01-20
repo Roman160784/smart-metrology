@@ -38,7 +38,8 @@ export const CalculationEso = ({ calculation, removeCalculationField, updateData
                             return (
                                 <tr key={i}>
                                     <td><EditableSpanForCalculation title={el.toString()} 
-         changeTitle={(title, toFixedValue) => {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title, toFixedValue)}}/></td>
+         changeTitle={(title, toFixedValue) => 
+         {updateDataForCalculation(calculation.reportId, calculation.calculationId, i, calculation.testVoltage, +title, toFixedValue)}}/></td>
                                 </tr>
                             )
                         })

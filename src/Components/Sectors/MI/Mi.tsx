@@ -1,9 +1,10 @@
 import React from 'react';
+import { EmirNavReports } from './EMRNavReports';
 
 export const Mi = () => {
     return (
         <div>
-            Здесь будет калибровка сектора МИ
+            <EmirNavReports/>
         </div>
     )
 }

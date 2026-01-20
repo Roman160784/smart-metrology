@@ -9,8 +9,8 @@ export const Bsca = () => {
         <tr>
           <td className={styles.firstColumn}>БГЦА</td>
           <td rowSpan={2} className={styles.secondColumn}>
-            BY/112 3.0056<br />
-            СТБ 2542
+            BY/112 5.0017<br />
+            ГОСТ ISO/IEC 17025
           </td>
         </tr>
         <tr>

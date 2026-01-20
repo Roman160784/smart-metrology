@@ -20,6 +20,8 @@ import st from './MainPage.module.css'
 import { ReportHelper } from '../Sectors/ReportHelper/reportHelper';
 import { CounterHelper } from '../Sectors/EMiR/CountersHelper/counterHelper';
 import { ReportTransformer04kV05s } from '../Sectors/EMiR/Transformers05s04kV/reportTransformer05s04rV';
+import { AttestationIO } from '../Sectors/MI/Attestation/attestation';
+import { pathEMREnum } from '../Sectors/MI/EMRNavReports';
 
 export const MainPage = () => {
     return (
@@ -50,6 +52,7 @@ export const MainPage = () => {
                         <Route path={pathEmirEnum.reportE6andPsi} element={<ReportE6andPsi/>} />
                         <Route path={pathEmirEnum.reportIfn} element={<ReportIfn/>} />
                         <Route path={pathEmirEnum.certificateIfn} element={<CertificateIfn/>} />
+                        <Route path={pathEMREnum.AttestationIO} element={<AttestationIO/>} />
                         <Route path={pathEmirEnum.reportTransformer04kV05s} element={<ReportTransformer04kV05s/>} />
                     </Routes>
                 </div>

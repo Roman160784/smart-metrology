@@ -37,7 +37,7 @@ export const SideBar = () => {
         </div>
         <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.mechanics}>
-            <span className={st.navigation}> Сектор МИ</span>
+            <span className={st.navigation}> Сектор ЭМР</span>
             </NavLink>
         </div>
         <div className={st.block}>
