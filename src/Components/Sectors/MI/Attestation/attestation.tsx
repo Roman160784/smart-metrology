@@ -94,7 +94,7 @@ const reportStart: AttestationReport = {
       name: 'Измеритель температуры',
       type: 'ИТПМ',
       serialNumber: '123',
-      nextVerificationDate: '17.01.2027',
+      nextVerificationDate: '17.01.20 27',
     },
     {
       id: v1(),
