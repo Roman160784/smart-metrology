@@ -7,6 +7,7 @@ import { Bsca } from '../../../Common/BSCA/bsca';
 import iso from '../../../../Pictures/iso.png'
 import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
 import { ProtocolSecondSheet } from './reportSecondPageAtestation';
+import { calculateAccuracySimple, calculateAverage, calculateNonUniformity } from '../../../../Redux/utils/utilsForAttestation';
 /* ===================== TYPES ===================== */
 
 type  valueForReportTable = {
@@ -42,6 +43,11 @@ type TestTool = {
   serialNumber: string
   nameGOST: string
   tnpa: string
+  title1: string
+    title2: string
+    title3: string
+    title4: string
+    title5: string
   
 };
 
@@ -131,8 +137,8 @@ const reportStart: AttestationReport = {
     discription: 'Температура в опорной (заданной) точке',
     tochnostGOST: '0,2',
     nerovnomernostGOST: '0,3',
-    countTochnost: '0,01',
-    countNerovnomernost: '0,01',
+    countTochnost: '-',
+    countNerovnomernost: '-',
     toFixedValue: 2,
     value: '°C',
   }],
@@ -140,7 +146,11 @@ const reportStart: AttestationReport = {
   serialNumber: '77777',
   nameGOST: 'ГОСТ.2323',
   tnpa: 'Паспорт',
-  
+    title1: 'Наименование',
+    title2: 'Значение величины ГОСТ (ТО)',
+    title3: 'Точность, данные ГОСТ (ТО) ±',
+    title4: 'Неравномерность, данные ГОСТ (ТО) ±',
+    title5: 'Измеряемая величина',
   }],
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -330,13 +340,9 @@ const changeImportantValue = (reportId: string, toolsId: string, value: string) 
               if (row.id !== toolsId) return row;
 
               return {
-                
                 ...row,
-                // Заполняем массив data новыми значениями
                 data: arrForCount.map(el => el.replace('.', ',')),
-                // Главная точка
                 point: valueCount.replace('.', ','),
-                // Пересчитанные значения
                 measuredMidleValue: measuredMidleValue.replace('.', ','),
                 difference: difference.replace('.', ','),
                 countTochnost: countTochnost.replace('.', ','),
@@ -350,10 +356,125 @@ const changeImportantValue = (reportId: string, toolsId: string, value: string) 
 };
 
 
-const changeDataForCount = (reportId: string, toolsId: string, value: string, i: number) => {
+const changeDataForCount = (toolId: string, rowId: string, value: string, index: number) => {
 
-}
+  setReport(prev => ({
+    ...prev,
+    tools: prev.tools.map(tool => {
+      // Ищем нужный инструмент
+      if (tool.id !== toolId) return tool;
+      
+      return {
+        ...tool,
+        valueForReportTable: tool.valueForReportTable.map(row => {
+          // Ищем нужную строку в таблице
+          if (row.id !== rowId) return row;
+          const newData = [...row.data]; 
+          if (index >= 0 && index < newData.length) {
+            newData[index] = value; // обновляем элемент по индексу
+          }
+          
+          let middleValue = calculateAverage(newData, row.toFixedValue)
+         
+          
+          const tochnost = row.tochnostGOST !== '-' 
+          ? calculateAccuracySimple(newData, row.point, row.toFixedValue)
+          : '-';
+        const nerovnovernost = row.nerovnomernostGOST !== '-'
+          ? calculateNonUniformity(newData, middleValue, row.toFixedValue)
+          : '-';
+
+          return {
+            ...row,
+            data: newData,
+            measuredMidleValue: middleValue,
+            countTochnost: tochnost,
+            countNerovnomernost: nerovnovernost
+          };
+        })
+      };
+    })
+  }));
+};
   
+const addNewRow = (toolId: string) => {
+  setReport(prev => {
+    // Функция создания строки по умолчанию
+    const createDefaultRow = (): valueForReportTable => ({
+      id: v1(),
+      data: ['0,0', '0,0', '0,0', '0,0', '0,0'],
+      difference: '0,0',
+      measuredMidleValue: '',
+      point: '0,0',
+      discription: 'Новая точка измерения',
+      tochnostGOST: '-',
+      nerovnomernostGOST: '-',
+      countTochnost: '-',
+      countNerovnomernost: '-',
+      toFixedValue: 1,
+      value: '°C'
+    });
+    
+    // Создаем полную копию предыдущего состояния
+    const newReport: AttestationReport = {
+      ...prev,
+      tools: prev.tools.map(tool => {
+        if (tool.id !== toolId) {
+          // Возвращаем неизмененный инструмент
+          return {
+            ...tool,
+            valueForReportTable: [...tool.valueForReportTable]
+          };
+        }
+        
+        // Получаем последнюю строку или создаем новую
+        const lastRow = tool.valueForReportTable.length > 0 
+          ? { ...tool.valueForReportTable[tool.valueForReportTable.length - 1] }
+          : createDefaultRow();
+        
+        // Создаем новую строку
+        const newRow: valueForReportTable = {
+          ...lastRow,
+          id: v1()
+        };
+        
+        // Возвращаем обновленный инструмент
+        return {
+          ...tool,
+          valueForReportTable: [...tool.valueForReportTable, newRow]
+        };
+      })
+    };
+    
+    return newReport;
+  });
+};
+
+const removeRow = (toolId: string, rowId: string) => {
+  setReport(prev => {
+    const tool = prev.tools.find(t => t.id === toolId);
+    
+    // Если инструмент не найден или это последняя строка
+    if (!tool || tool.valueForReportTable.length <= 1) {
+      return prev; // не удаляем последнюю строку
+    }
+    
+    return {
+      ...prev,
+      tools: prev.tools.map(tool => 
+        tool.id !== toolId
+          ? tool
+          : {
+              ...tool,
+              valueForReportTable: tool.valueForReportTable.filter(
+                row => row.id !== rowId
+              )
+            }
+      )
+    };
+  });
+};
+
 return (
   <>
   <div className={styles.container}>
@@ -463,6 +584,8 @@ return (
   changeNamingInTools={changeNamingInTools}
   changeImportantValue={changeImportantValue}
   changeDataForCount={changeDataForCount}
+  addNewRow={addNewRow}
+  removeRow={removeRow}
   />
   </>
 );

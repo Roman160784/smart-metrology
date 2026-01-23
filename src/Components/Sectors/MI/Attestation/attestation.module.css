@@ -215,6 +215,7 @@
   }
 
   .equipmentInfo {
+    margin-top: -40px;
     margin-left: 10mm;
     margin-right: 10mm;
     font-family: 'Times New Roman', serif;
@@ -250,7 +251,7 @@
   
   /* Заголовок таблицы */
   .tableCaption {
-    font-size: 14px;
+    font-size: 12pt;
     font-weight: 500;
     color: #000;
     margin-bottom: 2px;
@@ -267,7 +268,7 @@
     width: 98%;
     border-collapse: collapse;
     border: 1px solid #000;
-    font-size: 12px;
+    font-size: 9pt;
     font-family: 'Times New Roman', serif;
     line-height: 1.4;
     margin-bottom: 6px;
@@ -316,7 +317,7 @@
     }
     
     .measurementsTable {
-      font-size: 11px;
+      font-size: 9pt;
     }
     
     .measurementsTable th,

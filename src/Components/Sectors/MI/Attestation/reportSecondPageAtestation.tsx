@@ -11,6 +11,8 @@ interface ProtocolSecondSheetProps {
   changeNamingInTools: (reportId: string, toolsId: string, key: string, value: string) => void
   changeImportantValue: (reportId: string, toolsId: string,  value: string) => void
   changeDataForCount : (reportId: string, toolsId: string, value: string, i: number) => void
+  addNewRow: (toolsId: string) => void
+  removeRow: (toolsId: string, rowId: string) => void
 }
 
 export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: ProtocolSecondSheetProps) => {
@@ -71,13 +73,23 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
   <table className={styles.measurementsTable}>
     <thead>
       <tr>
-        <th rowSpan={2}>Номер п/п</th>
-        <th rowSpan={2}>Наименование</th>
-        <th rowSpan={2}>{`Значение величины ГОСТ (ТО)`}</th>
+        <th style={{ cursor: 'pointer' }} onDoubleClick={()=> {props.addNewRow(el.id)}} rowSpan={2}>Номер п/п</th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title1} changeTitle={(title) => {props.changerReportTitleBykey('title1', title, el.id)}}/> 
+        </th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title2} changeTitle={(title) => {props.changerReportTitleBykey('title2', title, el.id)}}/> 
+        </th>
         <th colSpan={5}>Измерение</th>
-        <th rowSpan={2}>{`Точность, данные ГОСТ (ТО)  ±`}</th>
-        <th rowSpan={2}>{`Неравномерность, данные ГОСТ (ТО)  ± `}</th>
-        <th rowSpan={2}>{`Измеряемая величинв `}</th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title3} changeTitle={(title) => {props.changerReportTitleBykey('title3', title, el.id)}}/> 
+        </th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title4} changeTitle={(title) => {props.changerReportTitleBykey('title4', title, el.id)}}/> 
+        </th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title5} changeTitle={(title) => {props.changerReportTitleBykey('title5', title, el.id)}}/> 
+        </th>
       </tr>
       <tr>
         <th>1</th>
@@ -96,7 +108,7 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
             return(
               
               <tr key={it.id}>
-              <td >{i+1}</td>
+              <td style={{ cursor: 'pointer' }} onDoubleClick={() => {props.removeRow(el.id, it.id)}}>{i+1}</td>
               <td>{<EditableSpan title={it.discription} 
               changeTitle={(title) => {props.changeNamingInTools(el.id, it.id, 'discription', title)}}/>}</td>
               
@@ -106,7 +118,8 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
                 it.data.map((data, ind) => {
                   return(
                     
-                    <td key={ind}>{<EditableSpan title={data} changeTitle={() => {}}/>}</td>
+                    <td  key={ind}>{<EditableSpan title={data} 
+                    changeTitle={(title) => {props.changeDataForCount(el.id, it.id, title, ind)}}/>}</td>
                   )
                 })
               }
@@ -132,13 +145,14 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
     <thead>
       <tr>
         <th rowSpan={2}>Номер п/п</th>
-        <th rowSpan={2}>{`Значение величины ГОСТ (ТО)`}</th>
+        <th rowSpan={2}>{el.title1}</th>
+        <th rowSpan={2}>{el.title2}</th>
         <th rowSpan={2}>Полученное значение величины </th>
-        <th rowSpan={2}>{`Точность, данные ГОСТ (ТО)  ±`}</th>
+        <th rowSpan={2}>{el.title3}</th>
         <th rowSpan={2}>Полученное значение точности, ±</th>
-        <th rowSpan={2}>{`Неравномерность, данные ГОСТ (ТО)  ± `}</th>
+        <th rowSpan={2}>{el.title4}</th>
         <th rowSpan={2}>Полученное значение неравномерности, ±</th>
-        <th rowSpan={2}>Измеряемая величина</th>
+        <th rowSpan={2}>{el.title5}</th>
       </tr>
       
     </thead>
@@ -149,6 +163,7 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
 return(
   <tr key={el.id}>
         <td >{i+1}</td>
+        <td >{el.discription}</td>
         <td>{el.point}</td>
         <td>{el.measuredMidleValue}</td>
         <td>{el.tochnostGOST}</td>
