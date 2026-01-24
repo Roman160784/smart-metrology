@@ -3,6 +3,7 @@ import React from 'react';
 import styles from './attestation.module.css';
 import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
 import { AttestationReport } from './attestation';
+import { AttestatGenerator } from './attestatCreater';
 
 
 interface ProtocolSecondSheetProps {
@@ -13,6 +14,8 @@ interface ProtocolSecondSheetProps {
   changeDataForCount : (reportId: string, toolsId: string, value: string, i: number) => void
   addNewRow: (toolsId: string) => void
   removeRow: (toolsId: string, rowId: string) => void
+  addNewAttestat : (attestatNumber: string) => void
+  removeAttestat : (toolsId: string) => void
 }
 
 export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: ProtocolSecondSheetProps) => {
@@ -23,7 +26,7 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
   return (
 <>
     {
-      props.report.tools.map((el) => {
+      props.report.tools.map((el, i) => {
         return(
 <div key={el.id} className={styles.container}>
       <div className={styles.pageFrame}>
@@ -31,7 +34,7 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
         <div className={styles.pageHeader}>
           <div className={styles.protocolHeader}>
             <span>Протокол № {props.report.reportNumber} от {props.report.date}</span>
-            <span>Страница {'2'} из {'2'}</span>
+            <span>Страница {i + 1} из {i + 1}</span>
           </div>
         </div>
        
@@ -184,8 +187,8 @@ return(
   <div style={{ marginBottom: '4px' }}>
     Выдан аттестат: <span style={{ fontWeight: '600', fontFamily: 'Courier New, monospace' }}>
       <EditableSpan title={el.attestationNumber} changeTitle={(title) => {props.changerReportTitleBykey('attestationNumber', title, el.id)}}/></span>
-    <button style={{
-      marginLeft: '50px',
+    <button onClick={() => {props.removeAttestat(el.id)}} style={{
+      marginLeft: '20px',
       padding: '4px 12px',
       fontSize: '11px',
       border: '1px solid #007bff',
@@ -196,8 +199,8 @@ return(
     }}>
       Удалить поле
     </button>
-    <button style={{
-      marginLeft: '80px',
+    <button onClick={() => {props.addNewAttestat(el.attestationNumber)}} style={{
+      marginLeft: '20px',
       padding: '4px 12px',
       fontSize: '11px',
       border: '1px solid #007bff',
@@ -208,6 +211,7 @@ return(
     }}>
       Новый по шаблону
     </button>
+    <AttestatGenerator report={props.report} tool={el}/>
   </div>
   
   <div style={{ marginTop: '4px', paddingTop: '4px',}}>

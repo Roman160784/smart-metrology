@@ -69,3 +69,7 @@ export const calculateAverage = (data: string[], toFixed: number): string => {
     // 6. Возвращаем строку с запятой
     return rounded.toFixed(toFixed).replace('.', ',');
   };
+
+
+
+

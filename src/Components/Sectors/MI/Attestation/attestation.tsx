@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { v1 } from 'uuid';
 import styles from './attestation.module.css';
-import { LogoBlock } from '../../../Common/BSCA/LogoBlock/logoBloc';
-import { Upolnom } from '../../../Common/BSCA/Upolnomochivanie/upoln';
-import { Bsca } from '../../../Common/BSCA/bsca';
 import iso from '../../../../Pictures/iso.png'
 import { EditableSpan } from '../../../Common/EditableSpan/EditableSpan';
 import { ProtocolSecondSheet } from './reportSecondPageAtestation';
 import { calculateAccuracySimple, calculateAverage, calculateNonUniformity } from '../../../../Redux/utils/utilsForAttestation';
+import { BscaIC } from '../../../Common/BSCA/bscaIC';
+import { useReactToPrint } from "react-to-print";
 /* ===================== TYPES ===================== */
 
 type  valueForReportTable = {
@@ -35,7 +34,7 @@ type Standard = {
   
 };
 
-type TestTool = {
+export type TestTool = {
   id: string
   attestationNumber: string
   valueForReportTable: valueForReportTable[],
@@ -211,35 +210,36 @@ const processArrayValues = (value: string, toFixed: number) => {
 
 
 ////////////////////////////////////////////////////////////////////////////////////////////
-// const loadReportFromStorage = (): AttestationReport => {
-//   try {
-//     const saved = localStorage.getItem(REPORT_STORAGE_KEY);
-//     return saved ? JSON.parse(saved) : reportStart;
-//   } catch {
-//     return reportStart;
-//   }
-// };
-
 const loadReportFromStorage = (): AttestationReport => {
   try {
     const saved = localStorage.getItem(REPORT_STORAGE_KEY);
-    if (!saved) return reportStart;
-
-    const parsed = JSON.parse(saved);
-
-    if (!parsed.__version) {
-      return reportStart; // старая схема
-    }
-
-    return parsed;
+    return saved ? JSON.parse(saved) : reportStart;
   } catch {
     return reportStart;
   }
 };
+
+// const loadReportFromStorage = (): AttestationReport => {
+//   try {
+//     const saved = localStorage.getItem(REPORT_STORAGE_KEY);
+//     if (!saved) return reportStart;
+
+//     const parsed = JSON.parse(saved);
+
+//     if (!parsed.__version) {
+//       return reportStart; // старая схема
+//     }
+
+//     return parsed;
+//   } catch {
+//     return reportStart;
+//   }
+// };
 /* ===================== COMPONENT ===================== */
 
 export const AttestationIO: React.FC = () => {
 
+  const componentRef = useRef<HTMLDivElement>(null);
     const [report, setReport] = useState<AttestationReport>(loadReportFromStorage)
 
 
@@ -475,9 +475,151 @@ const removeRow = (toolId: string, rowId: string) => {
   });
 };
 
+const addNewAttestat = (attestatNumber: string) => {
+  const parts = attestatNumber.split('/');
+  const [first, second, third] = parts;
+  
+  const newFirstNum = parseInt(first, 10) + 1;
+  const formattedNewFirst = newFirstNum.toString().padStart(4, '0');
+  const newAttestatNumber = `${formattedNewFirst}/${second}/${third}`;
+  
+  setReport(prevReport => {
+    const lastTool = prevReport.tools[prevReport.tools.length - 1];
+    
+    if (!lastTool.valueForReportTable || lastTool.valueForReportTable.length === 0) {
+      console.error('В предыдущем аттестате нет строк в таблице');
+      return prevReport;
+    }
+    
+    const firstRow = lastTool.valueForReportTable[0];
+    
+   
+    const newTableRow = {
+      ...firstRow, 
+    };
+    
+   
+    const newTool = {
+      ...lastTool, 
+      id: v1(), 
+      attestationNumber: newAttestatNumber, 
+      valueForReportTable: [newTableRow] 
+    };
+    
+    return {
+      ...prevReport,
+      tools: [...prevReport.tools, newTool]
+    };
+  });
+};
+
+
+const removeAttestat = (toolsId: string) => {
+  // Находим индекс аттестата
+  const attestatIndex = report.tools.findIndex(tool => tool.id === toolsId);
+  const attestatToRemove = report.tools[attestatIndex];
+  
+  if (!attestatToRemove) {
+    alert('Аттестат не найден!');
+    return;
+  }
+  
+  // Проверяем, не последний ли это аттестат
+  if (report.tools.length <= 1) {
+    alert('Это единственный аттестат! Нельзя удалить последний аттестат.');
+    return;
+  }
+  
+  if (attestatIndex === 0) {
+    const userConfirmed = window.confirm(
+      `Внимание! Вы пытаетесь удалить исходный (опорный) аттестат!\n` +
+      `Номер: ${attestatToRemove.attestationNumber}\n\n` +
+      `Все созданные аттестаты используют его как шаблон.\n` +
+      `Вы действительно хотите удалить опорный аттестат?`
+    );
+    
+    if (!userConfirmed) {
+      return;
+    }
+  } else {
+    // Для не-опорных аттестатов обычное подтверждение
+    const userConfirmed = window.confirm(
+      `Удалить аттестат №${attestatToRemove.attestationNumber}?\n` +
+      `${attestatToRemove.name}`
+    );
+    
+    if (!userConfirmed) {
+      return;
+    }
+  }
+  
+  // Удаляем
+  setReport(prevReport => {
+    const updatedTools = prevReport.tools.filter(tool => tool.id !== toolsId);
+    const lastTool = updatedTools[updatedTools.length - 1];
+    
+    return {
+      ...prevReport,
+      reportNumber: lastTool.attestationNumber,
+      tools: updatedTools
+    };
+  });
+  
+  alert(`Аттестат №${attestatToRemove.attestationNumber} успешно удален!`);
+};
+
+const removeStandard = (standardId: string) => {
+  setReport(prevReport => {
+    // Проверяем, сколько эталонов останется после удаления
+    const remainingStandards = prevReport.standards.filter(standard => standard.id !== standardId);
+    
+    // Если останется 0 или меньше 1 эталона, не удаляем и показываем алерт
+    if (remainingStandards.length < 1) {
+      alert('Нельзя удалить последний эталон! Должен остаться хотя бы один эталон.');
+      return prevReport;
+    }
+    
+    // Удаляем эталон из массива
+    return {
+      ...prevReport,
+      standards: remainingStandards
+    };
+  });
+};
+
+const cleanAllReport = () => {
+  const userConfirmed = window.confirm(
+    'Очистить локальное хранилище?\n' +
+    'Все сохраненные данные будут удалены, и протокол вернется к начальному состоянию.'
+  );
+  
+  if (userConfirmed) {
+    localStorage.removeItem(REPORT_STORAGE_KEY);
+    setReport(reportStart); // Сбрасываем стейт к начальному
+    alert('Локальное хранилище очищено, протокол сброшен.');
+  }
+}
+
+const loadAllStandards = () => {
+  setReport(prevReport => ({
+    ...prevReport,
+    standards: reportStart.standards.map(standard => ({
+      ...standard,
+      id: v1() // Генерируем новые ID для каждого эталона
+    }))
+  }));
+};
+
+const pdfHandler = useReactToPrint({
+  content: () => componentRef.current!,
+  documentTitle: "Report",
+});
+
 return (
-  <>
-  <div className={styles.container}>
+
+  
+   <div ref={componentRef}>
+  <div className={styles.container} >
     <div className={styles.pageFrame}>
       {/* Верхний блок с организацией и логотипами */}
       <div className={styles.topSection}>
@@ -495,7 +637,7 @@ return (
   width: '100%'
 }}>
   <div style={{ marginLeft: '30mm' }}>
-    <Bsca />
+    <BscaIC />
   </div>
   <img
     src={iso}
@@ -542,7 +684,7 @@ return (
         <table className={styles.table}>
           <thead>
             <tr>
-              <th>Наименование</th>
+              <th >Наименование</th>
               <th>Тип</th>
               <th>Зав. номер</th>
               <th>Дата поверки</th>
@@ -551,7 +693,7 @@ return (
           <tbody>
             {report.standards?.map((item) => (
               <tr key={item.id}>
-                <td>{item.name}</td>
+                <td style={{ cursor: 'pointer' }} onDoubleClick={() => {removeStandard(item.id)}}>{item.name}</td>
                 <td>{item.type}</td>
                 <td>{item.serialNumber}</td>
                 <td><EditableSpan title={item.nextVerificationDate} changeTitle={(title) => {changeStandartDate(item.id, title)}}/></td>
@@ -576,6 +718,55 @@ return (
           </tbody>
         </table>
       </div>
+      <div>
+    {/* ... твой существующий код ... */}
+    
+    <div style={{marginLeft: '38px', marginTop: '20px', display: 'flex', gap: '10px' }}>
+      <button 
+        onClick={cleanAllReport}
+        style={{
+          cursor: 'pointer',
+          padding: '8px 16px',
+          backgroundColor: '#ff4444',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '14px'
+        }}
+      >
+        Очистить весь протокол
+      </button>
+      
+      <button 
+        onClick={loadAllStandards}
+        style={{
+          cursor: 'pointer',
+          padding: '8px 16px',
+          backgroundColor: '#44aaff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '14px'
+        }}
+      >
+        Вернуть все эталоны
+      </button>
+      <button 
+        onClick={pdfHandler}
+        style={{
+          cursor: 'pointer',
+          padding: '8px 16px',
+          backgroundColor: '#44aaff',
+          color: 'white',
+          border: 'none',
+          borderRadius: '4px',
+          fontSize: '14px'
+        }}
+      >
+        Печать протокола
+      </button>
+    </div>
+  </div>
     </div>
   </div>
   
@@ -586,7 +777,9 @@ return (
   changeDataForCount={changeDataForCount}
   addNewRow={addNewRow}
   removeRow={removeRow}
+  addNewAttestat={addNewAttestat}
+  removeAttestat={removeAttestat}
   />
-  </>
+  </div>
 );
 };
