@@ -21,6 +21,7 @@ type  valueForReportTable = {
   countTochnost: string
   countNerovnomernost: string
   toFixedValue: number
+  sootv: string
   value: string
 }
 
@@ -47,6 +48,7 @@ export type TestTool = {
     title3: string
     title4: string
     title5: string
+    title6: string
   
 };
 
@@ -140,6 +142,7 @@ const reportStart: AttestationReport = {
     countNerovnomernost: '-',
     toFixedValue: 2,
     value: '°C',
+    sootv: 'соотв.',
   }],
   name: 'Шкаф сушильный',
   serialNumber: '77777',
@@ -150,6 +153,7 @@ const reportStart: AttestationReport = {
     title3: 'Точность, данные ГОСТ (ТО) ±',
     title4: 'Неравномерность, данные ГОСТ (ТО) ±',
     title5: 'Измеряемая величина',
+    title6: 'Оценка точности (погрешности) соответствие',
   }],
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -412,7 +416,8 @@ const addNewRow = (toolId: string) => {
       countTochnost: '-',
       countNerovnomernost: '-',
       toFixedValue: 1,
-      value: '°C'
+      value: '°C',
+      sootv: 'соотв.'
     });
     
     // Создаем полную копию предыдущего состояния

@@ -93,6 +93,9 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
         <th rowSpan={2}>
         <EditableSpan title={el.title5} changeTitle={(title) => {props.changerReportTitleBykey('title5', title, el.id)}}/> 
         </th>
+        <th rowSpan={2}>
+        <EditableSpan title={el.title6} changeTitle={(title) => {props.changerReportTitleBykey('title6', title, el.id)}}/> 
+        </th>
       </tr>
       <tr>
         <th>1</th>
@@ -133,6 +136,8 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
               changeTitle={(title) => {props.changeNamingInTools(el.id, it.id, 'nerovnomernostGOST', title)}}/>}</td>
               <td>{<EditableSpan title={it.value} 
               changeTitle={(title) => {props.changeNamingInTools(el.id, it.id, 'value', title)}}/>}</td>
+              <td>{<EditableSpan title={it.sootv} 
+              changeTitle={(title) => {props.changeNamingInTools(el.id, it.id, 'sootv', title)}}/>}</td>
               </tr>
             )
           })
@@ -156,6 +161,7 @@ export const ProtocolSecondSheet: React.FC<ProtocolSecondSheetProps> = (props: P
         <th rowSpan={2}>{el.title4}</th>
         <th rowSpan={2}>Полученное значение неравномерности, ±</th>
         <th rowSpan={2}>{el.title5}</th>
+        <th rowSpan={2}>{el.title6}</th>
       </tr>
       
     </thead>
@@ -174,6 +180,7 @@ return(
         <td>{el.nerovnomernostGOST}</td>
         <td>{el.countNerovnomernost}</td>
         <td>{el.value}</td>
+        <td>{el.sootv}</td>
       </tr>
 )
   })
