@@ -31,7 +31,7 @@ export const AttestatGenerator: React.FC<AttestatGeneratorProps> = ({ report, to
     { text: tool.title4 || "Неравномерность, данные ГОСТ (ТО) ±", width: 9 },
     { text: "Полученное значение неравномерности, ±", width: 9 },
     { text: tool.title5 || "Измеряемая величина", width: 12 },
-    { text: tool.title6 || "Измеряемая величина", width: 12 }
+    { text: tool.title6 || "Оценка точности (погрешности)", width: 12 }
   ];
 
   const generateAttestat = async () => {
