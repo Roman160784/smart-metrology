@@ -23,6 +23,7 @@ return(
                         <tr>
                             <td>
                             {`Точка калибровки  `}
+                            <br />
               <SuperSelect
                 onChangeOption={(option) => {
                   updateCalibrationValue(

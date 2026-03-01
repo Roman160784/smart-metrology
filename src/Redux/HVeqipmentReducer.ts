@@ -10,6 +10,8 @@ export enum ValueHVEnum {
   DCV = "кB (DCV)",
   ACA = "мА (ACA)",
   DCA = "мА (DCA)",
+  ACmkA = "мкА (ACA)",
+  DCmkA = "мкА (DCA)",
 }
 
 export type CalculationHVType = {
@@ -116,7 +118,7 @@ export const addNewCalibratonFieldHVTC = createAsyncThunk(
       dataForCalibration.push(param.dot);
     }
     
-    let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA]
+    let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
     let calibrationValue = ValueHVEnum.ACV
     let calculationId = v1()
     let reportId = report.reportId
@@ -144,7 +146,7 @@ export const updateCalibrationValueHVTC = createAsyncThunk(
       let calibrationDotString = calculation?.calibrationDot; 
       let normalizedString = calibrationDotString?.replace(',', '.')
       let calibrationDot = Number(normalizedString);
-      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA]
+      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
         param.calibrationValue, toFixedValue!, modeSelect, reportId)
@@ -171,7 +173,7 @@ export const updateCalibrationValueinArrayHVTC = createAsyncThunk(
       let calibrationDotString = calculation?.calibrationDot; 
       let normalizedString = calibrationDotString?.replace(',', '.')
       let calibrationDot = Number(normalizedString);
-      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA]
+      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
         calibrationValue!, toFixedValue!, modeSelect, reportId)
@@ -203,9 +205,9 @@ const initialState: ReportHVType = {
   customer: 'РУП "Гомельэнерго"',
   adresCustumer: "246028, г Гомель ул. Головацкого 19/212",
   calibrarionPlace: 'государственное предприятие "Гомельский ЦСМС"',
-  calibrationDate: "11.11.2025",
+  calibrationDate: "01.03.2026",
   method: "МК.ГМ  1984-2017, ",
-  methodType: "метод прямых измерений",
+  methodType: "метод непосредственной оценки",
   temperature: "21,0",
   relativeHumidity: "31,8",
   pressure: "100,1",
@@ -296,7 +298,7 @@ const slice = createSlice({
           : field
       );
     })
-  
+    
   },
 });
 

@@ -23,6 +23,7 @@ import { ReportTransformer04kV05s } from '../Sectors/EMiR/Transformers05s04kV/re
 import { AttestationIO } from '../Sectors/MI/Attestation/attestation';
 import { pathEMREnum } from '../Sectors/MI/EMRNavReports';
 import { CalibrationHV } from '../Sectors/MI/CalibrationHV/CalibtarionHV';
+import { CertificatHV } from '../Sectors/MI/CalibrationHV/CertificatHV/cetrificatHV';
 
 export const MainPage = () => {
     return (
@@ -56,6 +57,7 @@ export const MainPage = () => {
                         <Route path={pathEMREnum.AttestationIO} element={<AttestationIO/>} />
                         <Route path={pathEMREnum.CalibrationHV} element={<CalibrationHV/>} />
                         <Route path={pathEmirEnum.reportTransformer04kV05s} element={<ReportTransformer04kV05s/>} />
+                        <Route path={pathEmirEnum.CertificatHV} element={<CertificatHV/>} />
                     </Routes>
                 </div>
 

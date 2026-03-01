@@ -1,0 +1,157 @@
+/* ===== A4 SETTINGS ===== */
+@page {
+  size: A4;
+  margin: 2mm;
+}
+
+/* ===== PRINT MODE ===== */
+@media print {
+  body {
+    margin: 0;
+    background: none;
+  }
+
+  .printPage {
+    padding: 0;
+  }
+}
+
+/* ===== SCREEN PREVIEW ===== */
+.printPage {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 20px;
+  background: #fff;
+}
+
+.nameOrg{
+  width: 100%;
+  text-align: center;
+  font-size: 16pt;
+  display: block;
+}
+.sheet {
+  width: 210mm;
+  min-height: 297mm;
+  border: 2px solid #000;
+  margin-top: 5pt;
+  padding: 6mm;
+  box-sizing: border-box;
+  font-family: "Times New Roman", serif;
+  font-size: 14px;
+  line-height: 1.25;
+}
+
+/* ===== TEXT ===== */
+.title {
+  text-align: center;
+  font-size: 24pt;
+  margin: 18pt 0;
+  font-weight: bold;
+}
+
+.hint {
+  font-size: 12pt;
+  text-align: center;
+  
+}
+
+.naming{
+  font-size: 14pt;
+  padding-right: 10px;
+}
+.hintInline {
+  font-size: 11px;
+  margin-left: 6px;
+}
+
+.text {
+  font-size: 14pt;
+  margin: 25px 0;
+}
+
+/* ===== LINES ===== */
+.line {
+  border-bottom: 1px solid #000;
+  height: 6px;
+  
+}
+
+.shortLine {
+  display: inline-block;
+  width: 45mm;
+  border-bottom: 1px solid #000;
+  height: 16px;
+  margin: 0 6px;
+}
+
+.tinyLine {
+  display: inline-block;
+  width: 18mm;
+  border-bottom: 1px solid #000;
+  height: 16px;
+  margin: 0 4px;
+}
+
+/* ===== LAYOUT ===== */
+.row {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin: 16px 0;
+}
+
+.block {
+  margin: 18px 0;
+}
+
+.topBlock {
+  margin-bottom: 10px;
+}
+
+.signRow {
+  display: flex;
+  gap: 15mm;
+  margin-top: 30px;
+}
+
+.signBlock {
+  flex: 1;
+}
+
+.signBlockSmall {
+  width: 45mm;
+}
+
+/* ===== STAMP ===== */
+.stamp {
+  margin-top: 14pt;
+  text-align: center;
+  font-weight: bold;
+}
+.dateRow{
+  margin-top: 20pt;
+}
+
+.cetrif2page{
+  font-size: 14pt;
+  font-weight: 600;
+}
+
+.container2 {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%;
+  gap: 200px; /* отступ между спанами 200px */
+}
+
+.traceability{
+  margin-top: -10px;
+  text-align: center;
+}
+
+.discr{
+  padding-left: 100pt;
+}

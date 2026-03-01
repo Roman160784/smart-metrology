@@ -28,6 +28,18 @@ const standardError = (dot: number, paramp: string) => {
         }else if (dot >= 20 && dot <= 199.99) {
             staydardError = dot * 0.002 + 10 * 0.01
         }
+    }else if (paramp === ValueHVEnum.DCmkA) {
+        if (dot >= 0.01 && dot <= 199.99){
+            staydardError = dot * 0.002 + 20 * 0.01
+        }else if (dot >= 200 && dot <= 1999.9) {
+            staydardError = dot * 0.002 + 10 * 0.1
+        }
+    }else if (paramp === ValueHVEnum.ACmkA) {
+        if (dot >= 0.01 && dot <= 199.99){
+            staydardError = dot * 0.008 + 30 * 0.01
+        }else if (dot >= 200 && dot <= 1999.9) {
+            staydardError = dot * 0.008 + 30 * 0.1
+        }
     }
 
     return staydardError

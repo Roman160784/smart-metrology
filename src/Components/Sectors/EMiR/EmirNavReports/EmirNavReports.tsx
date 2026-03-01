@@ -14,7 +14,8 @@ export enum pathEmirEnum {
     reportMrp120 = '/reportMrp120/:id',
     reportE6andPsi = '/reportE6andPsi/:id',
     reportIfn = '/reportIfn/:id',
-    certificateIfn = '/certificateIfn/:id'
+    certificateIfn = '/certificateIfn/:id',
+    CertificatHV = '/CertificatHV/'
 }
 
 

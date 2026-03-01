@@ -8,8 +8,12 @@ import { useAppDispatch } from "../../../../Redux/store";
 import { ReportHVType, StringKeys, changeReportTitleHVTC, changeStandartDateHVTC } from "../../../../Redux/HVeqipmentReducer";
 
 
+type CalibrationHVSecondPagePropsType = {
+    lastPage: number
+}
 
-export const CalibrationHVSecondPage = () => {
+
+export const CalibrationHVSecondPage = (props: CalibrationHVSecondPagePropsType) => {
 
     let reportHVEqupment = useSelector(selectReportHVequpment)
     const dispatch = useAppDispatch()
@@ -25,7 +29,7 @@ export const CalibrationHVSecondPage = () => {
             <div className={st.header}>
                 <span className={st.headerItem}>Протокол  {reportHVEqupment.reportNumber}</span>
                 <span className={st.headerItem}>от {reportHVEqupment.calibrationDate}</span>
-                <span className={st.headerItem}>страница 2 страниц 3</span>
+                <span className={st.headerItem}>страница 2 страниц {props.lastPage}</span>
             </div>
             <div>
                 Эталоны, приеняемые при калибровке:

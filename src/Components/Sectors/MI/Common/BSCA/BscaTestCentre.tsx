@@ -1,3 +1,4 @@
+import { wait } from "@testing-library/user-event/dist/utils";
 import React from "react";
 
 export const BscaTC = () => {
@@ -6,7 +7,8 @@ export const BscaTC = () => {
       style={{
         borderCollapse: "collapse",
         fontFamily: "Times New Roman, Times, serif",
-        fontSize: "8pt",
+        fontSize: "9pt",
+        fontWeight: "600",
         lineHeight: 1.2,
         width: "auto"
       }}
@@ -15,7 +17,7 @@ export const BscaTC = () => {
         <tr>
           <td
             style={{
-              border: "1px solid #000",
+              border: "2px solid #000",
               padding: "3mm 4mm",
               textAlign: "center",
               verticalAlign: "middle",
@@ -28,7 +30,7 @@ export const BscaTC = () => {
           <td
             rowSpan={2}
             style={{
-              border: "1px solid #000",
+              border: "2px solid #000",
               padding: "3mm 4mm",
               textAlign: "center",
               verticalAlign: "middle",
@@ -44,7 +46,7 @@ export const BscaTC = () => {
         <tr>
           <td
             style={{
-              border: "1px solid #000",
+              border: "2px solid #000",
               padding: "3mm 4mm",
               textAlign: "center",
               verticalAlign: "middle",
