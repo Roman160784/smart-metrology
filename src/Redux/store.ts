@@ -5,6 +5,7 @@ import { TypedUseSelectorHook, useDispatch, useSelector } from "react-redux";
 import { ReportMrp120Reducer } from "./Mrp120Reducer";
 import { ReportE6Reducer } from "./E6Reducer";
 import { ReportIfnReducer } from "./IfnReducer";
+import { HVEqupmentReportReducer } from "./HVeqipmentReducer";
 
 
 
@@ -13,6 +14,7 @@ const rootReducer = combineReducers({
     reportMrp120: ReportMrp120Reducer,
     reportE6: ReportE6Reducer,
     reportIfn: ReportIfnReducer,
+    reportHVEqupment: HVEqupmentReportReducer
 })
 
 export type RootReducerType = ReturnType<typeof rootReducer>

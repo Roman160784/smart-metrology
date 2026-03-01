@@ -36,7 +36,7 @@ export type ResultEsoType = {
     expandedUncertainty: number
 }
 
-type StandardType = {
+export type StandardType = {
     id: string
     reportId: string
     standardName: string

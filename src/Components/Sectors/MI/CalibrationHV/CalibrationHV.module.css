@@ -1,0 +1,257 @@
+.pageFirst {
+    /* Размер для А4 */
+    width: 202mm;
+    min-height: 297mm;
+    height: auto;
+    
+    /* Внутренние отступы по 5мм с каждой стороны */
+    padding: 5mm;
+    
+    /* Граница */
+    border: 2px solid #000;
+    
+    /* Чтобы padding и border не увеличивали общий размер */
+    box-sizing: border-box;
+    
+    /* Для экрана */
+    margin: 20px auto;
+    background: #fff;
+    box-shadow: 0 0 10px rgba(0,0,0,0.2);
+    
+    /* Дополнительная страховка для браузеров */
+    page-break-after: avoid;
+    page-break-inside: avoid;
+    
+    /* Times New Roman 12pt */
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    line-height: 1.4;
+    
+    /* Опционально: нормальный межбуквенный интервал */
+    letter-spacing: normal;
+    word-spacing: normal;
+  }
+  
+  /* Специально для Chrome и Opera (WebKit/Blink) */
+  @media print {
+    .pageFirst {
+      margin: 0 auto !important;
+      box-shadow: none !important;
+      
+      width: 205mm;
+      min-height: 292mm;
+      height: auto;
+      
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      
+      overflow: visible;
+      
+      /* Убеждаемся что шрифт применится и при печати */
+      font-family: "Times New Roman", Times, serif !important;
+      font-size: 14pt !important;
+    }
+    
+    @page {
+      size: A4;
+      margin: 0;
+    }
+    
+    body {
+      margin: 0;
+      padding: 0;
+      background: none;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+      
+      /* Наследование шрифта для всего body */
+      font-family: "Times New Roman", Times, serif;
+      font-size: 14pt;
+    }
+  }
+  
+  /* Адаптация для мобильных устройств */
+  @media screen and (max-width: 768px) {
+    .pageFirst {
+      width: 100%;
+      min-height: auto;
+      margin: 10px;
+      padding: 4mm;
+      border-width: 1px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
+      font-size: 11pt; /* Чуть меньше на мобилках */
+    }
+  }
+  
+  /* Если контента много */
+  .pageFirst.contentFull {
+    height: auto;
+    min-height: 297mm;
+  }
+  
+  /* Для нескольких страниц */
+  .pageFirst + .pageFirst {
+    margin-top: 10mm;
+  }
+  
+  @media print {
+    .pageFirst + .pageFirst {
+      margin-top: 0;
+      page-break-before: always;
+    }
+  }
+  
+  /* Стили для типографики внутри блока */
+  .pageFirst h1 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 18pt;
+    font-weight: bold;
+    margin-top: 0;
+    margin-bottom: 6mm;
+    line-height: 1.2;
+  }
+  
+  .pageFirst h2 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 16pt;
+    font-weight: bold;
+    margin-top: 4mm;
+    margin-bottom: 3mm;
+    line-height: 1.3;
+  }
+  
+  .pageFirst h3 {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    font-weight: bold;
+    margin-top: 3mm;
+    margin-bottom: 2mm;
+    line-height: 1.3;
+  }
+  
+  .pageFirst p {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    line-height: 1.4;
+    margin: 0 0 3mm 0; /* Отступ между абзацами */
+    text-align: justify; /* Выравнивание по ширине (опционально) */
+  }
+  
+  .pageFirst ul, 
+  .pageFirst ol {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    line-height: 1.4;
+    margin: 2mm 0 3mm 5mm; /* Отступ слева для списков */
+    padding-left: 3mm;
+  }
+  
+  .pageFirst li {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    line-height: 1.4;
+    margin-bottom: 1mm;
+  }
+  
+  /* Таблицы */
+  .pageFirst table {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 14pt;
+    line-height: 1.3;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 3mm 0;
+  }
+  
+  .pageFirst td,
+  .pageFirst th {
+    padding: 1.5mm;
+    border: 1px solid #000;
+    text-align: left;
+  }
+  
+  .pageFirst th {
+    font-weight: bold;
+    background-color: #f0f0f0;
+  }
+  
+  .reportNumber{
+    text-align: center;
+  }
+
+  .header {
+    top: 2mm;
+    right: 5mm;
+    text-align: right;
+    z-index: 10;
+}
+
+.headerItem {
+    font-family: "Times New Roman", Times, serif;
+    font-size: 10pt;
+    line-height: 1.5;
+    white-space: nowrap;
+    display: block; /* Каждый элемент на новой строке */
+}
+.spanInput{
+  padding-left: 10px;
+  opacity: 0.5;
+}
+
+.printer{
+  padding-top: 10px;
+  padding-left: 46%;
+}
+
+
+.printer :hover {
+  color: green
+}
+
+.pageFirst table.arrayTable {
+  text-align: center;
+  font-size: 13pt; /* Увеличьте до читаемого размера */
+width: 100%;
+font-weight: 540
+}
+.pageFirst td.arrayTableTd {
+  text-align: center;
+  font-size: 16pt; /* Увеличьте до читаемого размера */
+
+}
+.pageFirst td.arrayTableTdArr {
+  text-align: center;
+  font-size: 14pt; 
+  font-weight: 540
+
+}
+
+.pageFirst table.calculationTable {
+  text-align: center;
+  font-size: 11.4pt; 
+  font-weight: 540;
+  width: 100%;
+  
+}
+.pageFirst table.calculationTable td {
+  text-align: center;  /* Центрирует текст в ячейках */
+  vertical-align: middle; /* Центрирует по вертикали */
+}
+
+
+.delete{
+  text-align: center;
+}
+
+.delete :hover{
+  color:red
+}
+
+  /* Для печати - убираем фоны таблиц если нужно */
+  @media print {
+    .pageFirst th {
+      background-color: #f0f0f0 !important;
+      -webkit-print-color-adjust: exact;
+      print-color-adjust: exact;
+    }
+  }

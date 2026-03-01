@@ -18,7 +18,7 @@ export const findMiddleValueFromArray = (arr: number[]) => {
 
 //Ищем сумму в процентов процентного вклада 
 
-const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) => {
+export const findValuesForUncertaintyResultPercent = (a: number, b: number, c: number) => {
     
     const roundedSum = Math.round(a * 100) / 100 + Math.round(b * 100) / 100 + Math.round(c * 100) / 100;
     
@@ -730,7 +730,8 @@ const findPermissibleValueForIfn_300 = (calibrationDot: number, calibrationValue
 
 //Cоздание нового объекта с расчитанными значениями для ИФН
 
-export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[], calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[], toFixedValue: number = 3) => {
+export const createNewCalibrationFieldIfn = (calibrationDot: number, reportId: string, calculationId: string, dataForCalibration: number[],
+     calibrationObjectType: string = calibrationObjectTypesEnum.ifn200, calibrationValue: string = ValueIfnEnum.om, calibrationValueSelect: string[], mode: string = modeEnum.om, modeSelect: string[], standardValue: StandardValueType[], toFixedValue: number = 3) => {
 
     let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
     let uncertaintyMiddle = findSKO(dataForCalibration)
