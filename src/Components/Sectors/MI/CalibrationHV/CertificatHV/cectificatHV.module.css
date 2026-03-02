@@ -1,7 +1,8 @@
 /* ===== A4 SETTINGS ===== */
 @page {
   size: A4;
-  margin: 2mm;
+  margin: 4mm;
+  
 }
 
 /* ===== PRINT MODE ===== */
@@ -16,12 +17,13 @@
   }
 }
 
+
 /* ===== SCREEN PREVIEW ===== */
 .printPage {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  padding: 20px;
+  padding: 2px;
   background: #fff;
 }
 
