@@ -87,11 +87,11 @@ export const CalibrationHVFirstPage = () => {
                         Относительная влажность воздуха: <EditableSpan title={reportHVEqupment.relativeHumidity} 
                         changeTitle={(title)=>{changeReportTitleHandler('relativeHumidity', title)}}/> %</td>
                 </tr>
-                <tr>
+                {/* <tr>
                     <td className={st.tempreture}>
                         Атмосферное давление: <EditableSpan title={reportHVEqupment.pressure} 
                        changeTitle={(title)=>{changeReportTitleHandler('pressure', title)}}/> кПа</td>
-                </tr>
+                </tr> */}
                 <tr>
                     <td className={st.tempreture}>
                         Напряжение питающей сети: <EditableSpan title={reportHVEqupment.supplyVoltage} 

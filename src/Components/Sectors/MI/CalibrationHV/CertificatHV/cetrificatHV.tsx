@@ -137,7 +137,7 @@ export const CertificatHV = () => {
             
         </div>
         <div className={styles.container2}>
-            <span className={styles.naming}>Номер свиделеьства № {report.reportNumber}</span>
+            <span className={styles.naming}>Номер свидетельства: {report.reportNumber}</span>
             <span className={styles.naming}>Страница 2 из 2</span>
         </div>
         <div>
@@ -235,7 +235,7 @@ export const CertificatHV = () => {
         padding: '2px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
-      }}>Точка калиброки</th>
+      }}>Точка калибровки</th>
       <th style={{ 
         border: '1px solid #000', 
         padding: '2px',

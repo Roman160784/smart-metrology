@@ -82,7 +82,7 @@ const mathModelData = [
   "Uх – действительное значение воспроизводимого напряжения (тока), кВ (мА)",
   "Uо - измеренное значение напряжения (тока) (среднее арифметическое значение показаний эталона в контрольной точке), кВ (мА)",
   "δио – основная погрешностью эталона, кВ (мА)",
-  "δкв – опогрешность отсчета, вносимая операторм (погрешность квантования), кВ (мА)",
+  "δкв – погрешность отсчета, вносимая оператором (погрешность квантования), кВ (мА)",
 ];
 
 export type StringKeys<T> = {
@@ -217,7 +217,7 @@ const initialState: ReportHVType = {
   mathModel: mathModel,
   mathModelValue: mathModelValue,
   mathModelData: mathModelData,
-  protectionI: "ток срабатымания защиты 25,5 мА",
+  protectionI: "ток срабатывания защиты 25,5 мА",
   standard: [
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",
@@ -227,7 +227,7 @@ const initialState: ReportHVType = {
       standardNumber: "3026",
       value:
         "от 0,2 кВ до 120 кВ,  АС  0,25 %, от 0,2 кВ до 120 кВ,  DС  0,05 %",
-      calibrationDate: "12.2025",
+      calibrationDate: "06.2025",
     },
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",

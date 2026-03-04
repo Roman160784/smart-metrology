@@ -1,7 +1,7 @@
 /* ===== A4 SETTINGS ===== */
 @page {
   size: A4;
-  margin: 4mm;
+  margin: 8mm;
   
 }
 
@@ -37,8 +37,8 @@
   width: 210mm;
   min-height: 297mm;
   border: 2px solid #000;
-  margin-top: 5pt;
-  padding: 6mm;
+  margin-top: 2pt;
+  padding: 4mm;
   box-sizing: border-box;
   font-family: "Times New Roman", serif;
   font-size: 14px;
