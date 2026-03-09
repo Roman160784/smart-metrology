@@ -40,26 +40,26 @@ export const SideBar = () => {
             <span className={st.navigation}> Сектор ЭМР</span>
             </NavLink>
         </div>
-        <div className={st.block}>
+        {/* <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.chemists}>
             <span className={st.navigation}> Сектор ФХИ</span>
             </NavLink>
-        </div>
-        <div className={st.block}>
+        </div> */}
+        {/* <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.geometry}>
             <span className={st.navigation}> Сектор ГИ</span>
             </NavLink>
-        </div>
-        <div className={st.block}>
+        </div> */}
+        {/* <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.heating}>
             <span className={st.navigation}> Cектор ТТИ</span>
             </NavLink>
-        </div>
-        <div className={st.block}>
+        </div> */}
+        {/* <div className={st.block}>
             <NavLink className={st.navigation} to={pathSiteBarEnum.radiation}>
             <span className={st.navigation}> Сектор ИИ</span>
             </NavLink>
-        </div>
+        </div> */}
             </div>
         </nav>
     )
