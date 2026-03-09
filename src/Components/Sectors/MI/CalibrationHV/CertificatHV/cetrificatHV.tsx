@@ -175,7 +175,7 @@ export const CertificatHV = () => {
         padding: '4px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
-      }}>Дата метрологической оценки</th>
+      }}>Дата очередной метрологической оценки</th>
     </tr>
   </thead>
   <tbody>
@@ -231,32 +231,37 @@ export const CertificatHV = () => {
   <thead>
     <tr>
       <th style={{ 
-        border: '1px solid #000', 
-        padding: '2px',
+        border: '1px solid #000',
+        lineHeight: '1.0', 
+        padding: '1px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
       }}>Точка калибровки</th>
       <th style={{ 
         border: '1px solid #000', 
-        padding: '2px',
+        lineHeight: '1.0', 
+        padding: '1px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
       }}>Измеренное значение</th>
       <th style={{ 
         border: '1px solid #000', 
-        padding: '2px',
+        lineHeight: '1.0', 
+        padding: '1px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
       }}>Абсолютная погрешность</th>
       <th style={{ 
         border: '1px solid #000', 
-        padding: '2px',
+        lineHeight: '1.0', 
+        padding: '1px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
       }}>Расширенная неопределённость</th>
       <th style={{ 
         border: '1px solid #000', 
-        padding: '2px',
+        lineHeight: '1.0', 
+        padding: '1px',
         textAlign: 'center',
         backgroundColor: '#f0f0f0'
       }}>{`Измеряемая величина (режим измерений)`}</th>
@@ -266,7 +271,13 @@ export const CertificatHV = () => {
     {
         report.calculation.map((el) => {
             return (
-                <tr key={el.calculationId}>
+                <tr style={{ 
+                  border: '1px solid #000', 
+                  lineHeight: '1.0', 
+                  padding: '1px',
+                  textAlign: 'center',
+                  
+                }} key={el.calculationId}>
                         <td>{el.calibrationDot}</td>
                         <td>{el.calibrationMiddleValue}</td>
                         <td>{el.error}</td>
@@ -280,7 +291,7 @@ export const CertificatHV = () => {
 </table>
 </div>
 <div>
-    <span>Расширенная неопределённость получена путём умножения суммарной
+    <span className={styles.desk}>Расширенная неопределённость получена путём умножения суммарной
           стандартной неопределённости на коэффициент охвата k = 2,
           соответствующий уровню доверия, приблизительно равному 95 % при
           допущении нормального распределения. Оценивание неопределённости
@@ -291,7 +302,7 @@ export const CertificatHV = () => {
     <span className={styles.naming}>{`Межкалибровочный интервал (рекомендуемый) ____ месяцев`}</span>
 </div>
 <div>
-    <span className={styles.naming}>{`Дополнительная информация____________________________________________________`}</span>
+    <span className={styles.naming}>{`Дополнительная информация: ${report.info}`}</span>
     <div className={styles.discr}>состояние объекта калибровки/регулировка и/или ремонт объекта калибровки до его калибровки</div>
 </div>
 
@@ -320,7 +331,7 @@ export const CertificatHV = () => {
         width: "100%",
       }}
     />
-    <div style={{ fontSize: "11pt", marginTop: "2px" }}>
+    <div style={{ fontSize: "11pt", marginTop: "1px" }}>
       подпись
     </div>
   </div>
@@ -335,18 +346,18 @@ export const CertificatHV = () => {
         width: "100%",
       }}
     />
-    <div style={{ fontSize: "11pt", marginTop: "2px" }}>
+    <div style={{ fontSize: "11pt", marginTop: "1px" }}>
       инициалы, фамилия и должность
     </div>
   </div>
 </div>
 
 <div>
-    <span>Адреc юридического лица ГМС, выполнившего калибровку: 246015, г.Гомель, ул.Лепешинского,1. тел.: +375 232 26-33-03, +375 232 26-33-25 факс,
+    <span className={styles.desk}>Адреc юридического лица ГМС, выполнившего калибровку: 246015, г.Гомель, ул.Лепешинского,1. тел.: +375 232 26-33-03, +375 232 26-33-25 факс,
 e-mail: mail@gomelcsms.by</span>
 </div>
 <div>
-    <span>Место проведения калибровки: 246015, г.Гомель, ул.Лепешинского,1. государственное предприятие "Гомельский ЦСМС"</span>
+    <span className={styles.desk}>Место проведения калибровки: 246015, г.Гомель, ул.Лепешинского,1. государственное предприятие "Гомельский ЦСМС"</span>
 </div>
    </div>
     </div>

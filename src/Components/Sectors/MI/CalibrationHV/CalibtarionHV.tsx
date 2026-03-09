@@ -23,8 +23,12 @@ export const CalibrationHV = () => {
 
     const dispatch = useAppDispatch()
 
+
+
     const changeReportTitleHandler = ( key: StringKeys<ReportHVType>, parameter: string) => { 
       dispatch(changeReportTitleHVTC({ key,parameter}))};
+
+   
       
       const onblurHandler = (toFixedValue: number, dot: number) => {
        dispatch(addNewCalibratonFieldHVTC({toFixedValue, dot}))
@@ -88,7 +92,7 @@ export const CalibrationHV = () => {
       <div className={st.pageFirst}>
         <div className={st.header}>
           <span className={st.headerItem}>Протокол {reportHVEqupment.reportNumber}</span>
-          <span className={st.headerItem}>от {"11.11.2026"}</span>
+          <span className={st.headerItem}>от {reportHVEqupment.calibrationDate}</span>
           <span className={st.headerItem}>страница {lastPage} страниц {lastPage}</span>
         </div>
         <div>
@@ -106,8 +110,11 @@ export const CalibrationHV = () => {
            Руководство по выражению неопределенности измерения.
         </div>
         <br />
-     
-
+<div>
+  Дополнительная информация <EditableSpan title={reportHVEqupment.info} 
+  changeTitle={(title) => {changeReportTitleHandler('info', title)}}/>
+</div>
+<br />
 <div 
   onClick={navigateToCertificate}
   onMouseEnter={(e) => e.currentTarget.style.color = 'green'}

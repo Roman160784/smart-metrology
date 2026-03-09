@@ -69,6 +69,7 @@ export type ReportHVType = {
   mathModel: string;
   mathModelData: string[];
   protectionI: string;
+  info: string
 };
 
 const traceability =
@@ -218,6 +219,7 @@ const initialState: ReportHVType = {
   mathModelValue: mathModelValue,
   mathModelData: mathModelData,
   protectionI: "ток срабатывания защиты 25,5 мА",
+  info: '---',
   standard: [
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",
@@ -227,7 +229,7 @@ const initialState: ReportHVType = {
       standardNumber: "3026",
       value:
         "от 0,2 кВ до 120 кВ,  АС  0,25 %, от 0,2 кВ до 120 кВ,  DС  0,05 %",
-      calibrationDate: "06.2025",
+      calibrationDate: "06.2026",
     },
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",
@@ -237,7 +239,7 @@ const initialState: ReportHVType = {
       standardNumber: "183173561",
       value:
         "AC  от 0 до 200  мА, δ=0,8% А+30 е.м.р., DC  от 0 до 200  мА, δ = 0,2 % А+10 е.м.р.",
-      calibrationDate: "06.2025",
+      calibrationDate: "06.2026",
     },
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",
@@ -246,7 +248,7 @@ const initialState: ReportHVType = {
       standardType: "Testo 605-H1",
       standardNumber: "41109462/402",
       value: "от 0 до 50 °С, от 5 до 95 %  δy ±3 %",
-      calibrationDate: "06.2025",
+      calibrationDate: "06.2026",
     },
   ],
   calculation: [
