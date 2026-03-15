@@ -10,7 +10,7 @@ import { selectReportHVequpment } from "../../../../Redux/selectors/eso-report-s
 import { CalculationHV } from "./CalculationHV";
 import { useAppDispatch } from "../../../../Redux/store";
 import { EditableSpan } from "../../../Common/EditableSpan/EditableSpan";
-import { ReportHVType, StringKeys, addNewCalibratonFieldHVTC, changeReportTitleHVTC, removeCalibratonFieldHVTC, updateCalibrationValueHVTC, updateCalibrationValueinArrayHVTC } from "../../../../Redux/HVeqipmentReducer";
+import { ReportHVType, StringKeys, addNewCalibratonFieldHVTC, changeCalculationTitleHVTC, changeReportTitleHVTC, removeCalibratonFieldHVTC, updateCalibrationValueHVTC, updateCalibrationValueinArrayHVTC } from "../../../../Redux/HVeqipmentReducer";
 import { useNavigate } from "react-router-dom";
 
 
@@ -27,6 +27,9 @@ export const CalibrationHV = () => {
 
     const changeReportTitleHandler = ( key: StringKeys<ReportHVType>, parameter: string) => { 
       dispatch(changeReportTitleHVTC({ key,parameter}))};
+
+    const changeCalculationTitleHandler = (id: string,  value: string) => { 
+      dispatch(changeCalculationTitleHVTC({ id, value}))};
 
    
       
@@ -83,6 +86,8 @@ export const CalibrationHV = () => {
                     updateCalibrationValue={updateCalibrationValue}
                     removeCalibrationFieldHandler={removeCalibrationFieldHandler}
                     updateCalibrationValueinArray={updateCalibrationValueinArray}
+                    changeCalculationTitleHandler={changeCalculationTitleHandler}
+                    reportHVEqupment={reportHVEqupment} 
                     />
                     </div>
                 )

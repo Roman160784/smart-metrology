@@ -96,12 +96,16 @@ export const CalibrationHVSecondPage = (props: CalibrationHVSecondPagePropsType)
             1 Внешний осмотр: соответствует {reportHVEqupment.method} 
             </div>
             <div>
+            {'Количество стендов: '}
+            <EditableSpan title={reportHVEqupment.stendsCount} 
+            changeTitle={(title)=> {changeReportTitleHandler('stendsCount', title)} }/>
+            </div>
+            <div>
             2 Опробование: соответствует {reportHVEqupment.method} 
             </div>
             <div>
             <EditableSpan title={reportHVEqupment.protectionI} 
             changeTitle={(title)=> {changeReportTitleHandler('protectionI', title)} }/>
-            
             </div>
             <div>
             3 Определение значений в точках калибровки:

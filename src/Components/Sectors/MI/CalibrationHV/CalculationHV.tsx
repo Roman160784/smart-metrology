@@ -1,20 +1,25 @@
 import React, { ChangeEvent } from "react";
 import { FiTrash } from "react-icons/fi";
-import { CalculationHVType } from "../../../../Redux/HVeqipmentReducer";
+import { CalculationHVType, ReportHVType } from "../../../../Redux/HVeqipmentReducer";
 import { SuperSelect } from "../../../Common/SuperSelect/SuperSelect";
 import { ResultTableEsoHeaderTC } from "./ResultTableHeaderTC";
 import { EditableSpanForCalculation } from "../../../Common/EditableSpanForCalculation/EditableSpanForCalculation";
 import st from "./CalibrationHV.module.css";
+import { numberHelper } from "../../../../Redux/utils/utils";
+import { EditableSpan } from "../../../Common/EditableSpan/EditableSpan";
 
 type CalculationHVPropsType = {
     calculation: CalculationHVType
+    reportHVEqupment: ReportHVType
     updateCalibrationValue: (calculationId: string, calibrationValue: string) => void
+    changeCalculationTitleHandler: (id: string, value: string) => void
     removeCalibrationFieldHandler: (id: string) => void
     updateCalibrationValueinArray: (id: string, i: number, value: number, toFixedValue: number) => void
+   
 }
 
 export const CalculationHV = ({calculation, updateCalibrationValue,
-     removeCalibrationFieldHandler, updateCalibrationValueinArray, ...props}: CalculationHVPropsType) => {
+     removeCalibrationFieldHandler, updateCalibrationValueinArray, reportHVEqupment, changeCalculationTitleHandler, ...props}: CalculationHVPropsType) => {
 
 return(
 <>
@@ -23,6 +28,12 @@ return(
                         <tr>
                             <td>
                             {`Точка калибровки  `}
+                            <br />
+                            {reportHVEqupment.stendsCount !== '0' ?
+                            <EditableSpan title={calculation.stend} 
+                            changeTitle={(title)=> {changeCalculationTitleHandler(calculation.calculationId, title)}}/>
+                            : ''
+                            }
                             <br />
               <SuperSelect
                 onChangeOption={(option) => {
@@ -133,7 +144,9 @@ return(
                     </table>
                 </div>
                 <div >
-                    <span className={st.res}>   {`Результат калибровки в точке ${calculation.calibrationDot} ${calculation.calibrationValue}`}
+                    <span className={st.res}>   
+                    {`Результат калибровки в точке ${calculation.calibrationDot} ${calculation.calibrationValue}
+${reportHVEqupment.stendsCount !== '0' ? calculation.stend : ''}`}
                     </span>
                     <table className={st.calculationTable} border={1}>
                     <tbody>
@@ -145,7 +158,8 @@ return(
                             <td className={''}>{calculation.mode}</td>
                             <td className={''}>{`${calculation.calibrationMiddleValue}  ${calculation.calibrationValue}`}</td>
                             <td className={''}>{`${calculation.error}  ${calculation.calibrationValue}`}</td>
-                            <td className={''}>{`${calculation.expandedUncertainty}  ${calculation.calibrationValue}`}</td>
+                            <td className={numberHelper(calculation.expandedUncertainty) < numberHelper(calculation.satadardError) ? st.error : ''}>
+                                {`${calculation.expandedUncertainty}  ${calculation.calibrationValue}`}</td>
                         </tr>
                     </tbody>
                     </table>

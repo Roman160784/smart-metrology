@@ -59,7 +59,8 @@ export const CalibrationHVFirstPage = () => {
             </tr>
             <tr>
                 <td>Место проведения калибровки</td>
-                <td>государственное предприятие "Гомельский ЦСМС"</td>
+                <td><EditableSpan title={reportHVEqupment.calibrarionPlace} 
+                changeTitle={(title)=>{changeReportTitleHandler('calibrarionPlace', title)}}/></td>
             </tr>
             <tr>
                 <td>Дата проведения калибровки</td>

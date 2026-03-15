@@ -47,7 +47,7 @@ const standardError = (dot: number, paramp: string) => {
 
 
 export const createNewCalibrationFieldHV = (dot: number, calculationId: string, dataForCalibration: number[], 
-     calibrationValue: string, toFixedValue: number, modeSelect: string[], reportId: string) => {
+     calibrationValue: string, toFixedValue: number, modeSelect: string[], reportId: string, stend: string ) => {
         let calibrationMiddleValue = findMiddleValueFromArray(dataForCalibration)
         let uncertaintyMiddle = findSKO(dataForCalibration)
         let satadardError = standardError(dot, calibrationValue)
@@ -91,7 +91,8 @@ export const createNewCalibrationFieldHV = (dot: number, calculationId: string, 
         uncertaintyUserErrorPercent: stringHelper(resPercent[1], 3),
         userError: stringHelper(userError!, toFixedValue! + 2),
         error: stringHelper(error, toFixedValue!),
-        permissibleValue: ""
+        permissibleValue: "",
+        stend: stend
     }
     return newCalvulation
 

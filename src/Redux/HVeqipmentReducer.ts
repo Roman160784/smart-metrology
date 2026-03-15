@@ -37,6 +37,7 @@ export type CalculationHVType = {
   expandedUncertainty: string;
   calibrationValue: string;
   toFixedValue: number
+  stend: string
 };
 
 export type ReportHVType = {
@@ -70,6 +71,8 @@ export type ReportHVType = {
   mathModelData: string[];
   protectionI: string;
   info: string
+  stendsCount: string
+  calibrationPlace: string
 };
 
 const traceability =
@@ -108,6 +111,13 @@ export const changeStandartDateHVTC = createAsyncThunk(
   }
 );
 
+export const changeCalculationTitleHVTC = createAsyncThunk(
+  "HVEqupmentReport/changeCalculationTitleHVTC",
+  async (param: { id: string, value: string}) => {
+    return param;
+  }
+);
+
 export const addNewCalibratonFieldHVTC = createAsyncThunk(
   "HVEqupmentReport/addNewCalibratonFieldHVTC",async (param: { toFixedValue: number, dot: number}, {getState}) => {
    try{
@@ -124,7 +134,7 @@ export const addNewCalibratonFieldHVTC = createAsyncThunk(
     let calculationId = v1()
     let reportId = report.reportId
     let newCalibrationField = createNewCalibrationFieldHV(param.dot, calculationId, dataForCalibration, 
-      calibrationValue, param.toFixedValue, modeSelect, reportId)
+      calibrationValue, param.toFixedValue, modeSelect, reportId, 'Стенд 1')
     return {newCalibrationField}
    }
    catch (e: any) {
@@ -142,6 +152,7 @@ export const updateCalibrationValueHVTC = createAsyncThunk(
       let report = state.reportHVEqupment
   
       let calculation = report.calculation.find(el => el.calculationId === param.id)
+      let stend = calculation?.stend
       let dataForCalibration = numberArrHelper(calculation!.dataForCalibration)
       let toFixedValue = calculation?.toFixedValue
       let calibrationDotString = calculation?.calibrationDot; 
@@ -150,7 +161,7 @@ export const updateCalibrationValueHVTC = createAsyncThunk(
       let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
-        param.calibrationValue, toFixedValue!, modeSelect, reportId)
+        param.calibrationValue, toFixedValue!, modeSelect, reportId, stend!)
         return {newCalibrationField, param}
      }
      catch (e: any) {
@@ -168,7 +179,7 @@ export const updateCalibrationValueinArrayHVTC = createAsyncThunk(
       let calculation = report.calculation.find(el => el.calculationId === param.id)
       let dataForCalibration = numberArrHelper(calculation!.dataForCalibration)
       dataForCalibration[param.i] = param.value
-
+      let stend = calculation!.stend
       let toFixedValue = param.toFixedValue
       let calibrationValue = calculation?.calibrationValue
       let calibrationDotString = calculation?.calibrationDot; 
@@ -177,7 +188,7 @@ export const updateCalibrationValueinArrayHVTC = createAsyncThunk(
       let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
-        calibrationValue!, toFixedValue!, modeSelect, reportId)
+        calibrationValue!, toFixedValue!, modeSelect, reportId, stend!)
         return {newCalibrationField, param}
      }
      catch (e: any) {
@@ -220,6 +231,8 @@ const initialState: ReportHVType = {
   mathModelData: mathModelData,
   protectionI: "ток срабатывания защиты 25,5 мА",
   info: '---',
+  stendsCount: '0',
+  calibrationPlace: 'государственное предприятие "Гомельский ЦСМС"',
   standard: [
     {
       reportId: "bfdbdfbdfb6646514b5df21b5df5b1dfb15df1b5df1",
@@ -299,6 +312,12 @@ const slice = createSlice({
           ? action.payload!.newCalibrationField 
           : field
       );
+    })
+    //Меняем название стенда
+    builder.addCase(changeCalculationTitleHVTC.fulfilled, (state, action) => {
+      state.calculation = state.calculation.map(el => el.calculationId === action.payload.id ?
+        {...el, stend : action.payload.value} : el
+        )
     })
     
   },

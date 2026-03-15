@@ -282,7 +282,7 @@ export const CertificatHV = () => {
                         <td>{el.calibrationMiddleValue}</td>
                         <td>{el.error}</td>
                         <td>{el.expandedUncertainty}</td>
-                        <td>{el.mode}</td>
+                        <td>{` ${report.stendsCount !== '0' ? el.mode + ' ' + el.stend : el.mode}`}</td>
                 </tr>
             )
         })
