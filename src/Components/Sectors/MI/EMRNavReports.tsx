@@ -6,6 +6,7 @@ export enum pathEMREnum {
     attestation = '/attestation',
     AttestationIO = '/AttestationIO',
     CalibrationHV = '/CalibrationHV',
+    LatterBuyEquipment = '/LatterBuyEquipment',
     
 }
 
@@ -68,6 +69,30 @@ export const EmirNavReports = () => {
                         }}
                     >
                         Калибровка В.B. оборудования
+                    </span>
+                </NavLink>
+                <NavLink 
+                    to={pathEMREnum.LatterBuyEquipment}
+                    style={{
+                        textDecoration: 'none',
+                        color: 'inherit'
+                    }}
+                >
+                    <span 
+                        style={{ 
+                            borderRadius: '3px',
+                            border: '1px solid #ddd',
+                            padding: '4px 8px',
+                            display: 'inline-block',
+                            backgroundColor: '#fff',
+                            color: '#333',
+                            fontSize: '14px',
+                            fontFamily: 'Arial, sans-serif',
+                            cursor: 'pointer',
+                            transition: 'all 0.3s ease'
+                        }}
+                    >
+                        Письмо на закупку оборудования
                     </span>
                 </NavLink>
             </div>
