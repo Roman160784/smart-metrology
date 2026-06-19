@@ -25,14 +25,14 @@ export const LogoBlock = () => {
             </div>
 
             <div style={{ height: "120%" }}>
-                <img
+                {/* <img
                     src={iso}
                     alt="BGCA"
                     style={{
                         height: "120%",
                         objectFit: "contain",
                     }}
-                />
+                /> */}
             </div>
         </div>
     );

@@ -12,9 +12,9 @@ const userErrorTectCentreHV = (toFixedValue: number) => {
 //погрешность эталона
 const standardError = (dot: number, paramp: string) => {
     let staydardError = 0
-    if (paramp === ValueHVEnum.ACV) {
+    if (paramp === ValueHVEnum.ACV || paramp === ValueHVEnum.ACVv) {
         staydardError = dot * 0.25 / 100
-    }else if (paramp === ValueHVEnum.DCV) {
+    }else if (paramp === ValueHVEnum.DCV || paramp === ValueHVEnum.DCVv) {
         staydardError = dot * 0.05 / 100
     }else if (paramp === ValueHVEnum.ACA){
         if (dot >= 1 && dot <= 19.999){

@@ -20,7 +20,7 @@ export const ReportHeaderTC = () => {
             <div style={{paddingLeft: "10%"
       }}>
                 <BscaTC/>
-               <img  src={iso} alt="iso" />
+               {/* <img  src={iso} alt="iso" /> */}
             </div>
             
         </div>

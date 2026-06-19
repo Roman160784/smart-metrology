@@ -26,7 +26,7 @@ export const ReportHeader = () => {
                 <Bsca/>
                 {/* <img className={st.pic} src={bgca} alt="bgca" /> */}
                 <br />
-                <img className={st.pic2} src={iso} alt="iso" />
+                {/* <img className={st.pic2} src={iso} alt="iso" /> */}
             </div>
             
         </div>

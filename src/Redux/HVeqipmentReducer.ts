@@ -7,7 +7,9 @@ import { numberArrHelper } from "./utils/utils";
 
 export enum ValueHVEnum {
   ACV = "кB (ACV)",
+  ACVv = "B (ACV)",
   DCV = "кB (DCV)",
+  DCVv = "B (DCV)",
   ACA = "мА (ACA)",
   DCA = "мА (DCA)",
   ACmkA = "мкА (ACA)",
@@ -129,7 +131,7 @@ export const addNewCalibratonFieldHVTC = createAsyncThunk(
       dataForCalibration.push(param.dot);
     }
     
-    let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
+    let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA, ValueHVEnum.DCVv, ValueHVEnum.ACVv]
     let calibrationValue = ValueHVEnum.ACV
     let calculationId = v1()
     let reportId = report.reportId
@@ -158,7 +160,7 @@ export const updateCalibrationValueHVTC = createAsyncThunk(
       let calibrationDotString = calculation?.calibrationDot; 
       let normalizedString = calibrationDotString?.replace(',', '.')
       let calibrationDot = Number(normalizedString);
-      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
+      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA, ValueHVEnum.DCVv, ValueHVEnum.ACVv]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
         param.calibrationValue, toFixedValue!, modeSelect, reportId, stend!)
@@ -185,7 +187,7 @@ export const updateCalibrationValueinArrayHVTC = createAsyncThunk(
       let calibrationDotString = calculation?.calibrationDot; 
       let normalizedString = calibrationDotString?.replace(',', '.')
       let calibrationDot = Number(normalizedString);
-      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA]
+      let modeSelect = [ValueHVEnum.ACV,ValueHVEnum.DCV, ValueHVEnum.ACA,  ValueHVEnum.DCA, ValueHVEnum.ACmkA, ValueHVEnum.DCmkA, ValueHVEnum.DCVv, ValueHVEnum.ACVv]
       let reportId = report.reportId
       let newCalibrationField = createNewCalibrationFieldHV(calibrationDot!, param.id, dataForCalibration!, 
         calibrationValue!, toFixedValue!, modeSelect, reportId, stend!)

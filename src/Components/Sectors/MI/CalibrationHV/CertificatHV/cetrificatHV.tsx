@@ -34,7 +34,7 @@ export const CertificatHV = () => {
   gap: '180pt' 
 }}>
   <BscaTC />
-  <img src={iso} alt="iso" />
+  {/* <img src={iso} alt="iso" /> */}
 </div>
 <div className={styles.line}></div>
           <div className={styles.hint}>
