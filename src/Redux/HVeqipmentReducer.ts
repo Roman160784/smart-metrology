@@ -261,7 +261,7 @@ const initialState: ReportHVType = {
       id: "5",
       standardName: "Прибор комбинированный цифровой",
       standardType: "Testo 605-H1",
-      standardNumber: "41109462/402",
+      standardNumber: "41109586/402",
       value: "от 0 до 50 °С, от 5 до 95 %  δy ±3 %",
       calibrationDate: "06.2026",
     },
